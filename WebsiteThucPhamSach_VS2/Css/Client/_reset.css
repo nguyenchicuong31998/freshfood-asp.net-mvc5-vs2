@@ -1,0 +1,22 @@
+﻿
+*,
+*::after,
+*::before{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: inherit;
+}
+
+html{
+    font-size: 62.5%;
+}
+
+
+body{
+    font-family: Roboto;
+    font-size: 1.4rem;
+    box-sizing: border-box;
+    background-color: red;
+}
+
+
