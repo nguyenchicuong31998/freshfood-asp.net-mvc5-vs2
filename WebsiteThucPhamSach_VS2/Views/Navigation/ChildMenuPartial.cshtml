@@ -1,0 +1,14 @@
+﻿
+
+@if ((int)ViewBag.childCount > 0)
+{
+    <ul class="child">
+        @foreach (var item in ViewBag.childMenus)
+        {
+           <li class="parent">
+              <a href="@Url.Content(item.link + '/'+ item.id)">@item.name</a>
+              @Html.Action("ChildMenuPartial", "Navigation", new { parentId = item.id })
+           </li>
+        }
+    </ul>
+}

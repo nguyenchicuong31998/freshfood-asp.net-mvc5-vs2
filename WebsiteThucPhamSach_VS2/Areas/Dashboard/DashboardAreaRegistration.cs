@@ -14,10 +14,13 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
+
+
             context.MapRoute(
                 "Dashboard_default",
                 "Dashboard/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { controller = "Dashboard" , action = "Index", id = UrlParameter.Optional },
+                namespaces: new string [] { "WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers" }
             );
         }
     }

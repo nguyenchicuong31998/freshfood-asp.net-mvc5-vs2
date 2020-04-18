@@ -1,3 +1,14 @@
-﻿
+﻿@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 @import "_reset.css";
+@import "_common.css";
+@import "_header.css";
 @import "_home.css";
+@import "_footer.css";
+@import "_login.css";
+@import "_register.css";
+@import "_personalInfo.css";
+@import "_forgot-password.css";
+@import "_change-password.css";
+@import "_navigation.css";
+@import "_slide.css";
+@import "_media.css";

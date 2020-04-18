@@ -1,0 +1,130 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model List<role>
+@{
+    ViewBag.Title = "Phân Quyền";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container-fluid p-3">
+    <a href="#wrapper-create-role" class="btn btn-primary btn-sm mt-3 mb-3 p-2 add-role">Thêm</a>
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Phân Quyền</div>
+        <div class="card-body">
+            <div class="table-responsive text-nowrap">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên nhóm quyền</th>
+                            <th>Trạng thái</th>
+                            <th>Công cụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var name = "";
+                            if (item.status == true)
+                            {
+                                name = "Bật";
+                            }
+                            else
+                            {
+                                name = "Tắt";
+                            }
+                            <tr>
+                                <td>@item.id</td>
+                                <td>@item.name</td>
+                                <td>
+                                    <input type="submit" class="status btn btn-info" data-id="@item.id" value="@name" />
+                                </td>
+                                <td>
+                                    <a href="#wrapper-create-role" data-id="@item.id" class="btnUpdateRole p-2" data-toggle="tooltip" title="Sửa"><img src="~/Img/edit.png" alt="Update" /></a>
+                                    <a href="#" data-id="@item.id" class="btnDeleteRole p-2"  data-toggle="tooltip" title="Xóa"><img src="~/Img/delete.png" alt="Delete" /></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="wrapper-create-role" class="wrapper-create-role">
+
+</div>
+
+@section Scripts{
+<script type="text/javascript">
+
+        function roleValidate() {
+            if ($('#name').val() == "") {
+                $('span*[data-valmsg-for="name"]').text("Vui lòng nhập tên nhóm");
+                return false;
+            }
+        }
+
+        $(document).ready(function () {
+            $('.role').addClass("active");
+
+            @*$('.add-role').click(function () {
+                //$('#wrapper-create-role').load("/Dashboard/Role/CreatePartial");
+                $.get('@Url.Action("CreatePartial", "Role")', {}, function (response) {
+
+                    $("#wrapper-create-role").html(response);
+                    $('.submit-role').click(function (e) {
+                        var data = $(".form-role").serialize();
+                        console.log(data);
+                        alert("vao");
+                        $.ajax({
+                            data: { data: data },
+                            url: "/Dashboard/Role/Create",
+                            type: "POST",
+                            dataType: "json",
+                            success: function (res) {
+                                if (res == true) {
+                                    window.location.href = "/Dashboard/Role/Index";
+                                }
+                            }
+                        })
+
+                    });
+                });
+            });*@
+            $('.add-role').click(function () {
+                $('#wrapper-create-role').load("/Dashboard/Role/CreatePartial");
+            })
+
+            $('.btnUpdateRole').click(function () {
+                let id = $(this).data('id');
+                $("#wrapper-create-role").load("/Dashboard/Role/EditPartial/"+id);
+                //$.get('/Dashboard/Role/EditPartial/'+id, { }, function (response) {
+                //    $("#wrapper-create-role").html(response);
+                //});
+            });
+
+            $('.btnDeleteRole').click(function () {
+                if (confirm("Bạn có chắc chắn muốn xóa nhóm quyền này không?")) {
+                    let id = $(this).data('id');
+                    $.ajax({
+                        data: { id: id },
+                        url: "/Dashboard/Role/DeleteRole",
+                        dataType: "json",
+                        type: "POST",
+                        success: function (res) {
+                            if (res.status == true) {
+                                alert("Bạn đã xóa thành công");
+                            } else {
+                                alert("Xóa thất bại");
+                            }
+                            window.location.href = "/Dashboard/Role/Index";
+                        }
+                    })
+                } else {
+                    return false;
+                }
+            });
+        })
+</script>
+}

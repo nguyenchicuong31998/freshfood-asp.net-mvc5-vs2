@@ -1,0 +1,97 @@
+﻿@using WebsiteThucPhamSach_VS2.Models;
+@model UsersModels
+
+
+@{
+    /**/
+
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+}
+
+<div class="wrapper-login">
+    <div class="login">
+        <h3 class="login__heading">Đăng nhập tài khoản</h3>
+        <div class="login__content">
+            @using (Html.BeginForm("Login", "Header", FormMethod.Post))
+            {
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    <label class="email-title" for="email">Email*</label>
+                    @Html.TextBoxFor(UsersModels => UsersModels.email, new { @class = "form-control input-email", @Placeholder = "Vui lòng nhập email" })
+                    @Html.ValidationMessageFor(UsersModels => UsersModels.email, "", new { @class = "text-error" })
+                </div>
+                <div class="form-group">
+                    <label class="password-title" for="password">Mật khẩu* </label>
+                    @Html.PasswordFor(UsersModels => UsersModels.password, new { @class = "form-control input-password", @Placeholder = "Vui lòng nhập mật khẩu" })
+                    @Html.ValidationMessageFor(UsersModels => UsersModels.password, "", new { @class = "text-error" })
+                    <span class="text-error">@ViewBag.errorLogin</span>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-block bg-green custom-login" type="submit" name="login" value="Đăng nhập">
+                </div>
+                <div class="form-group">
+                    <a data-toggle="modal" data-target="#forgot-passwrod" class="login__reset-password" href="#">Quên mật khẩu</a>
+                </div>
+                <div class="form-group">
+                    <p class="login__register">Bạn chưa có tài khoản đăng ký <a href="~/Dang-Ky">tại đây</a></p>
+                </div>
+                <div class="form-group text-center">
+                    <div class="login-other">Hoặc đăng nhập với</div>
+                </div>
+                <div class="form-group">
+                    <a href="~/Dang-Nhap-Facebook" class="btn__facebook btn">
+                        <i class="fa fa-facebook"></i>
+                        Facebook
+                    </a>
+                </div>
+                <div class="form-group">
+                    <a href="#" class="btn__google btn">
+                        <i class="fa fa-google"></i>
+                        Google
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*@Html.Action("ForgotPasswordPartial", "Header")*@
+
+@{
+    Html.RenderPartial("ForgotPasswordPartial", Model);
+}
+
+@section Scripts  {
+    <script>
+        $(document).ready(function () {
+            $('#send-email').click(function (e) {
+                e.preventDefault();
+                var email = $('#email-in-forgot-password').val();
+                if (!email) {
+                    $('.email-error').text("Vui lòng nhập email");
+                    return;
+                }
+                if (/^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) == false) {
+                    $('.email-error').text("Địa chỉ email không hợp lệ");
+                    return;
+                }
+                $('.email-error').text("");
+                $.ajax({
+                    data: { email: email },
+                    url: '/Header/ForgotPasswordPartial',
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (res) {
+                        if (res.status == true) {
+                            alert("Đặt lại mật khẩu thành công. Xin vui lòng kiểm tra email");
+                            location.reload();
+                        } else {
+                            $('.email-error').text('Email không tồn tại');
+                        }
+                    }
+                })
+            });
+        });
+    </script>
+}

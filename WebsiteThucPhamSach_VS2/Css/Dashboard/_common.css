@@ -1,0 +1,42 @@
+﻿
+
+
+html {
+    font-size: 90%;
+}
+
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20rem;
+    padding: 0px;
+    margin: 0px;
+}
+
+.text-error {
+    font-size: .9rem;
+    color: red;
+    margin: 5px 0px;
+}
+
+.input-share {
+    font-size: 1.2rem;
+    padding: 0px 10px;
+    height: 35px;
+}
+
+.box {
+    width: 100%;
+    box-shadow: 0 0 5px #dee2e6, 1px 0 10px #dee2e6, 1px 0 15px #dee2e6;
+    padding: 20px;
+}
+
+    .box .box-title{
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-align: center;
+        padding: 10px;
+        margin: 10px 0px;
+    }
+
+

@@ -1,0 +1,35 @@
+﻿
+@using WebsiteThucPhamSach_VS2.Models
+@model List<menu>
+
+<div id="nav">
+     <ul id="menu">
+         @foreach (var item in Model)
+         {
+               <li class="parent">
+                   <a href="@Url.Content(item.link)">@item.name</a>
+                   @Html.Action("ChildMenuPartial", "Navigation", new { parentId = item.id })
+               </li>
+          }
+    </ul>
+</div>
+@*<ul class="menu">
+    @foreach (var item in Model.Where(x => x.parent_id == null && x.status == true))
+        {
+            var child = Model.Where(x => x.parent_id == item.id);
+        <li>
+            <a href="#">@item.name</a>
+            @if(child.Count() > 0){
+                <ul class="second-level-menu">
+                    <li>
+                        @foreach (var childItem in child)
+                        {
+                            <a href="#">@childItem.name</a>
+                        }
+                    </li>
+                </ul>
+            }
+        </li>
+        }*@
+@*</ul>*@
+

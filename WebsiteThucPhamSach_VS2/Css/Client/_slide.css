@@ -1,0 +1,19 @@
+﻿
+
+
+.slide-main {
+    /*grid-column: 1 / -1;*/
+    background-image: url('../../Img/background-slide.png');
+    background-position: top left;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 40px 5%;
+}
+
+.carousel-indicators .active {
+    display: block !important;
+}
+
+.custom-slide-img{
+    height: 400px;
+}

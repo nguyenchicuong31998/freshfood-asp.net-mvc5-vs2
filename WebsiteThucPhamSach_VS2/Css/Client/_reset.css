@@ -12,11 +12,25 @@ html{
 }
 
 
-body{
-    font-family: Roboto;
-    font-size: 1.4rem;
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    padding: 0px;
+    margin: 0px;
     box-sizing: border-box;
-    background-color: red;
 }
 
+input,
+select,
+textarea {
+     max-width: none; 
+}
 
+/*p{
+   margin: 0px;
+}*/
+
+.wrapper-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+}

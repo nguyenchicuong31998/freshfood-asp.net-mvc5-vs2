@@ -19,7 +19,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44388</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -36,6 +36,17 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="QLThucPham-Deployment" Order="1">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=DESKTOP-KP9QRO6\SQLEXPRESS%3bInitial Catalog=FreshFood%3bIntegrated Security=True%3bApplication Name=EntityFramework" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\QLThucPham-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,6 +61,15 @@
     <Reference Include="AdvancedStringBuilder, Version=0.1.0.0, Culture=neutral, PublicKeyToken=e818a2fc08933ddb, processorArchitecture=MSIL">
       <HintPath>..\packages\AdvancedStringBuilder.0.1.0\lib\net45\AdvancedStringBuilder.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
+    </Reference>
     <Reference Include="LibSassHost, Version=1.2.10.0, Culture=neutral, PublicKeyToken=3e24e88796a38e46, processorArchitecture=MSIL">
       <HintPath>..\packages\LibSassHost.1.2.10\lib\net45\LibSassHost.dll</HintPath>
     </Reference>
@@ -63,6 +83,8 @@
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -140,11 +162,72 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\MenuController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\RoleController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\Dashboard\Models\AdminsModel.cs" />
+    <Compile Include="Areas\Dashboard\Models\LoginModel.cs" />
+    <Compile Include="Areas\Dashboard\Models\MenusModel.cs" />
+    <Compile Include="Areas\Dashboard\Models\RolesModel.cs" />
+    <Compile Include="Common\SessionName.cs" />
+    <Compile Include="Common\Utils.cs" />
+    <Compile Include="Controllers\FooterController.cs" />
+    <Compile Include="Controllers\HeaderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NavigationController.cs" />
+    <Compile Include="Controllers\SlideController.cs" />
+    <Compile Include="EmailTeamplate\ForgotPassword.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\admin.cs">
+      <DependentUpon>DBFreshFood.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\advertis.cs">
+      <DependentUpon>DBFreshFood.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdvertisesModel.cs" />
+    <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\contact.cs">
+      <DependentUpon>DBFreshFood.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBFreshFood.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBFreshFood.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBFreshFood.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBFreshFood.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBFreshFood.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBFreshFood.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\event.cs">
+      <DependentUpon>DBFreshFood.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\menu.cs">
+      <DependentUpon>DBFreshFood.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PersonalInfoModel.cs" />
+    <Compile Include="Models\product.cs">
+      <DependentUpon>DBFreshFood.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductsModel.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\role.cs">
+      <DependentUpon>DBFreshFood.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SlidesModel.cs" />
+    <Compile Include="Models\user.cs">
+      <DependentUpon>DBFreshFood.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UsersModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -154,11 +237,95 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Css\Client\_product.css" />
+    <Content Include="Css\Client\_slide.css" />
+    <Content Include="Css\Client\_change-password.css" />
+    <Content Include="Css\Client\_footer.css" />
+    <Content Include="Css\Client\_common.css" />
+    <Content Include="Css\Client\_forgot-password.css" />
+    <Content Include="Css\Client\_header.css" />
+    <Content Include="Css\Client\_login.css" />
+    <Content Include="Css\Client\_media.css" />
+    <Content Include="Css\Client\_navigation.css" />
+    <Content Include="Css\Client\_personalInfo.css" />
+    <Content Include="Css\Client\_register.css" />
     <Content Include="Css\Client\_reset.css" />
+    <Content Include="Css\Dashboard\datepicker3.css" />
+    <Content Include="Css\Dashboard\stylesDashboard.css" />
+    <Content Include="Css\Dashboard\_common.css" />
+    <Content Include="Css\Dashboard\_main.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Areas\Dashboard\Views\web.config" />
+    <Content Include="Img\background-header.png" />
+    <Content Include="Img\background-slide.png" />
+    <Content Include="Img\banner_1.png" />
+    <Content Include="Img\defaultLogo.png" />
+    <Content Include="Img\delete.png" />
+    <Content Include="Img\edit.png" />
+    <Content Include="Img\leaves.png" />
+    <Content Include="Img\logo.png" />
+    <Content Include="Img\marker.png" />
+    <Content Include="Img\shipped.png" />
+    <Content Include="Img\slide-1.png" />
+    <Content Include="Img\slide-2.png" />
+    <Content Include="Img\slide-3.png" />
+    <Content Include="Img\slide-4.jpg" />
+    <Content Include="Img\slide-5.jpg" />
+    <Content Include="Js\scripts.js" />
+    <Content Include="Js\_main.js" />
+    <Content Include="Models\DBFreshFood.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBFreshFood.edmx</DependentUpon>
+      <LastGenOutput>DBFreshFood.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DBFreshFood.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBFreshFood.edmx</DependentUpon>
+      <LastGenOutput>DBFreshFood.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -183,17 +350,42 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Css\Client\_home.css" />
     <Content Include="Css\Client\_layout.css" />
+    <Content Include="Areas\Dashboard\Views\Dashboard\Index.cshtml" />
+    <EntityDeploy Include="Models\DBFreshFood.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DBFreshFood.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DBFreshFood.edmx.diagram">
+      <DependentUpon>DBFreshFood.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Dashboard\Views\Shared\_LayoutDashboard.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Dashboard\HeaderPartial.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Dashboard\Login.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Dashboard\SiderBarPartial.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Admin\CreatePartial.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Admin\EditPartial.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Role\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Role\CreatePartial.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Role\EditPartial.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Menu\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -214,7 +406,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LayoutClient.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_LayoutDashboard.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
@@ -224,14 +415,25 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Header\HeaderPartial.cshtml" />
+    <Content Include="Views\Footer\FooterPartial.cshtml" />
+    <Content Include="Views\Header\Login.cshtml" />
+    <Content Include="Views\Header\Register.cshtml" />
+    <Content Include="Views\Header\PersonalInformation.cshtml" />
+    <Content Include="Views\Header\ForgotPasswordPartial.cshtml" />
+    <Content Include="Views\Header\ChangePassword.cshtml" />
+    <Content Include="Views\Navigation\NavigationPartial.cshtml" />
+    <Content Include="Views\Navigation\ChildMenuPartial.cshtml" />
+    <Content Include="Views\Slide\SlidePartial.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\News.cshtml" />
+    <Content Include="Views\Home\Contacts.cshtml" />
+    <Content Include="Views\Home\Products.cshtml" />
+    <Content Include="Views\Shared\_LeavesPartial.cshtml" />
+    <Content Include="Views\Home\FeaturedProductPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Dashboard\Controllers\" />
-    <Folder Include="Areas\Dashboard\Models\" />
-    <Folder Include="Areas\Dashboard\Views\Shared\" />
-    <Folder Include="Css\Dashboard\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -243,6 +445,7 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -263,7 +466,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53627</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:53627/</IISUrl>
+          <IISUrl>https://localhost:44388/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

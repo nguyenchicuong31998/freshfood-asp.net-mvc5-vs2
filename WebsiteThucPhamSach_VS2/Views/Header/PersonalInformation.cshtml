@@ -1,0 +1,59 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model PersonalInfoModel
+
+@{
+    ViewBag.Title = "Thông tin cá nhân";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+}
+
+<div class="wrapper-personal-info">
+    <div class="personal-info">
+        <h3 class="personal-info__heading">Thông tin cá nhân</h3>
+        <div class="personal-info__content">
+            @using (Html.BeginForm("PersonalInformation", "Header", FormMethod.Post))
+            {
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    <label for="fullname">Họ và tên*</label>
+                    @Html.TextBoxFor(PersonalInfoModel => PersonalInfoModel.display_name, "", new { @class = "form-control input-fullname", @Placeholder = "Vui lòng nhập họ và tên" })
+                    @Html.ValidationMessageFor(PersonalInfoModel => PersonalInfoModel.display_name, "", new { @class = "text-error" })
+                </div>
+                <div class="form-group">
+                    <label class="gender-title" for="gender">Giới tính</label>
+                    @if (Model.gender == null)
+                    {
+                        @Html.RadioButtonFor(PersonalInfoModel => PersonalInfoModel.gender, "true") <span>Nam</span>
+                        <span class="space"></span>
+                        @Html.RadioButtonFor(PersonalInfoModel => PersonalInfoModel.gender, "false") <span>Nữ</span>
+                    }
+                    else
+                    {
+                        @Html.RadioButtonFor(PersonalInfoModel => PersonalInfoModel.gender, "true", htmlAttributes: new { @checked = true }) <span>Nam</span>
+                        <span class="space"></span>
+                        @Html.RadioButtonFor(PersonalInfoModel => PersonalInfoModel.gender, "false") <span>Nữ</span>
+                    }
+                </div>
+                <div class="form-group">
+                    <label for="birthday">Ngày sinh*</label>
+                    <div class="birthday">
+                        @Html.TextBoxFor(PersonalInfoModel => PersonalInfoModel.date_of_birth, "{0:dd/MM/yyyy}", new { @class = "form-control input-birthday", @Placeholder = "Vui lòng chọn ngày sinh" })
+                        @Html.ValidationMessageFor(PersonalInfoModel => PersonalInfoModel.date_of_birth, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Số điện thoại*</label>
+                    @Html.TextBoxFor(PersonalInfoModel => PersonalInfoModel.phone_number, "", new { @class = "form-control input-phone-number", @Placeholder = "Vui lòng nhập số điện thoại" })
+                    @Html.ValidationMessageFor(PersonalInfoModel => PersonalInfoModel.phone_number, "", new { @class = "text-error" })
+                </div>
+                <div class="form-group">
+                    <label for="address">Địa chỉ*</label>
+                    @Html.TextAreaFor(PersonalInfoModel => PersonalInfoModel.address, new { @rows="4",  @class = "form-control input-address", @Placeholder = "Vui lòng nhập địa chỉ" })
+                    @Html.ValidationMessageFor(PersonalInfoModel => PersonalInfoModel.address, "", new { @class = "text-error" })
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-block bg-green custom-personal-info" type="submit" value="Lưu" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

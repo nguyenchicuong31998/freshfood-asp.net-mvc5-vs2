@@ -1,0 +1,75 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model List<menu>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container-fluid p-3">
+    <a href="#wrapper-create-menu" class="btn btn-primary btn-sm mt-3 mb-3 p-2 add-menu">Thêm</a>
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Danh mục</div>
+        <div class="card-body">
+            <div class="table-responsive text-nowrap">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên Danh Mục</th>
+                            <th>Mã Danh Mục Cha</th>
+                            <th>Thứ Tự</th>
+                            <th>Trạng thái</th>
+                            <th>Công cụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var name = "";
+                            if (item.status == true)
+                            {
+                                name = "Bật";
+                            }
+                            else
+                            {
+                                name = "Tắt";
+                            }
+                        <tr>
+                            <td>@item.id</td>
+                            <td>@item.name</td>
+                            <td>@item.parent_id</td>
+                            <td>@item.order</td>
+                            <td>
+                                <input type="submit" class="status btn btn-info" data-id="@item.id" value="@name" />
+                            </td>
+                            <td>
+                                <a href="#wrapper-create-menu" data-id="@item.id" class="btnUpdateMenu p-2" data-toggle="tooltip" title="Sửa"><img src="~/Img/edit.png" alt="Update" /></a>
+                                <a href="#" data-id="@item.id" class="btnDeleteMenu p-2" data-toggle="tooltip" title="Xóa"><img src="~/Img/delete.png" alt="Delete" /></a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".btnDeleteMenu").click(function (e) {
+                e.preventDefault();
+                if (confirm("Bạn chắc chắn muốn xóa danh mục này?")) {
+                    let id = $(this).data('id');
+                    alert("vaoo");
+                    $.ajax({
+
+                    })
+                } else {
+                    return false;
+                }
+            })
+        })
+    </script>
+}

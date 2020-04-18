@@ -1,0 +1,71 @@
+﻿
+
+
+
+
+.wrapper-personal-info {
+    height: 600px;
+    width: 100%;
+}
+
+.custom-personal-info {
+    color: white;
+    height: 35px;
+    color: white !important;
+    font-size: 1.2rem;
+}
+
+    .custom-personal-info:hover {
+        color: #9bd031 !important;
+        border: 1px solid #9bd031 !important;
+        background-color: white;
+    }
+
+.personal-info {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+}
+
+    .personal-info .personal-info__heading {
+        grid-column: 1 / -1;
+        justify-self: center;
+        padding: 5px 0px 15px 0px;
+    }
+
+    .personal-info .personal-info__content {
+        grid-column: 1 / -1;
+        width: 100%;
+        justify-self: center;
+        padding: 0 5%;
+    }
+
+        .personal-info .personal-info__content .input-birthday {
+            font-size: 1.2rem;
+            padding: 0px 10px;
+            height: 35px;
+        }
+
+        .personal-info .personal-info__content .input-fullname {
+            font-size: 1.2rem;
+            padding: 0px 10px;
+            height: 35px;
+        }
+
+        .personal-info .personal-info__content .input-address {
+            font-size: 1.2rem;
+            padding: 10px 10px;
+        }
+
+        .personal-info .personal-info__content .input-phone-number {
+            font-size: 1.2rem;
+            padding: 0px 10px;
+            height: 35px;
+        }
+
+        .personal-info .personal-info__content .gender-title {
+            padding-right: 30px;
+        }
+
+        .personal-info .personal-info__content .space {
+            padding-right: 20px;
+        }

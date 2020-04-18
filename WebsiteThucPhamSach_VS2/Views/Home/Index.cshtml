@@ -1,5 +1,24 @@
-﻿@{
+﻿@using WebsiteThucPhamSach_VS2.Models;
+
+@{
     ViewBag.Title = "Trang Chủ";
 }
-
-<h1>Nguyễn Chí Cường</h1>
+<div class="slide-main">
+    @Html.Action("SlidePartial", "Slide")
+</div>
+@Html.Partial("_LeavesPartial")
+<div class="new-product-main">
+    <h2 class="title-share">Sản phẩm mới</h2>
+</div>
+@Html.Partial("_LeavesPartial")
+<div class="featured-product-main">
+    @Html.Action("FeaturedProductPartial", "Home")
+</div>
+@Html.Partial("_LeavesPartial")
+<div class="sell-product-main">
+    <h2 class="title-share">Sản Giảm Giá</h2>
+</div>
+@Html.Partial("_LeavesPartial")
+<div class="featured-news">
+    <h2 class="title-share">Tin Tức Nổi Bật</h2>
+</div>

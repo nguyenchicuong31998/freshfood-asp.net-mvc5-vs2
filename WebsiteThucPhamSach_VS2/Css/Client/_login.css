@@ -1,0 +1,115 @@
+﻿
+
+.wrapper-login{
+    width: 100%;
+    height: 600px;
+}
+
+.login {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+
+}
+
+
+.login__heading {
+    grid-column: 1 / -1;
+    justify-self: center;
+    padding: 5px 0px 15px 0px;
+}
+
+.login__content .input-email {
+    font-size: 1.2rem;
+    padding: 0px 10px;
+    height: 35px;
+}
+
+.login__content .input-password {
+    font-size: 1.2rem;
+    padding: 0px 10px;
+    height: 35px;
+}
+
+.custom-login {
+    color: white;
+    height: 35px;
+    color: white !important;
+    font-size: 1.2rem;
+}
+
+    .custom-login:hover {
+        color: #9bd031 !important;
+        border: 1px solid #9bd031 !important;
+        background-color: white;
+    }
+
+.btn__facebook {
+    background-color: rgb(59, 89, 152);
+    width: 100%;
+    color: white;
+    font-size: 1.2rem;
+    text-decoration: none;
+    padding: 8px;
+    position: relative;
+}
+
+    .btn__facebook > i {
+        width: 30px;
+        position: absolute;
+        top: 13px;
+        height: auto;
+        left: 10px;
+    }
+
+    .btn__facebook:hover {
+        color: white;
+        text-decoration: none;
+        opacity: 0.8;
+    }
+
+.btn__google {
+    background-color: rgb(223, 74, 50);
+    width: 100%;
+    padding: 8px;
+    font-size: 1.2rem;
+    position: relative;
+    color: white;
+}
+
+    .btn__google > i {
+        width: 30px;
+        position: absolute;
+        top: 13px;
+        height: auto;
+        left: 10px;
+    }
+
+    .btn__google:hover {
+        color: white;
+        text-decoration: none;
+        opacity: 0.8;
+    }
+
+.login__content {
+    grid-column: 1 / -1;
+    width: 100%;
+    justify-self: center;
+    padding: 0 5%;
+}
+
+.login-other:before{
+    content: " ";
+    width: 20px;
+    height: 2px;
+    background-color: black;
+}
+
+.login__reset-password {
+    color: black;
+    text-decoration: none;
+}
+
+
+.login__register {
+    text-decoration: none;
+}

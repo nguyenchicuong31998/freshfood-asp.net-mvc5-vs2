@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - Dashboard</title>
+    @Styles.Render("~/Css/Dashboard")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @*<script src="~/ckeditor/ckeditor.js"></script>*@
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+    <link href="~/Css/Dashboard/datepicker3.css" rel="stylesheet" />
+    <link href="~/Css/Dashboard/stylesDashboard.css" rel="stylesheet" />
+</head>
+<body>
+    @Html.Action("HeaderPartial", "Dashboard")
+    <div id="layoutSidenav">
+        @Html.Action("SiderBarPartial", "Dashboard")
+        <div id="layoutSidenav_content">
+            <main>
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    @* @Scripts.Render("~/bundles/ckeditor")*@
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#dataTable").DataTable({
+                oLanguage: {
+                    sProcessing: "Đang xử lý...",
+                    sLengthMenu: "Xem _MENU_ mục",
+                    sZeroRecords: "Không tìm thấy dòng nào phù hợp",
+                    sInfo: "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                    sInfoEmpty: "Đang xem 0 đến 0 trong tổng số 0 mục",
+                    sInfoFiltered: "(được lọc từ _MAX_ mục)",
+                    sInfoPostFix: "",
+                    sSearch: "Tìm:",
+                    sUrl: "",
+                    oPaginate: {
+                        sFirst: "Đầu",
+                        sPrevious: "Trước",
+                        sNext: "Tiếp",
+                        sLast: "Cuối"
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="~/Js/scripts.js"></script>
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

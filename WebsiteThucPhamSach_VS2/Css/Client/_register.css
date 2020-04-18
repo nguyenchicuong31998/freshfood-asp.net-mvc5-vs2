@@ -1,0 +1,71 @@
+﻿
+
+
+.wrapper-register{
+    height: 600px;
+    width: 100%;
+}
+
+.custom-register {
+    color: white;
+    height: 35px;
+    color: white !important;
+    font-size: 1.2rem;
+}
+
+    .custom-register:hover {
+        color: #9bd031 !important;
+        border: 1px solid #9bd031 !important;
+        background-color: white;
+    }
+
+.register {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+}
+
+    .register .register__heading {
+        grid-column: 1 / -1;
+        justify-self: center;
+        padding: 5px 0px 15px 0px;
+    }
+
+    .register .register__content {
+        grid-column: 1 / -1;
+        width: 100%;
+        justify-self: center;
+        padding: 0 5%;
+    }
+
+    .register .register__content .input-birthday {
+        font-size: 1.2rem;
+        padding: 0px 10px;
+        height: 35px;
+    }
+    
+    .register .register__content .input-fullname {
+        font-size: 1.2rem;
+        padding: 0px 10px;
+        height: 35px;
+     }
+
+    .register .register__content .input-email {
+        font-size: 1.2rem;
+        padding: 0px 10px;
+        height: 35px;
+    }
+
+    .register .register__content .input-password {
+        font-size: 1.2rem;
+        padding: 0px 10px;
+        height: 35px;
+    }
+
+        .register .register__content .gender-title{
+            padding-right: 30px;
+        }
+
+    .register .register__content .space{
+        padding-right: 20px; 
+    }
+

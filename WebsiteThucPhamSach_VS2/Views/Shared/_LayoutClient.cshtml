@@ -4,22 +4,34 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/Css/Client")
     @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Css/Client")
 </head>
 <body>
-    <header class="header">
-        
-    </header>
-    <div class="body-content">
-        @RenderBody()
+    <div class="wrapper-container">
+        <header class="header">
+            @Html.Action("HeaderPartial", "Header")
+        </header>
+        <div class="navigation bg-green">
+            @Html.Action("NavigationPartial", "Navigation")
+        </div>
+        <div class="content min-height-content">
+            @RenderBody()
+        </div>
+        <footer class="footer">
+            @Html.Action("FooterPartial", "Footer")
+        </footer>
     </div>
-    <footer class="footer">
-       
-    </footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     @RenderSection("scripts", required: false)
+    <script src="~/Js/_main.js"></script>
 </body>
 </html>

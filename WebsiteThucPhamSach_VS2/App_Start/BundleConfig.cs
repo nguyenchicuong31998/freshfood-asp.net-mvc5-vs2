@@ -30,6 +30,10 @@ namespace WebsiteThucPhamSach_VS2
                        "~/Css/Client/_layout.css"
                 ));
 
+            bundles.Add(new StyleBundle("~/Css/Dashboard").Include(
+                        "~/Css/Dashboard/_main.css"
+                ));
+
         }
     }
 }

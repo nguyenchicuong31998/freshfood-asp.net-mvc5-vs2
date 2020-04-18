@@ -1,0 +1,57 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model RegisterModel
+
+
+@{
+    ViewBag.Title = "Đăng ký";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+}
+
+
+
+<div class="wrapper-register">
+    <div class="register">
+        <h3 class="register__heading">Đăng ký tài khoản</h3>
+        <div class="register__content">
+            @using (Html.BeginForm("Register", "Header", FormMethod.Post))
+            {
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    <label for="fullname">Họ và tên*</label>
+                    @Html.TextBoxFor(RegisterModel => RegisterModel.display_name, "", new { @class = "form-control input-fullname", @Placeholder = "Vui lòng nhập họ và tên" })
+                    @Html.ValidationMessageFor(RegisterModel => RegisterModel.display_name, "", new { @class = "text-error" })
+                </div>
+                <div class="form-group">
+                    <label for="email">Email*</label>
+                    @Html.TextBoxFor(RegisterModel => RegisterModel.email, "", new { @class = "form-control input-email", @Placeholder = "Vui lòng nhập email" })
+                    @Html.ValidationMessageFor(RegisterModel => RegisterModel.email, "", new { @class = "text-error" })
+                </div>
+                <div class="form-group">
+                    <label for="password">Mật khẩu*</label>
+                    @Html.PasswordFor(RegisterModel => RegisterModel.password, new { @class = "form-control input-password", @Placeholder = "Mật khẩu từ 6 đến 32 ký tự" })
+                    @Html.ValidationMessageFor(RegisterModel => RegisterModel.password, "", new { @class = "text-error" })
+                </div>
+                <div class="form-group">
+                    <label class="gender-title" for="gender">Giới tính</label>
+                    @Html.RadioButtonFor(RegisterModel => RegisterModel.gender, "true", htmlAttributes: new { @checked = true }) Nam
+                    &nbsp;<span class="space"></span>
+                    @Html.RadioButtonFor(RegisterModel => RegisterModel.gender, "false")  Nữ
+                </div>
+                <div class="form-group">
+                    <label for="birthday">Ngày sinh*</label>
+                    <div class="birthday">
+                        @Html.TextBoxFor(RegisterModel => RegisterModel.date_of_birth, "", new { @class = "form-control input-birthday", @Placeholder = "Vui lòng chọn ngày sinh" })
+                        @Html.ValidationMessageFor(RegisterModel => RegisterModel.date_of_birth, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-block bg-green custom-register" type="submit" value="Đăng ký" />
+                </div>
+                <div class="form-group">
+                    <p class="login__register">Đã có tài khoản đăng nhập <a href="~/Dang-Nhap">tại đây</a></p>
+                </div>
+            }
+        </div>
+    </div>
+</div>   
+

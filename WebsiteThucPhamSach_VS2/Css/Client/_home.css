@@ -1,1 +1,15 @@
 ﻿
+
+.featured-products{
+    padding: 0px 5%;
+}
+.featured-products-content {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.featured-products-item > img{
+   height:100%;
+   width:100%;
+}

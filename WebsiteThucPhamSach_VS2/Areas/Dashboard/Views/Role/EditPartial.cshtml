@@ -1,0 +1,28 @@
+﻿@using WebsiteThucPhamSach_VS2.Models;
+@model role
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-8">
+            <div class="box">
+                <div class="box-title forgot-passwrod">SỬA NHÓM QUYỀN</div>
+                @using (Html.BeginForm("EditPartial", "Role", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+                    <div class="form-group">
+                        <label for="role-id">ID</label>
+                        @Html.TextBoxFor(role => role.id, new { @class = "form-control" , disabled = "disabled" })
+                    </div>
+                    <div class="form-group">
+                        <label for="role-name">Tên nhóm quyền*</label>
+                        @Html.TextBoxFor(role => role.name, new { @class = "form-control input-role", @Placeholder = "Vui lòng nhập tên nhóm quyền" })
+                        @Html.ValidationMessageFor(role => role.name, "", new { @class = "text-error" })
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" onclick="return roleValidate();" class="btn btn-primary save-role" value="Lưu" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
