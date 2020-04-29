@@ -64,5 +64,30 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
             return false;
         }
 
+        public bool changeStatusById(int id)
+        {
+            try
+            {
+                var role = db.roles.FirstOrDefault(n => n.id == id);
+                if (role.status == true)
+                {
+                    role.status = false;
+                    db.Entry(role).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    role.status = true;
+                    db.Entry(role).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                return true;
+            }catch(Exception e)
+            {
+                throw e;
+                return false;
+            }
+        }
+
     }
 }

@@ -22,13 +22,13 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
             return View(roles);
         }
 
-        public ActionResult CreatePartial()
+        [HttpGet]
+        public ActionResult Create()
         {
             return View();
         }
-
         [HttpPost]
-        public ActionResult CreatePartial(role role)
+        public ActionResult Create(role role)
         {
             if (ModelState.IsValid)
             {
@@ -36,31 +36,33 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
                 var created = new RolesModel().createRole(role);
                 if (created)
                 {
-                    return RedirectToAction("Index","Role");
+                    return Redirect(Request.UrlReferrer.ToString());
                 }
             }
-            return RedirectToAction("Index", "Role");
+            return View();
         }
 
-        public ActionResult EditPartial(int id)
+
+        [HttpGet]
+        public ActionResult Edit(int id)
         {
             var roled = new RolesModel().getRoleById(id);
             return View(roled);
         }
-
         [HttpPost]
-        public ActionResult EditPartial(role updateRole)
+        public ActionResult Edit(role updateRole)
         {
             if (ModelState.IsValid)
             {
                 var updated = new RolesModel().updateRoleById(updateRole.id, updateRole);
                 if (updated)
                 {
-                    return RedirectToAction("Index", "Role");
+                    return Redirect(Request.UrlReferrer.ToString());
                 }
             }
             return View();
         }
+
 
         public JsonResult DeleteRole(int id)
         {
@@ -77,22 +79,14 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        //public JsonResult OpenStatus(int id)
-        //{
-        //    var admin = db.admins.FirstOrDefault(n => n.id == id);
-        //    if (admin.status == true)
-        //    {
-        //        admin.status = false;
-        //        UpdateModel(admin);
-        //        db.SaveChanges();
-        //    }
-        //    else
-        //    {
-        //        admin.status = true;
-        //        UpdateModel(admin);
-        //        db.SaveChanges();
-        //    }
-        //    return Json(new { status = true }, JsonRequestBehavior.AllowGet);
-        //}
+        public JsonResult OpenStatus(int id)
+        {
+            var changed = new RolesModel().changeStatusById(id);
+            if (changed)
+            {
+                return Json(new { status = true }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { status = false }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

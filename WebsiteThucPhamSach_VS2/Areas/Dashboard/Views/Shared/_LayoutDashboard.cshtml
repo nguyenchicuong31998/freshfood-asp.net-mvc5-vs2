@@ -6,15 +6,16 @@
     <title>@ViewBag.Title - Dashboard</title>
     @Styles.Render("~/Css/Dashboard")
     @Scripts.Render("~/bundles/modernizr")
-
-    @*<script src="~/ckeditor/ckeditor.js"></script>*@
+    @Scripts.Render("~/ckeditor/ckeditor")
     <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
-    <link href="~/Css/Dashboard/datepicker3.css" rel="stylesheet" />
+    @*<link href="~/Css/Dashboard/datepicker3.css" rel="stylesheet" />*@
     <link href="~/Css/Dashboard/stylesDashboard.css" rel="stylesheet" />
 </head>
-<body>
+<body class="sb-nav-fixed">
     @Html.Action("HeaderPartial", "Dashboard")
     <div id="layoutSidenav">
         @Html.Action("SiderBarPartial", "Dashboard")
@@ -25,9 +26,8 @@
         </div>
     </div>
     @Scripts.Render("~/bundles/jquery")
-    <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
-    @* @Scripts.Render("~/bundles/ckeditor")*@
+    @*<script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>*@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
@@ -35,6 +35,11 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#dataTable").DataTable({
+                scrollX: "120%",
+                scrollY: "48vh",
+                //scrollCollapse: true,
+                //stateSave: true,
+                pagingType: "full_numbers",
                 oLanguage: {
                     sProcessing: "Đang xử lý...",
                     sLengthMenu: "Xem _MENU_ mục",
@@ -51,12 +56,19 @@
                         sNext: "Tiếp",
                         sLast: "Cuối"
                     }
-                }
+                },
+                //"order": [[3, "desc"]]
             });
         });
     </script>
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="~/Js/scripts.js"></script>
+    <script src="~/Js/_datepicker-admin.js"></script>
+    <script src="~/ckfinder/ckfinder.js"></script>
+    <script>
+        CKEDITOR.replace('editor1');
+    </script>
     @RenderSection("scripts", required: false)
-
 </body>
 </html>

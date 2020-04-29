@@ -36,7 +36,7 @@ $(document).ready(function () {
     $.datepicker.setDefaults($.datepicker.regional["vi-VN"]);
 
 
-    $('#birthday').datepicker({
+    $('#date_of_birth').datepicker({
         clearBtn: true,
         changeMonth: true,
         dateFormat: "dd/MM/yy",

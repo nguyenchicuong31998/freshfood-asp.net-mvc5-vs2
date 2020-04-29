@@ -1,0 +1,33 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model about
+
+@{
+    ViewBag.Title = "Cập Nhật Giới Thiệu";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 mt-3">
+            <h3 class="text-center text-uppercase">CẬP NHẬT GIỚI THIỆU</h3>
+            @using (Html.BeginForm("Edit", "About", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.ValidationSummary(true);
+                <div class="form-group">
+                    <label for="about-id">ID</label>
+                    @Html.TextBoxFor(about => about.id, new { @class = "form-control", @readonly= "readonly" })
+                </div>
+                <div class="form-group">
+                    <label for="about-content">Nội dung</label>
+                    @Html.TextAreaFor(about => about.content, new { @id = "editor1" })
+                    @Html.ValidationMessageFor(about => about.content, "", new { @class = "text-error" })
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-sm btn-primary p-2" value="Lưu" />
+                    <a href="~/Dashboard/About/Index" class="btn btn-sm btn-success p-2">Quay lại</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

@@ -28,10 +28,12 @@ namespace WebsiteThucPhamSach_VS2.Models
         public virtual DbSet<menu> menus { get; set; }
         public virtual DbSet<role> roles { get; set; }
         public virtual DbSet<advertis> advertises { get; set; }
-        public virtual DbSet<contact> contacts { get; set; }
         public virtual DbSet<@event> events { get; set; }
+        public virtual DbSet<product> products { get; set; }
+        public virtual DbSet<feedback> feedbacks { get; set; }
+        public virtual DbSet<about> abouts { get; set; }
+        public virtual DbSet<contact> contacts { get; set; }
         public virtual DbSet<admin> admins { get; set; }
         public virtual DbSet<user> users { get; set; }
-        public virtual DbSet<product> products { get; set; }
     }
 }

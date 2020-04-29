@@ -2,7 +2,9 @@
 
 
 @media screen and (min-width: 576px) {
-
+    .featured-products-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 
@@ -230,6 +232,9 @@
         justify-self: center;
         padding: 0 5%;
     }
+    .featured-products-content {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 
@@ -268,6 +273,10 @@
 @media screen and (min-width: 1200px) {
     body{
         font-size: 1.6rem;
+    }
+
+    .featured-products-content {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 

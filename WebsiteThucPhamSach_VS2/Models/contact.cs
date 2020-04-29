@@ -15,13 +15,13 @@ namespace WebsiteThucPhamSach_VS2.Models
     public partial class contact
     {
         public int id { get; set; }
-        public string name { get; set; }
-        public string company { get; set; }
-        public string address { get; set; }
-        public string phone_number { get; set; }
+        public string full_name { get; set; }
         public string email { get; set; }
-        public string detail { get; set; }
+        public string phone_number { get; set; }
+        public string content { get; set; }
+        public string reply { get; set; }
         public Nullable<System.DateTime> start_time { get; set; }
+        public Nullable<System.DateTime> end_time { get; set; }
         public Nullable<bool> status { get; set; }
     }
 }

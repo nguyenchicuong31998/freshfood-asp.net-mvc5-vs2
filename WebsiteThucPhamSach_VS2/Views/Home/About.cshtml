@@ -1,8 +1,16 @@
-﻿
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model about
+
 @{
     ViewBag.Title = "Giới thiệu";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 
-<h2>About</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-12 mb-5">
+            @Html.Raw(Model.content)
+        </div>
+    </div>
+</div>
 

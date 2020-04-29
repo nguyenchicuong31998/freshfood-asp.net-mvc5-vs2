@@ -1,0 +1,52 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model role
+@{
+    ViewBag.Title = "Sửa phân quyền";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-lg-center">
+        <div class="col-12 col-lg-8">
+            <h3 class="font-weight-bold text-center">Thêm phân quyền</h3>
+            @using (Html.BeginForm("Edit", "Role", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.ValidationSummary(true);
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-3 col-form-label">Id:</label>
+                    <div class="col-9 col-md-9">
+                        @Html.TextBoxFor(role => role.id, new { @readonly="readonly" ,@class = "form-control input-share input-size input-height", @Placeholder = "Họ và tên*" })
+                        @Html.ValidationMessageFor(role => role.id, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-3 col-form-label">Tên nhóm quyền<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-9">
+                        @Html.TextBoxFor(role => role.name, new { @class = "form-control input-share input-size input-height", @Placeholder = "Họ và tên*" })
+                        @Html.ValidationMessageFor(role => role.name, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group mt-4 mb-4 row">
+                    <div class="col-3 col-md-3"></div>
+                    <div class="col-9 col-md-9">
+                        <input type="submit" onclick="return roleValidate();" class="btn btn-sm btn-primary p-2" value="Lưu" />
+                        <a href="~/Dashboard/Role/Index" class="btn btn-sm btn-success p-2">Quay lại</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        function roleValidate() {
+            if ($('#name').val() == "") {
+                $('span*[data-valmsg-for="name"]').text("Vui lòng nhập tên nhóm quyền.");
+                return false;
+            }
+        }
+    </script>
+}
+

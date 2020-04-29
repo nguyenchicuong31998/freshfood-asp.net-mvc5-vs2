@@ -19,7 +19,8 @@ namespace WebsiteThucPhamSach_VS2.Controllers
 
         public ActionResult About()
         {
-            return View();
+            var about = new AboutsModel().getAboutByStatusTrue();
+            return View(about);
         }
 
         public ActionResult Products()
@@ -32,15 +33,50 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult Contacts()
         {
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Contacts(ContactsModel contact)
+        {
+            if (ModelState.IsValid)
+            {
+                var created = new ContactsModel().create(contact);
+                if(created == true)
+                {
+                    TempData["message"] = "1";
+                    ViewBag.ok = "Nguyễn Chí Cường";
+                    //TempData["message"] = "Bạn đã gửi liên hệ thành công";
+                    return Redirect(Request.UrlReferrer.ToString());
+                }
+            }
+            return View(contact);
+        }
+
         public PartialViewResult FeaturedProductPartial()
+        {
+            var products = new ProductsModel().getProductsByViewCount();
+            return PartialView(products);
+        }
+        public PartialViewResult NewProductPartial()
         {
             var products = new ProductsModel().getProductsByNewStartTime();
             return PartialView(products);
+        }
+
+        public PartialViewResult ProductForYouPartial()
+        {
+            var products = new ProductsModel().getProducts();
+            return PartialView(products);
+        }
+
+        public ActionResult DetailProduct(int id)
+        {
+            ViewBag.Id = id;
+            return View();
         }
     }
 }

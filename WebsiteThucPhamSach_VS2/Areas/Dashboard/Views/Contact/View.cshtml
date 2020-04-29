@@ -1,0 +1,49 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model contact
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h3 class="text-center font-weight-bold">Thông tin liên hệ</h3>
+            <div class="container">
+                <div class="row jumbotron">
+                    <div class="col-2 p-3">Họ và tên:</div>
+                    <div class="col-10 p-3">@Model.full_name</div>
+                    <div class="col-2  p-3">Email:</div>
+                    <div class="col-10 p-3">@Model.email</div>
+                    <div class="col-2 p-3">Số điện thoại:</div>
+                    <div class="col-10 p-3">@Model.phone_number</div>
+                    <div class="col-2 p-3">Nội dung:</div>
+                    <div class="col-10 p-3">@Model.content</div>
+                    <div class="col-2 p-3">Trả lời:</div>
+                    <div class="col-10 p-3">@Model.reply</div>
+                    <div class="col-2 p-3">Ngày gửi:</div>
+                    <div class="col-10 p-3">@String.Format("{0:dd/MM/yyyy}", Model.start_time)</div>
+                    <div class="col-2 p-3">Ngày trả lời:</div>
+                    <div class="col-10 p-3">@String.Format("{0:dd/MM/yyyy}", Model.end_time)</div>
+                    <div class="col-2 p-3">Trạng thái:</div>
+                    @{ 
+                        string name;
+                        if(@Model.status == true)
+                        {
+                            name = "Đã trả lời";
+                        }
+                        else
+                        {
+                            name = "Chưa trả lời";
+                        }
+                    }
+                    <div class="col-10 p-3">@name</div>
+                    <div class="col-12 p-3">
+                        <a class="btn btn-sm p-2 btn-success" href="~/Dashboard/Contact/Index">Quay lại</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

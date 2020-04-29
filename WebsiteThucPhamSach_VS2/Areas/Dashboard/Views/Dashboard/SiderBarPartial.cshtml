@@ -1,4 +1,4 @@
-﻿
+﻿@using WebsiteThucPhamSach_VS2.Common
 <div id="layoutSidenav_nav">
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
@@ -9,11 +9,27 @@
                     Trang Chủ
                 </a>
                 <div class="sb-sidenav-menu-heading">Interface</div>
-                <a class="nav-link" href="tables.html">
-                    <div class="sb-nav-link-icon customer"><i class="fas fa-customers"></i></div>
+                <a class="nav-link" href="~/Dashboard/User/Index">
+                    <div class="sb-nav-link-icon customer"><i class="fas fa-users"></i></div>
                     Khách hàng
                 </a>
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                <a class="nav-link" href="~/Dashboard/Menu/Index">
+                    <div class="sb-nav-link-icon category"></div>
+                    Danh mục
+                </a>
+                <a class="nav-link" href="~/Dashboard/Product/Index">
+                    <div class="sb-nav-link-icon product"></div>
+                    Sản phẩm
+                </a>
+                <a class="nav-link" href="~/Dashboard/About/Index">
+                    <div class="sb-nav-link-icon about"></div>
+                    Giới thiệu
+                </a>
+                <a class="nav-link" href="~/Dashboard/Contact/Index">
+                    <div class="sb-nav-link-icon contact"></div>
+                    Liên hệ
+                </a>
+                @*<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                     Quản lý chung
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -21,41 +37,46 @@
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="~/Dashboard/Menu/Index">Danh mục</a>
-                        <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                        <a class="nav-link" href="~/Dashboard/Product/Index">Sản phẩm</a>
+                        <a class="nav-link" href="~/Dashboard/About/Index">Giới thiệu</a>
+                        <a class="nav-link" href="~/Dashboard/Contact/Index">Liên hệ</a>
                     </nav>
-                </div>
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                    Pages
+                </div>*@
+                @*<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+            Pages
+            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+        </a>
+        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                    Authentication
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                            Authentication
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-                            <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="login.html">Login</a><a class="nav-link" href="register.html">Register</a><a class="nav-link" href="password.html">Forgot Password</a></nav>
-                        </div>
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                            Error
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-                            <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="401.html">401 Page</a><a class="nav-link" href="404.html">404 Page</a><a class="nav-link" href="500.html">500 Page</a></nav>
-                        </div>
-                    </nav>
+                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
+                    <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="login.html">Login</a><a class="nav-link" href="register.html">Register</a><a class="nav-link" href="password.html">Forgot Password</a></nav>
                 </div>
-                <a class="nav-link role" href="~/Dashboard/Role/Index">
-                    <div class="sb-nav-link-icon"><i class="fas fa-admin"></i></div>
-                    Phần quyền
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                    Error
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <a class="nav-link admin" href="~/Dashboard/Admin/Index">
-                    <div class="sb-nav-link-icon"><i class="fas fa-admin"></i></div>
-                    Quản trị viên
-                </a>
+                <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
+                    <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="401.html">401 Page</a><a class="nav-link" href="404.html">404 Page</a><a class="nav-link" href="500.html">500 Page</a></nav>
+                </div>
+            </nav>
+        </div>*@
+                @if (Session[SessionName.adminRole].ToString() == "Quản lý")
+                {
+                    <a class="nav-link role" href="~/Dashboard/Role/Index">
+                        <div class="sb-nav-link-icon"><i class="fas fa-gavel"></i></div>
+                        Phần quyền
+                    </a>
 
+                    <a class="nav-link admin" href="~/Dashboard/Admin/Index">
+                        <div class="sb-nav-link-icon"><i class="fa fa-fw fa-users"></i></div>
+                        Quản trị viên
+                    </a>
+                }
                 <div class="sb-sidenav-menu-heading">Addons</div>
                 <a class="nav-link" href="charts.html">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>

@@ -1,0 +1,99 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model List<contact>
+
+@{
+    ViewBag.Title = "Quản lý liên hệ";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container-fluid p-3">
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Quản lý liên hệ</div>
+        <div class="card-body">
+            <div class="table-responsive text-nowrap">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Họ và tên</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Nội dung</th>
+                            <th>Trả lời</th>
+                            <th>Ngày gửi</th>
+                            <th>Ngày trả lời</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var name = "";
+                            if (item.status == false)
+                            {
+                                name = "Chưa trả lời";
+                            }
+                            else
+                            {
+                                name = "Đã trả lời";
+                            }
+                            <tr>
+                                <td>@item.id</td>
+                                <td>@item.full_name</td>
+                                <td>@item.email</td>
+                                <td>@item.phone_number</td>
+                                <td>@item.content</td>
+                                <td>@item.reply</td>
+                                <td>@String.Format("{0:dd/MM/yyyy}", item.start_time)</td>
+                                <td>@String.Format("{0:dd/MM/yyyy}", item.end_time)</td>
+                                <td>
+                                    @name
+                                </td>
+                                <td>
+                                    <a href="~/Dashboard/Contact/View?id=@item.id" class="btnView text-dark  ml-1" data-toggle="tooltip" title="Xem">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    <a href="~/Dashboard/Contact/Reply?id=@item.id" class="btnReply text-primary  ml-1" data-toggle="tooltip" title="Trả lời">
+                                        <i class="fa fa-envelope"></i>
+                                    </a>
+                                    <a href="javascript:0" data-id="@item.id" class="btnDeleteContact text-danger  ml-1" data-toggle="tooltip" title="Xóa">
+                                        <i class="fas fa-trash-alt text-danger"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".btnDeleteContact").click(function () {
+                if (confirm("Bạn có chắc chắn muốn xóa liên hệ này không?")) {
+                    var id = $(this).data("id");
+                    $.ajax({
+                        url: "/Dashboard/Contact/Delete?id=" + id,
+                        dataType: "json",
+                        type: "POST",
+                        success: function (res) {
+                            if (res.status == true) {
+                                alert("Bạn đã xóa thành công");
+                            } else {
+                                alert("Xóa thất bại");
+                            }
+                            window.location.href = "/Dashboard/Contact/Index";
+                        }
+                    })
+                } else {
+                    return false;
+                }
+            });
+        });
+    </script>    
+}

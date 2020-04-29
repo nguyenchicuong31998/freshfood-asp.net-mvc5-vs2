@@ -1,12 +1,11 @@
-﻿
-    @using WebsiteThucPhamSach_VS2.Models
-    @model List<admin>
-    @{
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model List<admin>
+@{
         ViewBag.Title = "Quản Trị Viên";
         Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
-    }
+}
 <div class="container-fluid p-3">
-    <a href="#wrapper-create-admin" class="btn btn-primary btn-sm mt-3 mb-3 p-2 add-role">Thêm</a>
+    <a href="~/Dashboard/Admin/Create" class="btn btn-primary btn-sm mt-3 mb-3 p-2 add-role">Thêm mới</a>
     <div class="card mb-4">
         <div class="card-header"><i class="fas fa-table mr-1"></i>Quản trị viên</div>
         <div class="card-body">
@@ -34,11 +33,11 @@
                             var name = "";
                             if (item.status == true)
                             {
-                                name = "Bật";
+                                name = "Hoạt động";
                             }
                             else
                             {
-                                name = "Tắt";
+                                name = "Không hoạt động";
                             }
                             <tr>
                                 <td>@item.id</td>
@@ -55,17 +54,29 @@
                                         <span>Nữ</span>
                                     }
                                 </td>
-                                <td>@String.Format("{0:dd/MM/yyyy}", item.day_of_birth)</td>
+                                <td>@String.Format("{0:dd/MM/yyyy}", item.date_of_birth)</td>
                                 <td>@item.phone_number</td>
                                 <td>@item.address</td>
-                                <td>@item.role</td>
+                                <td>
+                                    @if (item.role1.name == null)
+                                    {
+                                        <span></span>
+                                    }
+                                    else {
+                                        @item.role1.name
+                                    }
+                                </td>
                                 <td>@String.Format("{0:dd/MM/yyyy}", item.start_time)</td>
                                 <td>
                                     <input type="submit" class="status btn btn-info" data-id="@item.id" value="@name" />
                                 </td>
                                 <td>
-                                    <a href="#" data-id="@item.id" class="btnUpdateAdmin ml-2" data-toggle="tooltip" title="Sửa"><img src="~/Img/edit.png" alt="Update" /></a>
-                                    <a href="#" data-id="@item.id" class="btnDeleteAdmin" data-toggle="tooltip" title="Xóa"><img src="~/Img/delete.png" alt="Delete" /></a>
+                                    <a href="~/Dashboard/Admin/Edit?id=@item.id" data-id="@item.id" class="btnUpdateAdmin ml-2 text-warning" data-toggle="tooltip" title="Sửa">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" data-id="@item.id" class="btnDeleteAdmin" data-toggle="tooltip" title="Xóa">
+                                        <i class="fas fa-trash-alt text-danger"></i>
+                                    </a>
                                 </td>
                             </tr>
                         }
@@ -74,9 +85,6 @@
             </div>
         </div>
     </div>
-</div>
-<div id="wrapper-create-admin">
-
 </div>
 
 @section Scripts {
@@ -100,8 +108,8 @@
             $('.status').click(function () {
                 $.ajax({
                     url: "/Dashboard/Admin/OpenStatus",
-                    data: { id: $(this).data('id') },
-                    dataType: "Json",
+                    data: { id: $(this).data("id") },
+                    dataType: "json",
                     type: "POST",
                     success: function (res) {
                         if (res.status == true) {

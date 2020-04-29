@@ -43,8 +43,12 @@
                                 <input type="submit" class="status btn btn-info" data-id="@item.id" value="@name" />
                             </td>
                             <td>
-                                <a href="#wrapper-create-menu" data-id="@item.id" class="btnUpdateMenu p-2" data-toggle="tooltip" title="Sửa"><img src="~/Img/edit.png" alt="Update" /></a>
-                                <a href="#" data-id="@item.id" class="btnDeleteMenu p-2" data-toggle="tooltip" title="Xóa"><img src="~/Img/delete.png" alt="Delete" /></a>
+                                <a href="#wrapper-create-menu" data-id="@item.id" class="btnUpdateMenu p-2 text-warning" data-toggle="tooltip" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="#" data-id="@item.id" class="btnDeleteMenu p-2" data-toggle="tooltip" title="Xóa">
+                                    <i class="fas fa-trash-alt text-danger"></i>
+                                </a>
                             </td>
                         </tr>
                         }

@@ -19,7 +19,7 @@ namespace WebsiteThucPhamSach_VS2.Models
         public string email { get; set; }
         public string password { get; set; }
         public Nullable<bool> gender { get; set; }
-        public Nullable<System.DateTime> day_of_birth { get; set; }
+        public Nullable<System.DateTime> date_of_birth { get; set; }
         public string phone_number { get; set; }
         public string address { get; set; }
         public Nullable<int> role { get; set; }

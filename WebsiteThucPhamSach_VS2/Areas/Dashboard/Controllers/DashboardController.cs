@@ -17,16 +17,26 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
             {
                 return RedirectToAction("Login", "Dashboard");
             }
+            ViewBag.totalUser = new UsersAdModel().totalUser();
             return View();
         }
 
         public PartialViewResult HeaderPartial()
         {
+            if (Session[SessionName.adminId] == null)
+            {
+                Response.Redirect("~/Dashboard/Dashboard/Login");
+            }
             return PartialView();
         }
 
+        [ChildActionOnly]
         public PartialViewResult SiderBarPartial()
         {
+            if (Session[SessionName.adminId] == null)
+            {
+                Response.Redirect("~/Dashboard/Dashboard/Login");
+            }
             return PartialView();
         }
 
@@ -46,6 +56,7 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
                     {
                         Session[SessionName.adminId] = currentAdmin.id;
                         Session[SessionName.adminName] = currentAdmin.full_name;
+                        Session[SessionName.adminRole] = currentAdmin.role1.name;
                         Session.Timeout = 30;
                         return RedirectToAction("Index", "Dashboard");
                     }

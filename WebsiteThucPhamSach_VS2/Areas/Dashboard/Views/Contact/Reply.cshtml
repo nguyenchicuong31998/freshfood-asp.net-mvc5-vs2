@@ -1,0 +1,51 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model contact
+@{
+    ViewBag.Title = "Reply";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h3 class="text-center font-weight-bold ">Trả lời liên hệ</h3>
+            @using (Html.BeginForm("Reply", "Contact", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.ValidationSummary(true);
+                <div class="form-group mt-4 mb-4">
+                    @Html.TextBoxFor(contact => contact.id, new { @readonly = "readonly", @class = "form-control input-share input-size input-height"})
+                    @Html.ValidationMessageFor(contact => contact.id, "", new { @class = "text-error" })
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    @Html.TextBoxFor(contact => contact.full_name, new { @readonly = "readonly", @class = "form-control input-share input-size input-height", @Placeholder = "Họ và tên*" })
+                    @Html.ValidationMessageFor(contact => contact.full_name, "", new { @class = "text-error" })
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    @Html.TextBoxFor(contact => contact.full_name, new { @readonly = "readonly", @class = "form-control input-share input-size input-height", @Placeholder = "Họ và tên*" })
+                    @Html.ValidationMessageFor(contact => contact.full_name, "", new { @class = "text-error" })
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    @Html.TextBoxFor(contact => contact.email, new { @readonly = "readonly", @class = "form-control input-share input-size input-height", @Placeholder = "Email*" })
+                    @Html.ValidationMessageFor(contact => contact.email, "", new { @class = "text-error" })
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    @Html.TextBoxFor(contact => contact.phone_number, new { @readonly = "readonly", @class = "form-control input-share input-size input-height", @Placeholder = "Số điện thoại*" })
+                    @Html.ValidationMessageFor(contact => contact.phone_number, "", new { @class = "text-error" })
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    @Html.TextAreaFor(contact => contact.content, new { @readonly = "readonly", @class = "form-control  input-size", @rows = "6", @Placeholder = "Nhập nội dung*" })
+                    @Html.ValidationMessageFor(contact => contact.content, "", new { @class = "text-error" })
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    @Html.TextAreaFor(contact => contact.reply, new { @class = "form-control  input-size", @rows = "6", @Placeholder = "Nhập trả lời*" })
+                    @Html.ValidationMessageFor(contact => contact.reply, "", new { @class = "text-error" })
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-sm btn-primary p-2" value="Gửi" />
+                    <a href="~/Dashboard/Contact/Index" class="btn btn-sm btn-success p-2">Quay lại</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,83 @@
+﻿@using WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
+@model AdminsModel
+@{
+    ViewBag.Title = "Thêm quản trị viên";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-lg-center">
+        <div class="col-12 col-lg-8">
+            <h3 class="font-weight-bold text-center">Thêm quản trị viên</h3>
+            @using (Html.BeginForm("Create", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.ValidationSummary(true);
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Họ và tên<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextBoxFor(AdminsModel => AdminsModel.full_name, new { @class = "form-control input-share input-size input-height", @Placeholder = "Họ và tên*" })
+                        @Html.ValidationMessageFor(AdminsModel => AdminsModel.full_name, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Email<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextBoxFor(AdminsModel => AdminsModel.email, new { @class = "form-control input-share input-size input-height", @Placeholder = "Email*" })
+                        @Html.ValidationMessageFor(AdminsModel => AdminsModel.email, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Mật khẩu<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.PasswordFor(AdminsModel => AdminsModel.password, new { @class = "form-control input-share input-size input-height", @Placeholder = "Nhập mật khẩu*" })
+                        @Html.ValidationMessageFor(AdminsModel => AdminsModel.password, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Giới tính:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.RadioButtonFor(AdminsModel => AdminsModel.gender, "true", htmlAttributes: new { @checked = true }) Nam
+                        &nbsp;<span class="space"></span>
+                        @Html.RadioButtonFor(AdminsModel => AdminsModel.gender, "false")  Nữ
+                    </div>
+                </div>
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Ngày sinh<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextBoxFor(AdminsModel => AdminsModel.date_of_birth, "", new { @class = "form-control input-birthday", @Placeholder = "Vui lòng chọn ngày sinh" })
+                        @Html.ValidationMessageFor(AdminsModel => AdminsModel.date_of_birth, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Số điện thoại<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextBoxFor(AdminsModel => AdminsModel.phone_number, new { @class = "form-control input-share input-size input-height", @Placeholder = "Nhập số điện thoại*" })
+                        @Html.ValidationMessageFor(AdminsModel => AdminsModel.phone_number, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Địa chỉ<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextAreaFor(AdminsModel => AdminsModel.address, new { @class = "form-control  input-size", @rows = "4", @Placeholder = "Nhập địa chỉ*" })
+                        @Html.ValidationMessageFor(AdminsModel => AdminsModel.address, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Quyền:</label>
+                    <div class="col-9 col-md-10">
+                        @*@Html.DropDownList("role", (IEnumerable<SelectListItem>)ViewBag.roles, new { @class = "form-control" })*@
+                        @Html.DropDownListFor(AdminsModel => AdminsModel.role, (IEnumerable<SelectListItem>)ViewBag.roles, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group mt-4 mb-4 row">
+                    <div class="col-3 col-md-2"></div>
+                    <div class="col-9 col-md-10">
+                        <input type="submit" class="btn btn-sm btn-primary p-2" value="Thêm" />
+                        <a href="~/Dashboard/Admin/Index" class="btn btn-sm btn-success p-2">Quay lại</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

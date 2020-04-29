@@ -6,7 +6,7 @@
 }
 
 <div class="container-fluid p-3">
-    <a href="#wrapper-create-role" class="btn btn-primary btn-sm mt-3 mb-3 p-2 add-role">Thêm</a>
+    <a href="~/Dashboard/Role/Create" class="btn btn-primary btn-sm mt-3 mb-3 p-2">Thêm mới</a>
     <div class="card mb-4">
         <div class="card-header"><i class="fas fa-table mr-1"></i>Phân Quyền</div>
         <div class="card-body">
@@ -39,8 +39,12 @@
                                     <input type="submit" class="status btn btn-info" data-id="@item.id" value="@name" />
                                 </td>
                                 <td>
-                                    <a href="#wrapper-create-role" data-id="@item.id" class="btnUpdateRole p-2" data-toggle="tooltip" title="Sửa"><img src="~/Img/edit.png" alt="Update" /></a>
-                                    <a href="#" data-id="@item.id" class="btnDeleteRole p-2"  data-toggle="tooltip" title="Xóa"><img src="~/Img/delete.png" alt="Delete" /></a>
+                                    <a href="~/Dashboard/Role/Edit?id=@item.id" class="btnUpdateRole p-2 text-warning" data-toggle="tooltip" title="Sửa">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" data-id="@item.id" class="btnDeleteRole p-2"  data-toggle="tooltip" title="Xóa">
+                                        <i class="fas fa-trash-alt text-danger"></i>
+                                    </a>
                                 </td>
                             </tr>
                         }
@@ -57,13 +61,6 @@
 
 @section Scripts{
 <script type="text/javascript">
-
-        function roleValidate() {
-            if ($('#name').val() == "") {
-                $('span*[data-valmsg-for="name"]').text("Vui lòng nhập tên nhóm");
-                return false;
-            }
-        }
 
         $(document).ready(function () {
             $('.role').addClass("active");
@@ -92,17 +89,14 @@
                     });
                 });
             });*@
-            $('.add-role').click(function () {
-                $('#wrapper-create-role').load("/Dashboard/Role/CreatePartial");
-            })
 
-            $('.btnUpdateRole').click(function () {
-                let id = $(this).data('id');
-                $("#wrapper-create-role").load("/Dashboard/Role/EditPartial/"+id);
-                //$.get('/Dashboard/Role/EditPartial/'+id, { }, function (response) {
-                //    $("#wrapper-create-role").html(response);
-                //});
-            });
+            //$('.btnUpdateRole').click(function () {
+            //    let id = $(this).data('id');
+            //    $("#wrapper-create-role").load("/Dashboard/Role/EditPartial/"+id);
+            //    //$.get('/Dashboard/Role/EditPartial/'+id, { }, function (response) {
+            //    //    $("#wrapper-create-role").html(response);
+            //    //});
+            //});
 
             $('.btnDeleteRole').click(function () {
                 if (confirm("Bạn có chắc chắn muốn xóa nhóm quyền này không?")) {
@@ -125,6 +119,24 @@
                     return false;
                 }
             });
+
+            $('.status').click(function () {
+                let id = $(this).data("id");
+                $.ajax({
+                    url: "/Dashboard/Role/OpenStatus",
+                    data: { id: id },
+                    dataType: "json",
+                    type: "POST",
+                    success: function (res) {
+                        if (res.status == true) {
+                            location.reload();
+                        } else {
+
+                        }
+                    }
+                })
+            })
+
         })
 </script>
 }

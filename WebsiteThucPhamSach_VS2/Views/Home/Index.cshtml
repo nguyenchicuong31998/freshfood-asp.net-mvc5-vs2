@@ -4,21 +4,33 @@
     ViewBag.Title = "Trang Chủ";
 }
 <div class="slide-main">
-    @Html.Action("SlidePartial", "Slide")
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                @Html.Action("SlidePartial", "Slide")
+            </div>
+        </div>
+    </div>
 </div>
-@Html.Partial("_LeavesPartial")
-<div class="new-product-main">
-    <h2 class="title-share">Sản phẩm mới</h2>
-</div>
-@Html.Partial("_LeavesPartial")
-<div class="featured-product-main">
-    @Html.Action("FeaturedProductPartial", "Home")
-</div>
-@Html.Partial("_LeavesPartial")
-<div class="sell-product-main">
-    <h2 class="title-share">Sản Giảm Giá</h2>
-</div>
-@Html.Partial("_LeavesPartial")
-<div class="featured-news">
-    <h2 class="title-share">Tin Tức Nổi Bật</h2>
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            @Html.Partial("_LeavesPartial")
+            <div class="new-product-main mb-2">
+                @Html.Action("NewProductPartial", "Home")
+            </div>
+            @Html.Partial("_LeavesPartial")
+            <div class="featured-product-main mb-2">
+                @Html.Action("FeaturedProductPartial", "Home")
+            </div>
+            @Html.Partial("_LeavesPartial")
+            <div class="sell-product-main">
+                @Html.Action("ProductForYouPartial", "Home")
+            </div>
+            @Html.Partial("_LeavesPartial")
+            <div class="featured-news">
+                <h2 class="title-share">Tin Tức Nổi Bật</h2>
+            </div>
+        </div>
+    </div>
 </div>

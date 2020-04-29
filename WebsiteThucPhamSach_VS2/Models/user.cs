@@ -28,6 +28,7 @@ namespace WebsiteThucPhamSach_VS2.Models
         public string address { get; set; }
         public string email { get; set; }
         public string password { get; set; }
+        public Nullable<System.DateTime> start_time { get; set; }
         public Nullable<bool> status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

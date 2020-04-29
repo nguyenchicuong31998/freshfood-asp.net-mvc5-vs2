@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="FreshFoodModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="abouts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="content" Type="nvarchar(max)" />
+          <Property Name="start_time" Type="datetime" />
+          <Property Name="status" Type="bit" />
+        </EntityType>
         <EntityType Name="admins">
           <Key>
             <PropertyRef Name="id" />
@@ -14,7 +23,7 @@
           <Property Name="email" Type="varchar" MaxLength="40" />
           <Property Name="password" Type="varchar" MaxLength="200" />
           <Property Name="gender" Type="bit" />
-          <Property Name="day_of_birth" Type="datetime" />
+          <Property Name="date_of_birth" Type="datetime" />
           <Property Name="phone_number" Type="varchar" MaxLength="11" />
           <Property Name="address" Type="nvarchar" MaxLength="500" />
           <Property Name="role" Type="int" />
@@ -41,13 +50,13 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="200" />
-          <Property Name="company" Type="nvarchar" MaxLength="500" />
-          <Property Name="address" Type="nvarchar" MaxLength="500" />
-          <Property Name="phone_number" Type="varchar" MaxLength="11" />
+          <Property Name="full_name" Type="nvarchar" MaxLength="200" />
           <Property Name="email" Type="varchar" MaxLength="40" />
-          <Property Name="detail" Type="nvarchar(max)" />
+          <Property Name="phone_number" Type="varchar" MaxLength="11" />
+          <Property Name="content" Type="nvarchar(max)" />
+          <Property Name="reply" Type="nvarchar(max)" />
           <Property Name="start_time" Type="datetime" />
+          <Property Name="end_time" Type="datetime" />
           <Property Name="status" Type="bit" />
         </EntityType>
         <EntityType Name="events">
@@ -59,6 +68,18 @@
           <Property Name="title" Type="nvarchar" MaxLength="500" />
           <Property Name="detail" Type="nvarchar(max)" />
           <Property Name="start_time" Type="datetime" />
+        </EntityType>
+        <EntityType Name="feedbacks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="product_id" Type="int" />
+          <Property Name="star" Type="int" />
+          <Property Name="comment" Type="nvarchar(max)" />
+          <Property Name="start_time" Type="datetime" />
+          <Property Name="status" Type="bit" />
         </EntityType>
         <EntityType Name="menus">
           <Key>
@@ -116,6 +137,7 @@
           <Property Name="address" Type="nvarchar(max)" />
           <Property Name="email" Type="varchar" MaxLength="40" />
           <Property Name="password" Type="varchar(max)" />
+          <Property Name="start_time" Type="datetime" />
           <Property Name="status" Type="bit" />
         </EntityType>
         <Association Name="FK__events__user_id__52593CB8">
@@ -155,10 +177,12 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="FreshFoodModelStoreContainer">
+          <EntitySet Name="abouts" EntityType="Self.abouts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="admins" EntityType="Self.admins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="advertises" EntityType="Self.advertises" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="contacts" EntityType="Self.contacts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="events" EntityType="Self.events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="feedbacks" EntityType="Self.feedbacks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="menus" EntityType="Self.menus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
@@ -184,8 +208,15 @@
           <EntitySet Name="menus" EntityType="FreshFoodModel.menu" />
           <EntitySet Name="roles" EntityType="FreshFoodModel.role" />
           <EntitySet Name="advertises" EntityType="FreshFoodModel.advertis" />
-          <EntitySet Name="contacts" EntityType="FreshFoodModel.contact" />
           <EntitySet Name="events" EntityType="FreshFoodModel.event" />
+          <EntitySet Name="products" EntityType="FreshFoodModel.product" />
+          <AssociationSet Name="FK__products__menu_i__5EBF139D" Association="FreshFoodModel.FK__products__menu_i__5EBF139D">
+            <End Role="menu" EntitySet="menus" />
+            <End Role="product" EntitySet="products" />
+          </AssociationSet>
+          <EntitySet Name="feedbacks" EntityType="FreshFoodModel.feedback" />
+          <EntitySet Name="abouts" EntityType="FreshFoodModel.about" />
+          <EntitySet Name="contacts" EntityType="FreshFoodModel.contact" />
           <EntitySet Name="admins" EntityType="FreshFoodModel.admin" />
           <AssociationSet Name="pk_admin_role" Association="FreshFoodModel.pk_admin_role">
             <End Role="role" EntitySet="roles" />
@@ -195,11 +226,6 @@
           <AssociationSet Name="FK__events__user_id__52593CB8" Association="FreshFoodModel.FK__events__user_id__52593CB8">
             <End Role="user" EntitySet="users" />
             <End Role="event" EntitySet="events" />
-          </AssociationSet>
-          <EntitySet Name="products" EntityType="FreshFoodModel.product" />
-          <AssociationSet Name="FK__products__menu_i__5EBF139D" Association="FreshFoodModel.FK__products__menu_i__5EBF139D">
-            <End Role="menu" EntitySet="menus" />
-            <End Role="product" EntitySet="products" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="menu">
@@ -238,20 +264,6 @@
           <Property Name="target" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="status" Type="Boolean" />
         </EntityType>
-        <EntityType Name="contact">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="company" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="phone_number" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="start_time" Type="DateTime" Precision="3" />
-          <Property Name="status" Type="Boolean" />
-        </EntityType>
         <EntityType Name="event">
           <Key>
             <PropertyRef Name="id" />
@@ -263,62 +275,6 @@
           <Property Name="start_time" Type="DateTime" Precision="3" />
           <NavigationProperty Name="user" Relationship="FreshFoodModel.FK__events__user_id__52593CB8" FromRole="event" ToRole="user" />
         </EntityType>
-        <EntityType Name="admin">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="full_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="gender" Type="Boolean" />
-          <Property Name="day_of_birth" Type="DateTime" Precision="3" />
-          <Property Name="phone_number" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="role" Type="Int32" />
-          <Property Name="start_time" Type="DateTime" Precision="3" />
-          <Property Name="status" Type="Boolean" />
-          <NavigationProperty Name="role1" Relationship="FreshFoodModel.pk_admin_role" FromRole="admin" ToRole="role" />
-        </EntityType>
-        <Association Name="pk_admin_role">
-          <End Type="FreshFoodModel.role" Role="role" Multiplicity="0..1" />
-          <End Type="FreshFoodModel.admin" Role="admin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="role">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="admin">
-              <PropertyRef Name="role" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="user">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="display_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="gender" Type="Boolean" />
-          <Property Name="date_of_birth" Type="DateTime" Precision="3" />
-          <Property Name="phone_number" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="status" Type="Boolean" />
-          <NavigationProperty Name="events" Relationship="FreshFoodModel.FK__events__user_id__52593CB8" FromRole="user" ToRole="event" />
-        </EntityType>
-        <Association Name="FK__events__user_id__52593CB8">
-          <End Type="FreshFoodModel.user" Role="user" Multiplicity="0..1" />
-          <End Type="FreshFoodModel.event" Role="event" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="event">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="product">
           <Key>
             <PropertyRef Name="id" />
@@ -354,6 +310,98 @@
             </Principal>
             <Dependent Role="product">
               <PropertyRef Name="menu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="feedback">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="product_id" Type="Int32" />
+          <Property Name="star" Type="Int32" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="start_time" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="about">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="start_time" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="contact">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="full_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="phone_number" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="reply" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="start_time" Type="DateTime" Precision="3" />
+          <Property Name="end_time" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="full_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="gender" Type="Boolean" />
+          <Property Name="date_of_birth" Type="DateTime" Precision="3" />
+          <Property Name="phone_number" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="role" Type="Int32" />
+          <Property Name="start_time" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Boolean" />
+          <NavigationProperty Name="role1" Relationship="FreshFoodModel.pk_admin_role" FromRole="admin" ToRole="role" />
+        </EntityType>
+        <Association Name="pk_admin_role">
+          <End Type="FreshFoodModel.role" Role="role" Multiplicity="0..1" />
+          <End Type="FreshFoodModel.admin" Role="admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="admin">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="display_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="Boolean" />
+          <Property Name="date_of_birth" Type="DateTime" Precision="3" />
+          <Property Name="phone_number" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="start_time" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Boolean" />
+          <NavigationProperty Name="events" Relationship="FreshFoodModel.FK__events__user_id__52593CB8" FromRole="user" ToRole="event" />
+        </EntityType>
+        <Association Name="FK__events__user_id__52593CB8">
+          <End Type="FreshFoodModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="FreshFoodModel.event" Role="event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="event">
+              <PropertyRef Name="user_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -400,21 +448,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="contacts">
-            <EntityTypeMapping TypeName="FreshFoodModel.contact">
-              <MappingFragment StoreEntitySet="contacts">
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="start_time" ColumnName="start_time" />
-                <ScalarProperty Name="detail" ColumnName="detail" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="company" ColumnName="company" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="events">
             <EntityTypeMapping TypeName="FreshFoodModel.event">
               <MappingFragment StoreEntitySet="events">
@@ -422,38 +455,6 @@
                 <ScalarProperty Name="detail" ColumnName="detail" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="admins">
-            <EntityTypeMapping TypeName="FreshFoodModel.admin">
-              <MappingFragment StoreEntitySet="admins">
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="start_time" ColumnName="start_time" />
-                <ScalarProperty Name="role" ColumnName="role" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
-                <ScalarProperty Name="day_of_birth" ColumnName="day_of_birth" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="full_name" ColumnName="full_name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="FreshFoodModel.user">
-              <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
-                <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="display_name" ColumnName="display_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -480,6 +481,77 @@
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="feedbacks">
+            <EntityTypeMapping TypeName="FreshFoodModel.feedback">
+              <MappingFragment StoreEntitySet="feedbacks">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="star" ColumnName="star" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="abouts">
+            <EntityTypeMapping TypeName="FreshFoodModel.about">
+              <MappingFragment StoreEntitySet="abouts">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contacts">
+            <EntityTypeMapping TypeName="FreshFoodModel.contact">
+              <MappingFragment StoreEntitySet="contacts">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="reply" ColumnName="reply" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="admins">
+            <EntityTypeMapping TypeName="FreshFoodModel.admin">
+              <MappingFragment StoreEntitySet="admins">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="FreshFoodModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="display_name" ColumnName="display_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

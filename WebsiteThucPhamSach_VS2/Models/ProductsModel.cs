@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using WebsiteThucPhamSach_VS2.Models;
 using WebsiteThucPhamSach_VS2.Common;
+using System.Data.Entity.SqlServer;
+
 namespace WebsiteThucPhamSach_VS2.Models
 {
     public class ProductsModel
@@ -12,7 +14,7 @@ namespace WebsiteThucPhamSach_VS2.Models
 
         public List<product> getProducts()
         {
-            return db.products.ToList();
+            return db.products.Where(p => p.status == true).OrderBy(r => Guid.NewGuid()).ToList();
         }
         public product getProductById(int id)
         {
@@ -21,12 +23,14 @@ namespace WebsiteThucPhamSach_VS2.Models
 
         public List<product> getProductsByNewStartTime()
         {
-            return db.products.OrderByDescending(p => p.start_time).ToList();
+            return db.products.OrderByDescending(p => p.start_time).Where(p=>p.status == true).Take(12).ToList();
         }
 
         public List<product> getProductsByViewCount()
         {
-            return db.products.OrderByDescending(p => p.view_count).ToList();
+            return db.products.OrderByDescending(p => p.view_count).Take(12).ToList();
         }
+
+        
     }
 }

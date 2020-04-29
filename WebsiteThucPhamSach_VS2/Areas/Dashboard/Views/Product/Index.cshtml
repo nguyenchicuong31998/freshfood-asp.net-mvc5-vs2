@@ -1,0 +1,100 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model List<product>
+
+@{
+    ViewBag.Title = "Quản lý sản phẩm";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+<div class="container-fluid p-3">
+    <a href="~/Dashboard/Product/Create" class="btn btn-primary btn-sm mt-3 mb-3 p-2 add-product">Thêm</a>
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Quản lý sản phẩm</div>
+        <div class="card-body">
+            <div class="table-responsive text-nowrap">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Code</th>
+                            <th>Tên</th>
+                            <th>Mô tả</th>
+                            <th>Hình ảnh</th>
+                            <th>Nhiều hình ảnh</th>
+                            <th>Chi tiết</th>
+                            <th>Từ khóa</th>
+                            <th>Thuế</th>
+                            <th>Thứ tự sắp xếp</th>
+                            <th>Tiền</th>
+                            <th>Tiền khuyến mãi</th>
+                            <th>Sản phẩm hot</th>
+                            <th>Danh mục</th>
+                            <th>Ngày Thêm</th>
+                            <th>Tống số lượng</th>
+                            <th>Tổng bán</th>
+                            <th>Đặc biệt</th>
+                            <th>Lượt xem</th>
+                            <th>Trạng thái</th>
+                            <th>Công cụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var name = "";
+                            if (item.status == true)
+                            {
+                                name = "Hiển thị";
+                            }
+                            else
+                            {
+                                name = "Ẩn";
+                            }
+                            <tr>
+                                <td>@item.id</td>
+                                <td>@item.code</td>
+                                <td>@item.name</td>
+                                <td>@item.description</td>
+                                <td>
+                                    <img style="width: 60px; height:60px;" src="@Url.Content(item.image)" alt="lỗi" />
+                                </td>
+                                <td>@item.more_images</td>
+                                <td>@item.detail</td>
+                                <td>@item.keywords</td>
+                                <td>@item.includeVAT</td>
+                                <td>@item.sort_order</td>
+                                <td>@item.price</td>
+                                <td>@item.price_promotion</td>
+                                <td>@item.top_hot</td>
+                                <td>@item.menu_id</td>
+                                <td>@String.Format("{0:dd/MM/yyyy}", item.start_time)</td>
+                                <td>@item.total_product</td>
+                                <td>@item.total_sold</td>
+                                <td>@item.special</td>
+                                <td>@item.view_count</td>
+                                <td>
+                                    <input type="submit" class="status btn btn-info" data-id="@item.id" value="@name" />
+                                </td>
+                                <td>
+                                    <a href="~/Dashboard/Product/Edit?id=@item.id" data-id="@item.id" class="btnUpdateRole p-2  text-warning" data-toggle="tooltip" title="Sửa">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" data-id="@item.id" class="btnDeleteRole p-2" data-toggle="tooltip" title="Xóa">
+                                        <i class="fas fa-trash-alt text-danger"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*@section Scripts{
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+            });
+        </script>
+    }*@

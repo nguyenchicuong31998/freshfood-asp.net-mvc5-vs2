@@ -3,67 +3,21 @@
 @model List<product>
 
 <div class="featured-products">
-    <h2 class="title-share">Sản Phẩm Bán Chạy</h2>
+    <h2 class="title-share mt-1 mb-5 pb-4">Sản Phẩm Bán Chạy</h2>
     <div class="featured-products-content">
-        <div class="featured-products-item">
-            <img src="https://via.placeholder.com/250x250" />
-            <div class="featured-products-item">
-                Title
+        @foreach (var product in Model)
+        {
+            <div class="featured-products-item p-2">
+                @{
+                    product.image = product.image != " " ? product.image : "https://via.placeholder.com/250x250";
+                }
+                <span class="featured">Bán chạy</span>
+                <img class="img-thumbnail" src="@Url.Content(product.image)" />
+                <div class="featured-item-content pt-3 pb-3">
+                    <a href="~/Chi-Tiet-San-Pham?id=@product.id" class="p-2 ">@product.name</a>
+                    <p class="p-2 d-block">@product.price</p>
+                </div>
             </div>
-            <div class="featured-products-item">
-                <h1>Tên Sản Phẩm</h1>
-                <h3>Giá tiền</h3>
-            </div>
-        </div>
-        <div class="featured-products-item">
-            <img src="https://via.placeholder.com/250x250" />
-            <div class="featured-products-item">
-                Title
-            </div>
-            <div class="featured-products-item">
-                <h1>Tên Sản Phẩm</h1>
-                <h3>Giá tiền</h3>
-            </div>
-        </div>
-        <div class="featured-products-item">
-            <img src="https://via.placeholder.com/250x250" />
-            <div class="featured-products-item">
-                Title
-            </div>
-            <div class="featured-products-item">
-                <h1>Tên Sản Phẩm</h1>
-                <h3>Giá tiền</h3>
-            </div>
-        </div>
-        <div class="featured-products-item">
-            <img src="https://via.placeholder.com/250x250" />
-            <div class="featured-products-item">
-                Title
-            </div>
-            <div class="featured-products-item">
-                <h1>Tên Sản Phẩm</h1>
-                <h3>Giá tiền</h3>
-            </div>
-        </div>
-        <div class="featured-products-item">
-            <img src="https://via.placeholder.com/250x250" />
-            <div class="featured-products-item">
-                Title
-            </div>
-            <div class="featured-products-item">
-                <h1>Tên Sản Phẩm</h1>
-                <h3>Giá tiền</h3>
-            </div>
-        </div>
-        <div class="featured-products-item">
-            <img src="https://via.placeholder.com/250x250" />
-            <div class="featured-products-item">
-                Title
-            </div>
-            <div class="featured-products-item">
-                <h1>Tên Sản Phẩm</h1>
-                <h3>Giá tiền</h3>
-            </div>
-        </div>
+        }
     </div>
 </div>

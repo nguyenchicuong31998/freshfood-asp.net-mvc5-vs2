@@ -10,7 +10,7 @@
                     @Html.ValidationSummary(false)
                     <div class="form-group">
                         <label for="role-name">Tên nhóm quyền*</label>
-                        @Html.TextBoxFor(role => role.name, new { @class = "form-control input-role", @Placeholder = "Vui lòng nhập tên nhóm quyền" })
+                        @Html.TextBoxFor(role => role.name, new { @class = "form-control input-share", @Placeholder = "Vui lòng nhập tên nhóm quyền" })
                         @Html.ValidationMessageFor(role => role.name, "", new { @class = "text-error" })
                     </div>
                     <div class="form-group">

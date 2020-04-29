@@ -91,6 +91,7 @@ namespace WebsiteThucPhamSach_VS2.Models
             try
             {
                 newUser.password = utils.GetMd5Hash(newUser.password);
+                newUser.start_time = DateTime.Now;
                 newUser.status = true;
                 db.users.Add(newUser);
                 db.SaveChanges();

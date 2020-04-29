@@ -7,37 +7,44 @@
     string url = Html.Action("getLogo", "Header").ToString();
     url = url != "" ? url : "https://via.placeholder.com/200x75?text=Logo";
 }
+
 <div class="header__top">
-    <ul class="topbar-md">
-        <li class="topbar-md__item">
-            <i class="fa fa-phone"></i>
-            Hotline:
-            <span>0972612445</span>
-        </li>
-        @if (Session["id"] == null)
-        {
-            <li class="topbar-md__item"><a href="~/Dang-Nhap" class="topbar-md__link topbar-md__link--opacity">Đăng nhập</a></li>
-            <li class="topbar-md__item">/</li>
-            <li class="topbar-md__item"><a href="~/Dang-Ky" class="topbar-md__link topbar-md__link--opacity">Đăng ký</a></li>
-        }
-        else
-        {
-            <li class="topbar-md__item">
-                <a class="topbar-md__link" href="#">
-                    @Session["display_name"]
-                    <span class="topbar-md__arrow-down">
-                    </span>
-                </a>
-            </li>
-        }
-    </ul>
-    <div class="wrap-info">
-        <ul class="wrap-info__group">
-            <li class="wrap-info__item"><a href="~/Thong-Tin-Ca-Nhan" class="wrap-info__link">Thông tin cá nhân</a></li>
-            <li class="wrap-info__item"><a href="~/Doi-Mat-Khau" class="wrap-info__link">Đổi mật khấu</a></li>
-            <li class="wrap-info__item"><a href="~/Dang-Xuat" class="wrap-info__link">Đăng xuất</a></li>
-        </ul>
-    </div>
+    @*<div class="container">
+        <div class="row">
+            <div class="col-12">*@
+                <ul class="topbar-md">
+                    <li class="topbar-md__item">
+                        <i class="fa fa-phone"></i>
+                        Hotline:
+                        <span>0972612445</span>
+                    </li>
+                    @if (Session["id"] == null)
+                    {
+                        <li class="topbar-md__item"><a href="~/Dang-Nhap" class="topbar-md__link topbar-md__link--opacity">Đăng nhập</a></li>
+                        <li class="topbar-md__item">/</li>
+                        <li class="topbar-md__item"><a href="~/Dang-Ky" class="topbar-md__link topbar-md__link--opacity">Đăng ký</a></li>
+                    }
+                    else
+                    {
+                        <li class="topbar-md__item">
+                            <a class="topbar-md__link" href="#">
+                                @Session["display_name"]
+                                <span class="topbar-md__arrow-down">
+                                </span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+                <div class="wrap-info">
+                    <ul class="wrap-info__group">
+                        <li class="wrap-info__item"><a href="~/Thong-Tin-Ca-Nhan" class="wrap-info__link">Thông tin cá nhân</a></li>
+                        <li class="wrap-info__item"><a href="~/Doi-Mat-Khau" class="wrap-info__link">Đổi mật khấu</a></li>
+                        <li class="wrap-info__item"><a href="~/Dang-Xuat" class="wrap-info__link">Đăng xuất</a></li>
+                    </ul>
+                </div>
+            @*</div>
+        </div>
+    </div>*@
 </div>
 <div class="header__content">
     <div class="header__box">

@@ -1,0 +1,60 @@
+﻿@using WebsiteThucPhamSach_VS2.Areas.Dashboard.Models;
+@model ProductsAdModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-8">
+            <div class="box">
+                <div class="box-title forgot-passwrod">THÊM SẢN PHẨM</div>
+                @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.ValidationSummary(true)
+                    <div class="form-group">
+                        <label for="role-name">Mã Sản Phẩm</label>
+                        @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.code, new { @class = "form-control input-share", @Placeholder = "Vui lòng nhập mã sản phẩm" })
+                        @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.code, "", new { @class = "text-error" })
+                    </div>
+                    <div class="form-group">
+                        <label for="role-name">Tên Sản Phẩm*</label>
+                        @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.name, new { @class = "form-control input-share", @Placeholder = "Vui lòng nhập tên sản phẩm" })
+                        @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.name, "", new { @class = "text-error" })
+                    </div>
+                    <div class="form-group">
+                        <label for="role-name">Mô Tả</label>
+                        @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.description, new { @class = "form-control input-share", @Placeholder = "Vui lòng nhập mô tả sản phẩm" })
+                        @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.description, "", new { @class = "text-error" })
+                    </div>
+                    <div class="form-group">
+                        <label for="role-name">Nội dung</label>
+                        @Html.TextAreaFor(ProductsAdModel => ProductsAdModel.description, new { @id = "editor1" })
+                        @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.description, "", new { @class = "text-error" })
+                    </div>
+                    <div class="form-group">
+                        <label for="role-name">Hình ảnh*</label>
+                        <div>
+                            @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.image, new { @type = "file", @class = "btn btn-sm d-block" })
+                            @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.image, "", new { @class = "text-error" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="role-name">Tổng số lượng*</label>
+                        @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.total_product, new { @class = "form-control input-share", @Placeholder = "Vui lòng nhập tên sản phẩm" })
+                        @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.total_product, "", new { @class = "text-error" })
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" onclick="return roleValidate();" class="btn btn-primary submit-product" value="Thêm" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

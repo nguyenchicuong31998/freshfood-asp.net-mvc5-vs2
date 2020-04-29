@@ -1,0 +1,111 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@using WebsiteThucPhamSach_VS2.Common
+@model List<user>
+@{
+    ViewBag.Title = "Quản lý khách hàng";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container-fluid p-3">
+    <a href="~/Dashboard/User/Create" class="btn btn-primary btn-sm mt-3 mb-3 p-2">Thêm mới</a>
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Quản lý khách hàng</div>
+        <div class="card-body">
+            <div class="table-responsive text-nowrap">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Họ và tên</th>
+                            <th>Giới tính</th>
+                            <th>Ngày sinh</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Email</th>
+                            <th>Mật khẩu</th>
+                            <th>Ngày tạo</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var name = "";
+                            if (item.status == true)
+                            {
+                                name = "Hoạt động";
+                            }
+                            else
+                            {
+                                name = "Chặn";
+                            }
+                            <tr>
+                                <td>@item.id</td>
+                                <td>@item.display_name</td>
+                                <td>
+                                    @if (item.gender == true)
+                                    {
+                                        <span>Nam</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Nữ</span>
+                                    }
+                                </td>
+                                <td>@String.Format("{0:dd/MM/yyyy}", item.date_of_birth)</td>
+                                <td>@item.phone_number</td>
+                                <td>@item.address</td>
+                                <td>@item.email</td>
+                                <td>@item.password</td>
+                                <td>@String.Format("{0:dd/MM/yyyy}", item.start_time)</td>
+                                <td>
+                                    <input type="submit" class="status btn btn-info" data-id="@item.id" value="@name" />
+                                </td>
+                                <td>
+                                    <a href="~/Dashboard/User/Edit?id=@item.id" class="btnUpdateUser ml-2 text-warning" data-toggle="tooltip" title="Sửa">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    @if(Session[SessionName.adminRole].ToString() == "Quản lý") {
+                                        <a href="#" data-id="@item.id" class="btnDeleteUser" data-toggle="tooltip" title="Xóa">
+                                            <i class="fas fa-trash-alt text-danger"></i>
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.btnDeleteUser').click(function () {
+                if (confirm("Bạn chắc chắn muốn xóa khách hàng này không?")) {
+                    let id = $(this).data("id");
+                    $.ajax({
+                        url: "/Dashboard/User/Delete",
+                        data: { id: id },
+                        dataType: "json",
+                        type: "POST",
+                        success: function (res) {
+                            if (res.status) {
+                                alert("Bạn đã xóa thành công");
+                            } else {
+                                alert("Xóa thất bại!");
+                            }
+                            location.reload();
+                        }
+                    })
+                } else {
+                    return;
+                }
+            })
+        })
+    </script>    
+}

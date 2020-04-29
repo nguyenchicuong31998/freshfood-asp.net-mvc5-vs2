@@ -100,6 +100,17 @@ namespace WebsiteThucPhamSach_VS2
                     action = "News"
                 }
             );
+            //Chi Tiết Sản Phẩm
+            routes.MapRoute(
+                name: "Chi Tiết Sản Phẩm",
+                url: "Chi-Tiet-San-Pham",
+                defaults: new
+                {
+                    controller = "Home",
+                    action = "DetailProduct",
+                    id = UrlParameter.Optional
+                }
+            );
             //Sản Phẩm
             routes.MapRoute(
                 name: "Sản Phẩm",
