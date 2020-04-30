@@ -14,12 +14,6 @@ namespace WebsiteThucPhamSach_VS2.Models
     
     public partial class user
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public user()
-        {
-            this.events = new HashSet<@event>();
-        }
-    
         public int id { get; set; }
         public string display_name { get; set; }
         public Nullable<bool> gender { get; set; }
@@ -30,8 +24,5 @@ namespace WebsiteThucPhamSach_VS2.Models
         public string password { get; set; }
         public Nullable<System.DateTime> start_time { get; set; }
         public Nullable<bool> status { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<@event> events { get; set; }
     }
 }

@@ -1,0 +1,48 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model EventsModel
+
+@{
+    ViewBag.Title = "Sửa tin tức, sự kiện";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-lg-center">
+        <div class="col-12 col-lg-8">
+            <h3 class="font-weight-bold text-center">Sửa tin tức, sự kiện</h3>
+            @using (Html.BeginForm("Create", "Event", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.ValidationSummary(true);
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Hình ảnh<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextBoxFor(EventsModel => EventsModel.image, new { @type = "file", @class = "btn btn-sm d-block" })
+                        @Html.ValidationMessageFor(EventsModel => EventsModel.image, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Tiêu đề<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextBoxFor(EventsModel => EventsModel.title, new { @class = "form-control input-share input-size input-height", @Placeholder = "Tiêu đề*" })
+                        @Html.ValidationMessageFor(EventsModel => EventsModel.title, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Nội dung<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextAreaFor(EventsModel => EventsModel.content, new { @id = "editor1" })
+                        @Html.ValidationMessageFor(EventsModel => EventsModel.content, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <div class="col-3 col-md-2"></div>
+                    <div class="col-9 col-md-10">
+                        <input type="submit" class="btn btn-sm btn-primary p-2" value="Thêm" />
+                        <a href="~/Dashboard/Event/Index" class="btn btn-sm btn-success p-2">Quay lại</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

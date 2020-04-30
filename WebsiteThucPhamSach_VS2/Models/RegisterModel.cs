@@ -21,7 +21,6 @@ namespace WebsiteThucPhamSach_VS2.Models
         [EmailAddress(ErrorMessage = "Địa chỉ email không hợp lệ")]
         [StringLength(40)]
         public string email { get; set; }
-
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
         [StringLength(40, ErrorMessage = "Mật khẩu phải từ 6 đến 32 ký tự", MinimumLength = 6)]
         public string password { get; set; }

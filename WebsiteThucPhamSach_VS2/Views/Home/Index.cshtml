@@ -27,10 +27,40 @@
             <div class="sell-product-main">
                 @Html.Action("ProductForYouPartial", "Home")
             </div>
-            @Html.Partial("_LeavesPartial")
             <div class="featured-news">
-                <h2 class="title-share">Tin Tức Nổi Bật</h2>
+                @Html.Partial("_LeavesPartial")
+                @Html.Partial("_NewsHotPartial")
             </div>
         </div>
     </div>
 </div>
+
+@*<div class="featured-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                @Html.Partial("_LeavesPartial")
+                @Html.Partial("_NewsHotPartial")
+            </div>
+        </div>
+    </div>
+</div>*@
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.news-hot').slick({
+                //slidesToShow: 3,
+                //slidesToScroll: 3
+                //centerMode: true,
+                //focusOnSelect: true
+                centerMode: true,
+                //centerPadding: '60px',
+                slidesToShow: 3,
+                autoplay: true,
+                autoplaySpeed: 2000,
+            });
+        });
+    </script>
+}

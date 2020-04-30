@@ -1,0 +1,117 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model List<@event>
+@{
+    ViewBag.Title = "Quản lý tin tức, sự kiện";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container-fluid p-3">
+    <a href="~/Dashboard/Event/Create" class="btn btn-primary btn-sm mt-3 mb-3 p-2">Thêm mới</a>
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Quản lý tin tức, sự kiện</div>
+        <div class="card-body">
+            <div class="table-responsive text-nowrap">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên người quản trị</th>
+                            <th>Hình ảnh</th>
+                            <th>Tiêu đề</th>
+                            <th>Nội dung</th>
+                            <th>Ngày tạo</th>
+                            <th>Ngày kết thúc</th>
+                            <th>Tin tức nổi bật</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var status = "";
+                            var topHot = "";
+                            topHot = item.top_hot == true ? "Bật" : "Tắt";
+                            status = item.status == true ? "Hiển thị" : "Ẩn";
+                            <tr>
+                                <td>@item.id</td>
+                                <td>@Html.Action("GetNameAdminById", "Event", new { @id = item.admin_id })</td>
+                                <td>
+                                    <img style="width:50px; height:50px;" src="@Url.Content(item.image)" alt="Lỗi" />
+                                </td>
+                                <td>@item.title</td>
+                                <td>@item.content</td>
+                                <td>@String.Format("{0:dd/MM/yyyy}", item.start_time)</td>
+                                <td>@String.Format("{0:dd/MM/yyyy}", item.end_time)</td>
+                                <td>
+                                    <input type="submit" class="top-hot btn btn-info" data-id="@item.id" value="@topHot" />
+                                </td>
+                                <td>
+                                    <input type="submit" class="status btn btn-info" data-id="@item.id" value="@status" />
+                                </td>
+                                <td>
+                                    <a href="~/Dashboard/Event/Edit?id=@item.id" class="btnUpdateEvent ml-2 text-warning" data-toggle="tooltip" title="Sửa">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" data-id="@item.id" class="btnDeleteEvent" data-toggle="tooltip" title="Xóa">
+                                        <i class="fas fa-trash-alt text-danger"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+
+        $('.top-hot').click(function () {
+            let id = $(this).data("id");
+            $.ajax({
+                url: "/Dashboard/Event/ChangeTopHotById",
+                data: { id: id },
+                dataType: "json",
+                type: "POST",
+                success: function (res) {
+                    location.reload();
+                }
+            })
+        })
+
+        $('.status').click(function () {
+            let id = $(this).data("id");
+            $.ajax({
+                url: "/Dashboard/Event/ChangeStatusById",
+                data: { id: id },
+                dataType: "json",
+                type: "POST",
+                success: function (res) {
+                    location.reload();
+                }
+            })
+        })
+
+        $('.btnDeleteEvent').click(function () {
+            if (confirm("Bạn chắc chắn muốn xóa tin tức, sự kiện này không?")) {
+                let id = $(this).data("id");
+                $.ajax({
+                    url: "/Dashboard/Event/Delete",
+                    data: { id: id },
+                    dataType: "json",
+                    type: "POST",
+                    success: function (res) {
+                        location.reload();
+                    }
+                })
+            } else {
+                return false;
+            }
+        })
+
+    </script>   
+}

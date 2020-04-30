@@ -170,6 +170,7 @@
     <Compile Include="Areas\Dashboard\Controllers\AdminController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\ContactController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\EventController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\MenuController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\ProductController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\RoleController.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="Models\event.cs">
       <DependentUpon>DBFreshFood.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventsModel.cs" />
     <Compile Include="Models\feedback.cs">
       <DependentUpon>DBFreshFood.tt</DependentUpon>
     </Compile>
@@ -1242,6 +1244,10 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Slick\ajax-loader.gif" />
+    <Content Include="Content\Slick\fonts\slick.svg" />
+    <Content Include="Content\Slick\slick-theme.css" />
+    <Content Include="Content\Slick\slick.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -1436,14 +1442,6 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\esm\popper-utils.js" />
-    <Content Include="Scripts\esm\popper-utils.min.js" />
-    <Content Include="Scripts\esm\popper.js" />
-    <Content Include="Scripts\esm\popper.min.js" />
-    <Content Include="Scripts\esm\popper.min.js.map" />
-    <Content Include="Scripts\esm\popper.js.map" />
-    <Content Include="Scripts\esm\popper-utils.min.js.map" />
-    <Content Include="Scripts\esm\popper-utils.js.map" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
@@ -1506,6 +1504,22 @@
     <Content Include="Areas\Dashboard\Views\User\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\User\Create.cshtml" />
     <Content Include="Areas\Dashboard\Views\User\Edit.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Event\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Event\Create.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Event\Edit.cshtml" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Content Include="Content\Slick\slick.scss" />
+    <Content Include="Content\Slick\slick-theme.scss" />
+    <Content Include="Content\Slick\fonts\slick.woff" />
+    <Content Include="Content\Slick\fonts\slick.ttf" />
+    <Content Include="Content\Slick\fonts\slick.eot" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1527,6 +1541,8 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\Slick\slick.js" />
+    <Content Include="Scripts\Slick\slick.min.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
@@ -1543,15 +1559,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LayoutClient.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\umd\popper.min.js.map" />
-    <Content Include="Scripts\umd\popper.js.map" />
-    <Content Include="Scripts\umd\popper-utils.min.js.map" />
-    <Content Include="Scripts\umd\popper-utils.js.map" />
-    <Content Include="Scripts\README.md" />
-    <Content Include="Scripts\popper.min.js.map" />
-    <Content Include="Scripts\popper.js.map" />
-    <Content Include="Scripts\popper-utils.min.js.map" />
-    <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Header\HeaderPartial.cshtml" />
     <Content Include="Views\Footer\FooterPartial.cshtml" />
     <Content Include="Views\Header\Login.cshtml" />
@@ -1571,6 +1578,16 @@
     <Content Include="Views\Home\NewProductPartial.cshtml" />
     <Content Include="Views\Home\ProductForYouPartial.cshtml" />
     <Content Include="Views\Home\DetailProduct.cshtml" />
+    <Content Include="Views\Shared\_NewsHotPartial.cshtml" />
+    <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="Scripts\umd\popper-utils.js.map" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1581,11 +1598,11 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\index.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -75,16 +75,40 @@ namespace WebsiteThucPhamSach_VS2.Models
             }
             return false;
         }
-
+        public bool changeAllStatusFalse()
+        {
+            try
+            {
+                var abouts = db.abouts.ToList();
+                if(abouts.Count() > 0)
+                {
+                    foreach (var about in abouts)
+                    {
+                        about.status = false;
+                        db.Entry(about).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    return true;
+                }
+                return false;
+            }catch(Exception e)
+            {
+                return false;
+            }
+        }
         public bool changeStatusById(int id)
         {
-            var about = this.getAboutById(id);
-            if (about != null)
+            var changeAll = this.changeAllStatusFalse();
+            if (changeAll)
             {
-                //db.abouts.Remove(about);
-                //db.SaveChanges();
-                //return true;
-
+                var about = this.getAboutById(id);
+                if (about != null)
+                {
+                    about.status = true;
+                    db.Entry(about).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
             }
             return false;
         }

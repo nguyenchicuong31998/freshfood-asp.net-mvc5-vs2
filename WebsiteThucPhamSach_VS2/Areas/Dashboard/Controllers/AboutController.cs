@@ -43,6 +43,7 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
             return View(about);
         }
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Edit(about updateAbout)
         {
                 var updated = new AboutsModel().updateAboutById(updateAbout.id, updateAbout);
@@ -72,10 +73,17 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
 
         public JsonResult ChangeStatus(int id)
         {
-
+            var changed = new AboutsModel().changeStatusById(id);
+            if (changed)
+            {
+                return Json(new
+                {
+                    status = true
+                });
+            }
             return Json(new
             {
-                status = true
+                status = false
             });
         }
     }

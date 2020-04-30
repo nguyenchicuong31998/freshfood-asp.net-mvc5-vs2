@@ -14,6 +14,12 @@ namespace WebsiteThucPhamSach_VS2.Models
     
     public partial class admin
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public admin()
+        {
+            this.events = new HashSet<@event>();
+        }
+    
         public int id { get; set; }
         public string full_name { get; set; }
         public string email { get; set; }
@@ -27,5 +33,7 @@ namespace WebsiteThucPhamSach_VS2.Models
         public Nullable<bool> status { get; set; }
     
         public virtual role role1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<@event> events { get; set; }
     }
 }

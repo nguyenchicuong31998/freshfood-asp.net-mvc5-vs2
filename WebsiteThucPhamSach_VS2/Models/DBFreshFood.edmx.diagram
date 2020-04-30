@@ -10,7 +10,6 @@
         <EntityTypeShape EntityType="FreshFoodModel.advertis" Width="1.5" PointX="5.375" PointY="8.75" />
         <EntityTypeShape EntityType="FreshFoodModel.contact1" Width="1.5" PointX="7.375" PointY="8.75" />
         <EntityTypeShape EntityType="FreshFoodModel.event1" Width="1.5" PointX="3" PointY="8.625" />
-        <EntityTypeShape EntityType="FreshFoodModel.event" Width="1.5" PointX="3" PointY="1.5" />
         <EntityTypeShape EntityType="FreshFoodModel.product" Width="1.5" PointX="9.625" PointY="5.375" />
         <AssociationConnector Association="FreshFoodModel.FK__products__menu_i__5EBF139D" />
         <EntityTypeShape EntityType="FreshFoodModel.feedback" Width="1.5" PointX="0.75" PointY="8.75" />
@@ -19,7 +18,8 @@
         <EntityTypeShape EntityType="FreshFoodModel.admin" Width="1.5" PointX="9.625" PointY="0.875" />
         <AssociationConnector Association="FreshFoodModel.pk_admin_role" />
         <EntityTypeShape EntityType="FreshFoodModel.user" Width="1.5" PointX="0.75" PointY="1" />
-        <AssociationConnector Association="FreshFoodModel.FK__events__user_id__52593CB8" />
+        <EntityTypeShape EntityType="FreshFoodModel.event" Width="1.5" PointX="11.875" PointY="1.125" />
+        <AssociationConnector Association="FreshFoodModel.FK__events__admin_id__0A9D95DB" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

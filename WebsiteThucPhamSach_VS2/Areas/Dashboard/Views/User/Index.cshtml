@@ -22,7 +22,7 @@
                             <th>Số điện thoại</th>
                             <th>Địa chỉ</th>
                             <th>Email</th>
-                            <th>Mật khẩu</th>
+                            @*<th>Mật khẩu</th>*@
                             <th>Ngày tạo</th>
                             <th>Trạng thái</th>
                             <th>Thao tác</th>
@@ -57,7 +57,7 @@
                                 <td>@item.phone_number</td>
                                 <td>@item.address</td>
                                 <td>@item.email</td>
-                                <td>@item.password</td>
+                                @*<td>@item.password</td>*@
                                 <td>@String.Format("{0:dd/MM/yyyy}", item.start_time)</td>
                                 <td>
                                     <input type="submit" class="status btn btn-info" data-id="@item.id" value="@name" />
@@ -85,6 +85,21 @@
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
+            $('.status').click(function () {
+                let id = $(this).data("id");
+                $.ajax({
+                    url: "/Dashboard/User/OpenStatus",
+                    data: { id: id },
+                    dataType: "json",
+                    type: "POST",
+                    success: function (res) {
+                        if (res.status == true) {
+                            location.reload();
+                        }
+                    }
+                })
+            });
+
             $('.btnDeleteUser').click(function () {
                 if (confirm("Bạn chắc chắn muốn xóa khách hàng này không?")) {
                     let id = $(this).data("id");

@@ -37,7 +37,7 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
         public virtual role role1 { get; set; }
 
         FreshFoodEntities db = new FreshFoodEntities();
-
+        Utils utils = new Utils();
         public List<admin> getAdmins()
         {
   
@@ -56,12 +56,23 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
 
         public admin login(string email, string password)
         {
-            var admin = db.admins.SingleOrDefault(ad => ad.email == email && ad.password == password && ad.status == true);
-            if(admin != null)
+            try
             {
-                return admin;
+                //var hashPassword = utils.GetMd5Hash(password);
+                //var results = utils.VerifyMd5Hash(password, hashPassword);
+                //if (results) { 
+                    var admin = db.admins.SingleOrDefault(ad => ad.email == email && ad.password == password && ad.status == true);
+                    if (admin != null)
+                    {
+                        return admin;
+                    }
+                //}
+                return null;
             }
-            return null;
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
         public bool create(AdminsModel newAdmin)
@@ -71,7 +82,7 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
                 admin admin = new admin();
                 admin.full_name = newAdmin.full_name;
                 admin.email = newAdmin.email;
-                admin.password = newAdmin.password;
+                admin.password = new Utils().GetMd5Hash(newAdmin.password);
                 admin.gender = newAdmin.gender;
                 admin.date_of_birth = newAdmin.date_of_birth;
                 admin.phone_number = newAdmin.phone_number;
@@ -97,7 +108,7 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
                 {
                     currentAdmin.full_name = updateAdmin.full_name;
                     currentAdmin.email = updateAdmin.email;
-                    currentAdmin.password = updateAdmin.password;
+                    //currentAdmin.password = updateAdmin.password;
                     currentAdmin.gender = updateAdmin.gender;
                     currentAdmin.date_of_birth = updateAdmin.date_of_birth;
                     currentAdmin.phone_number = updateAdmin.phone_number;

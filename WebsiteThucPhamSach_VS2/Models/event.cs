@@ -15,11 +15,15 @@ namespace WebsiteThucPhamSach_VS2.Models
     public partial class @event
     {
         public int id { get; set; }
-        public Nullable<int> user_id { get; set; }
+        public Nullable<int> admin_id { get; set; }
+        public string image { get; set; }
         public string title { get; set; }
-        public string detail { get; set; }
+        public string content { get; set; }
         public Nullable<System.DateTime> start_time { get; set; }
+        public Nullable<System.DateTime> end_time { get; set; }
+        public Nullable<bool> top_hot { get; set; }
+        public Nullable<bool> status { get; set; }
     
-        public virtual user user { get; set; }
+        public virtual admin admin { get; set; }
     }
 }

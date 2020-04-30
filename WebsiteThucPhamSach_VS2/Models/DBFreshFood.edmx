@@ -59,15 +59,21 @@
           <Property Name="end_time" Type="datetime" />
           <Property Name="status" Type="bit" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FreshFood.dbo.events' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="events">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="user_id" Type="int" />
+          <Property Name="admin_id" Type="int" />
+          <Property Name="image" Type="nvarchar" MaxLength="500" />
           <Property Name="title" Type="nvarchar" MaxLength="500" />
-          <Property Name="detail" Type="nvarchar(max)" />
+          <Property Name="content" Type="nvarchar(max)" />
           <Property Name="start_time" Type="datetime" />
+          <Property Name="end_time" Type="datetime" />
+          <Property Name="top_hot" Type="bit" />
+          <Property Name="status" Type="bit" />
         </EntityType>
         <EntityType Name="feedbacks">
           <Key>
@@ -140,15 +146,15 @@
           <Property Name="start_time" Type="datetime" />
           <Property Name="status" Type="bit" />
         </EntityType>
-        <Association Name="FK__events__user_id__52593CB8">
-          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+        <Association Name="FK__events__admin_id__0A9D95DB">
+          <End Role="admins" Type="Self.admins" Multiplicity="0..1" />
           <End Role="events" Type="Self.events" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="users">
+            <Principal Role="admins">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="events">
-              <PropertyRef Name="user_id" />
+              <PropertyRef Name="admin_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -181,14 +187,26 @@
           <EntitySet Name="admins" EntityType="Self.admins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="advertises" EntityType="Self.advertises" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="contacts" EntityType="Self.contacts" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="events" EntityType="Self.events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="feedbacks" EntityType="Self.feedbacks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="menus" EntityType="Self.menus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__events__user_id__52593CB8" Association="Self.FK__events__user_id__52593CB8">
-            <End Role="users" EntitySet="users" />
+          <EntitySet Name="events" EntityType="Self.events" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [events].[id] AS [id], 
+    [events].[admin_id] AS [admin_id], 
+    [events].[image] AS [image], 
+    [events].[title] AS [title], 
+    [events].[content] AS [content], 
+    [events].[start_time] AS [start_time], 
+    [events].[end_time] AS [end_time], 
+    [events].[top_hot] AS [top_hot], 
+    [events].[status] AS [status]
+    FROM [dbo].[events] AS [events]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__events__admin_id__0A9D95DB" Association="Self.FK__events__admin_id__0A9D95DB">
+            <End Role="admins" EntitySet="admins" />
             <End Role="events" EntitySet="events" />
           </AssociationSet>
           <AssociationSet Name="FK__products__menu_i__5EBF139D" Association="Self.FK__products__menu_i__5EBF139D">
@@ -208,7 +226,6 @@
           <EntitySet Name="menus" EntityType="FreshFoodModel.menu" />
           <EntitySet Name="roles" EntityType="FreshFoodModel.role" />
           <EntitySet Name="advertises" EntityType="FreshFoodModel.advertis" />
-          <EntitySet Name="events" EntityType="FreshFoodModel.event" />
           <EntitySet Name="products" EntityType="FreshFoodModel.product" />
           <AssociationSet Name="FK__products__menu_i__5EBF139D" Association="FreshFoodModel.FK__products__menu_i__5EBF139D">
             <End Role="menu" EntitySet="menus" />
@@ -223,8 +240,9 @@
             <End Role="admin" EntitySet="admins" />
           </AssociationSet>
           <EntitySet Name="users" EntityType="FreshFoodModel.user" />
-          <AssociationSet Name="FK__events__user_id__52593CB8" Association="FreshFoodModel.FK__events__user_id__52593CB8">
-            <End Role="user" EntitySet="users" />
+          <EntitySet Name="events" EntityType="FreshFoodModel.event" />
+          <AssociationSet Name="FK__events__admin_id__0A9D95DB" Association="FreshFoodModel.FK__events__admin_id__0A9D95DB">
+            <End Role="admin" EntitySet="admins" />
             <End Role="event" EntitySet="events" />
           </AssociationSet>
         </EntityContainer>
@@ -263,17 +281,6 @@
           <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="target" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="status" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="event">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="user_id" Type="Int32" />
-          <Property Name="title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="start_time" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="user" Relationship="FreshFoodModel.FK__events__user_id__52593CB8" FromRole="event" ToRole="user" />
         </EntityType>
         <EntityType Name="product">
           <Key>
@@ -364,6 +371,7 @@
           <Property Name="start_time" Type="DateTime" Precision="3" />
           <Property Name="status" Type="Boolean" />
           <NavigationProperty Name="role1" Relationship="FreshFoodModel.pk_admin_role" FromRole="admin" ToRole="role" />
+          <NavigationProperty Name="events" Relationship="FreshFoodModel.FK__events__admin_id__0A9D95DB" FromRole="admin" ToRole="event" />
         </EntityType>
         <Association Name="pk_admin_role">
           <End Type="FreshFoodModel.role" Role="role" Multiplicity="0..1" />
@@ -391,17 +399,31 @@
           <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="start_time" Type="DateTime" Precision="3" />
           <Property Name="status" Type="Boolean" />
-          <NavigationProperty Name="events" Relationship="FreshFoodModel.FK__events__user_id__52593CB8" FromRole="user" ToRole="event" />
         </EntityType>
-        <Association Name="FK__events__user_id__52593CB8">
-          <End Type="FreshFoodModel.user" Role="user" Multiplicity="0..1" />
+        <EntityType Name="event">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="admin_id" Type="Int32" />
+          <Property Name="image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="start_time" Type="DateTime" Precision="3" />
+          <Property Name="end_time" Type="DateTime" Precision="3" />
+          <Property Name="top_hot" Type="Boolean" />
+          <Property Name="status" Type="Boolean" />
+          <NavigationProperty Name="admin" Relationship="FreshFoodModel.FK__events__admin_id__0A9D95DB" FromRole="event" ToRole="admin" />
+        </EntityType>
+        <Association Name="FK__events__admin_id__0A9D95DB">
+          <End Type="FreshFoodModel.admin" Role="admin" Multiplicity="0..1" />
           <End Type="FreshFoodModel.event" Role="event" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="user">
+            <Principal Role="admin">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="event">
-              <PropertyRef Name="user_id" />
+              <PropertyRef Name="admin_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -444,17 +466,6 @@
                 <ScalarProperty Name="start_time" ColumnName="start_time" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="link" ColumnName="link" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="events">
-            <EntityTypeMapping TypeName="FreshFoodModel.event">
-              <MappingFragment StoreEntitySet="events">
-                <ScalarProperty Name="start_time" ColumnName="start_time" />
-                <ScalarProperty Name="detail" ColumnName="detail" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -552,6 +563,21 @@
                 <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
                 <ScalarProperty Name="gender" ColumnName="gender" />
                 <ScalarProperty Name="display_name" ColumnName="display_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="events">
+            <EntityTypeMapping TypeName="FreshFoodModel.event">
+              <MappingFragment StoreEntitySet="events">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="top_hot" ColumnName="top_hot" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="admin_id" ColumnName="admin_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

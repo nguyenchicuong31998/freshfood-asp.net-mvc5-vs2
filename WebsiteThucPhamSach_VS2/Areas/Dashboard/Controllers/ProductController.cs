@@ -27,6 +27,7 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(ProductsAdModel product)
         {
             try

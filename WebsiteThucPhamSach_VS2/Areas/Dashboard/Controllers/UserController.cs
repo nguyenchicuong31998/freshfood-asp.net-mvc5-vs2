@@ -27,22 +27,71 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(user user)
+        public ActionResult Create(UsersAdModel user)
         {
-            return View();
+            try
+            {
+                var emailExisted = new UsersAdModel().checkEmailExisted(user.email);
+                if (!emailExisted)
+                {
+                    var created = new UsersAdModel().createUser(user);
+                    if (created)
+                    {
+                        return Redirect(Request.UrlReferrer.ToString());
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("email", "Địa chỉ email đã tồn tại. Vui lòng nhập địa chỉ email khác.");
+                }
+
+            }catch(Exception e)
+            {
+                throw e;
+            }
+            return View(user);
         }
 
 
         [HttpGet]
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
-            return View();
+            var user = new UsersAdModel().getUserById(id);
+            UsersAdModel usersAdModel = new UsersAdModel();
+            usersAdModel.display_name = user.display_name;
+            usersAdModel.gender = user.gender;
+            usersAdModel.date_of_birth = user.date_of_birth;
+            usersAdModel.phone_number = user.phone_number;
+            usersAdModel.address = user.address;
+            usersAdModel.email = user.email;
+            return View(usersAdModel);
         }
 
         [HttpPost]
-        public ActionResult Edit(user user)
+        public ActionResult Edit(UsersAdModel user)
         {
-            return View();
+            try
+            {
+                var updated = new UsersAdModel().updateUserById(user.id, user);
+                if (updated)
+                {
+                    return Redirect(Request.UrlReferrer.ToString());
+                }
+            }catch(Exception e)
+            {
+                throw e;
+            }
+            return View(user);
+        }
+
+        public JsonResult OpenStatus(int id)
+        {
+            var changed = new UsersAdModel().changeStatusById(id);
+            if (changed)
+            {
+                return Json(new { status = true });
+            }
+            return Json(new { status = false });
         }
 
         public JsonResult Delete(int id)
