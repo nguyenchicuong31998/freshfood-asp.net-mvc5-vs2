@@ -1,40 +1,218 @@
-﻿
+﻿@using WebsiteThucPhamSach_VS2.Models
+@using WebsiteThucPhamSach_VS2.Common
+@model product
 @{
-    ViewBag.Title = "DetailProduct";
+    ViewBag.Title = "Chi tiết sản phẩm";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    Utils utils = new Utils();
 }
-
-<div class="container">
+<div class="container mt-4">
     <div class="row">
-        <div class="col-6">
+        <div class="col-12">
+            <div class="wrapper-breadcrumb">
+                <ul class="nav d-flex flex-row border-bottom">
+                    <li class="breadcrumb-item ">
+                        <a href="~/Trang-Chu" class="breadcrumb-link">Trang chủ</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="~/Chi-Tiet-San-Pham/@Model.id" class="breadcrumb-link active">@Model.name</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12 col-sm-6">
             <div class="containers">
                 <div class="mySlides">
-                    <img src="~/Img/buoi-da-xanh.jpg" style="width:100%">
+                    <img src="~/Img/thanh-long.jpg" style="width:84%">
                 </div>
 
                 <div class="mySlides">
-                    <img src="~/Img/bap.jpg" style="width:100%">
+                    <img src="~/Img/thanhlong1.jpg" style="width:84%">
+                </div>
+
+                <div class="mySlides">
+                    <img src="~/Img/thanhlong2.jpg" style="width:84%">
                 </div>
 
                 <div class="row-gallery">
                     <div class="column">
-                        <img class="demo cursor" src="~/Img/buoi-da-xanh.jpg" style="width:100%" onclick="currentSlide(1)" alt="Nature and sunrise">
+                        <img class="demo cursor" src="~/Img/thanh-long.jpg" style="width:100%" onclick="currentSlide(1)" alt="Nature and sunrise">
                     </div>
                     <div class="column">
-                        <img class="demo cursor" src="~/Img/bap.jpg" style="width:100%" onclick="currentSlide(2)" alt="Snowy Mountains">
+                        <img class="demo cursor" src="~/Img/thanhlong1.jpg" style="width:100%" onclick="currentSlide(2)" alt="Snowy Mountains">
+                    </div>
+                    <div class="column">
+                        <img class="demo cursor" src="~/Img/thanhlong2.jpg" style="width:100%" onclick="currentSlide(3)" alt="Snowy Mountains">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-6">
-            Right
+        <div class="col-12 col-sm-6">
+            <h2 class="font-weight-bold mt-3 mb-3">
+                @Model.name
+            </h2>
+            <div class="mt-2">
+                5 sao (250)
+            </div>
+            <div class="mt-2">
+                Lượt xem: <span class="font-weight-bold">@Model.view_count</span>
+            </div>
+            <div class="mt-2">
+                @{
+                    var statusName = Model.total_product > 0 ? "Còn hàng" : "Đã hết hàng";
+                }
+                <span class="text-danger font-weight-bold">@statusName</span>
+            </div>
+            <div class=" mt-2 mb-2">
+                @if (Model.price_promotion != null)
+                {
+                    <span class="mr-5 font-weight-bold">
+                        @{
+                            var giamGia = String.Format("{0:0}", Model.price * ((100 - Model.price_promotion) / 100));
+                        }
+                        @utils.FormatPrice(giamGia.ToString()) đ/Kg
+                    </span>
+                    <span class="font-weight-normal"><del>@utils.FormatPrice(Model.price.ToString()) đ/Kg</del></span>
+                }
+                else
+                {
+                    <span class="font-weight-bold">@utils.FormatPrice(Model.price.ToString()) đ/Kg</span>
+                }
+            </div>
+            <div class="mt-5 mb-2 ">
+                <p>
+                    <i class="fa fa-check-square-o">
+                        Gọi mua hàng 0972 612 445
+                    </i>
+                </p>
+                <p>
+                    <i class="fa fa-check-square-o">
+                        Đảm bảo tươi ngon
+                    </i>
+                </p>
+                <p>
+                    <i class="fa fa-check-square-o">
+                        Giao hàng trực tiếp từ vườn
+                    </i>
+                </p>
+                <p>
+                    <i class="fa fa-check-square-o">
+                        Đổi trả trong vòng 24h
+                    </i>
+                </p>
+            </div>
+            @using (Html.BeginForm("AddItem", "Home", FormMethod.Post))
+            {
+
+                var enable = Model.total_product > 0 ? "" : "disabled";
+                <div class="d-inline">Số lượng:</div>
+                <div class="d-flex">
+                    <input id="soluong" name="soluong" class="nhapsoluong mr-4" type="number" value="1" min="1" max="20" />
+                    <input type="submit" class="btn btn-danger btn-lg" @enable value="Cho vào giỏ hàng" id="submitgh" />
+                </div>
+            }
         </div>
     </div>
-    <div class="row">
+    <hr />
+    <div class="row mt-4">
         <div class="col-12">
-            Sản Phẩm Thường Được Xem Cùng
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link activeBlock active text-uppercase text-black" href="#product-info" role="tab" data-toggle="tab">Mô tả sản phẩm</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-uppercase text-black" href="#feedback" role="tab" data-toggle="tab">Nhận xét (0)</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="product-info">
+                    @Html.Raw(Model.detail)
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="feedback">
+                    <div id="create-feedback">
+                        @Html.Action("AddFeedbackPartial", "Home", new { @id = Model.id })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="text-uppercase">Sản Phẩm Thường Được Xem Cùng</h2>
+            <hr />
+            <div class="mt-5 product-slide">
+                ok
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="text-uppercase">KHÁCH HÀNG NHẬN XÉT</h2>
+            <hr />
+            <div id="content-feedback" class="mt-5 ">
+                @Html.Action("DisplayFeedbackPartial", "Home")
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="messageLogin" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content ">
+            <div class="modal-body ml-3 mr-3">
+                <div class="modal-close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="model-content p-0">
+                    <div class="text-black">Bạn cần đăng nhập để sử dụng tính năng này.</div>
+                </div>
+                <div class="model-footer mt-4 mb-4">
+                    <a id="login" href="~/Dang-Nhap" class="btn btn-text btn-block p-3 text-white bg-green">Đăng nhập</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 
+@section scripts{
+    <script type="text/javascript">
+        function validateFeedback() {
+            return true;
+        }
+        $('#add-feedback').click(function (e) {
+            //var totalStar = $("input[name='star']:checked").val();
+            e.preventDefault();
+            var feedback = {};
+            $('#form-add-feedback :input').each(function () {
+                feedback[this.name] = $(this).val();
+            });
+            feedback.star = $("input[name='star']:checked").val();
+            feedback.product_id = @Model.id;
+            $.ajax({
+                url: "/Home/AddFeedbackPartial",
+                data: { newFeedback: JSON.stringify(feedback) },
+                dataType: "json",
+                type: "POST",
+                success: function (res) {
+                    if (res.yetLogin == true) {
+                        $('#messageLogin').modal('show')
+                    }
+                    if (res.status == true) {
+                        $('#content-feedback').load("/Home/DisplayFeedbackPartial/@Model.id");
+                        $('#create-feedback').load("/Home/AddFeedbackPartial/@Model.id");
+                        alert("Bạn đã bình luận thành công");
+                    }
+                }
+            })
+        })
+    </script>
+}

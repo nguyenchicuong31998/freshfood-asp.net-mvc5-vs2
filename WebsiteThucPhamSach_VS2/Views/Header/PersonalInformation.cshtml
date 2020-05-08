@@ -5,8 +5,23 @@
     ViewBag.Title = "Thông tin cá nhân";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
-
-<div class="wrapper-personal-info">
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="wrapper-breadcrumb">
+                <ul class="nav d-flex flex-row border-bottom">
+                    <li class="breadcrumb-item ">
+                        <a href="~/Trang-Chu" class="breadcrumb-link">Trang chủ</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="~/Thong-Tin-Ca-Nhan" class="breadcrumb-link active">Thông tin cá nhân</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper-personal-info mt-5">
     <div class="personal-info">
         <h3 class="personal-info__heading">Thông tin cá nhân</h3>
         <div class="personal-info__content">

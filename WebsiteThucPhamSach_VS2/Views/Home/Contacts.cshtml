@@ -7,7 +7,24 @@
 @{
     var message = TempData["message"] ?? string.Empty;
 }
-<div class="container mt-3">
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="wrapper-breadcrumb">
+                <ul class="nav d-flex flex-row border-bottom">
+                    <li class="breadcrumb-item ">
+                        <a href="~/Trang-Chu" class="breadcrumb-link">Trang chủ</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="~/Lien-He" class="breadcrumb-link active">Liên hệ</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
     <div class="row">
         <div class="col-12 col-lg-5">
             <h3>Gửi tin nhắn cho chúng tôi</h3>

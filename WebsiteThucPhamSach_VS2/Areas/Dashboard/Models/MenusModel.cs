@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WebsiteThucPhamSach_VS2.Models;
+
 namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
 {
     public class MenusModel
     {
         FreshFoodEntities db = new FreshFoodEntities();
+        public List<menu> getMenuOtherOne()
+        {
+            return db.menus.Where(m => m.order != 1).ToList();
+        }
+
         public List<menu> getMenus()
         {
             return db.menus.ToList();

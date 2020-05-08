@@ -1,0 +1,115 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@using WebsiteThucPhamSach_VS2.Common
+@model List<feedback>
+@{
+    ViewBag.Title = "Nhận xét";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container-fluid p-3">
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Quản lý nhận xét</div>
+        <div class="card-body">
+            <div class="table-responsive text-nowrap">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên khách hàng</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Tiêu đề</th>
+                            <th>Số sao</th>
+                            <th>Nội dung nhận xét</th>
+                            <th>Ngày nhận xét</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var name = item.status == true ? "Hiển thị" : "Ẩn";
+                            <tr>
+                                <td>@item.id</td>
+                                <td>@Html.Action("GetNameUserById", "Feedback", new { @id = item.user_id })</td>
+                                <td>@Html.Action("GetNameProductById", "Feedback", new { @id = item.product_id })</td>
+                                <td>@item.title</td>
+                                @*<td>@item.star</td>*@
+                                <td>
+                                    @for (int i = 0; i < Int32.Parse(item.star.ToString()); i++)
+                                    {
+                                        <span class="fas fa-star text-warning"></span>
+                                    }
+                                    @for (int i = Int32.Parse(item.star.ToString()); i < 5; i++)
+                                    {
+                                        <span class="far fa-star text-warning"></span>
+                                    }
+                                </td>
+                                <td>@item.comment</td>
+                                <td>@String.Format("{0:dd/MM/yyyy}", item.start_time)</td>
+                                <td>
+                                    <input type="submit" class="status btn btn-info" data-id="@item.id" value="@name" />
+                                </td>
+                                <td>
+                                    <a href="~/Dashboard/Feedback/View?id=@item.id" class="btnView text-dark  ml-1" data-toggle="tooltip" title="Xem">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    @if (Session[SessionName.adminId].ToString() == "Quản lý")
+                                    {
+                                        <a href="#" data-id="@item.id" class="btnDeleteFeedback" data-toggle="tooltip" title="Xóa">
+                                            <i class="fas fa-trash-alt text-danger"></i>
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".btnDeleteFeedback").click(function () {
+                if (confirm("Bạn có chắc chắn muốn xóa nhận xét này không?")) {
+                    var id = $(this).data("id");
+                    $.ajax({
+                        url: "/Dashboard/Feedback/Delete?id=" + id,
+                        dataType: "json",
+                        type: "POST",
+                        success: function (res) {
+                            if (res.status == true) {
+                                alert("Bạn đã xóa thành công");
+                            } else {
+                                alert("Xóa thất bại");
+                            }
+                            window.location.href = "/Dashboard/Feedback/Index";
+                        }
+                    })
+                } else {
+                    return false;
+                }
+            });
+
+            $(".status").click(function () {
+                let id = $(this).data("id");
+                $.ajax({
+                    url: "/Dashboard/Feedback/ChangeStatusById",
+                    data: { id: id },
+                    dataType: "json",
+                    type: "POST",
+                    success: function (res) {
+                        if (res.status == true) {
+                            location.reload();
+                        }
+                        location.reload();
+                    }
+                })
+            });
+        });
+    </script>
+}

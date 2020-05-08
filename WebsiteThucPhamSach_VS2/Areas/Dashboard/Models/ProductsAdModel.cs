@@ -16,13 +16,16 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
         [Required(ErrorMessage = "Vui lòng chọn hình sản phẩm")]
         public string image { get; set; }
         public string more_images { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập mô tả chi tiết sản phẩm")]
         public string detail { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập từ khóa sản phẩm")]
         public string keywords { get; set; }
-        public Nullable<bool> includeVAT { get; set; }
-        public Nullable<int> sort_order { get; set; }
+        public Nullable<int> includeVAT { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập giá sản phẩm")]
         public Nullable<decimal> price { get; set; }
         public Nullable<decimal> price_promotion { get; set; }
         public Nullable<bool> top_hot { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập chọn danh mục sản phẩm")]
         public Nullable<int> menu_id { get; set; }
         public Nullable<System.DateTime> start_time { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập tổng số lượng sản phẩm")]
@@ -31,6 +34,8 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
         public Nullable<bool> special { get; set; }
         public Nullable<int> view_count { get; set; }
         public Nullable<bool> status { get; set; }
+        public virtual menu menu { get; set; }
+
         FreshFoodEntities db = new FreshFoodEntities();
         public List<product> getProducts()
         {
@@ -54,17 +59,16 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
             product.detail = productAd.detail;
             product.keywords = productAd.keywords;
             product.includeVAT = productAd.includeVAT;
-            product.sort_order = productAd.sort_order;
             product.price = productAd.price;
             product.price_promotion = productAd.price_promotion;
-            product.top_hot = productAd.top_hot;
-            product.menu_id = productAd.menu_id;
+            product.top_hot = false;
+            product.menu_id = int.Parse(productAd.menu_id.ToString());
             product.start_time = productAd.start_time;
             product.total_product = productAd.total_product;
-            product.total_sold = productAd.total_sold;
-            product.special = productAd.special;
-            product.view_count = productAd.view_count;
-            product.status = productAd.status;
+            product.total_sold = 0;
+            product.special = false;
+            product.view_count = 0;
+            product.status = true;
             db.products.Add(product);
             db.SaveChanges();
             return true;

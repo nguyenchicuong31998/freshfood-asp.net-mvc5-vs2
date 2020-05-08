@@ -59,8 +59,6 @@
           <Property Name="end_time" Type="datetime" />
           <Property Name="status" Type="bit" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FreshFood.dbo.events' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="events">
           <Key>
             <PropertyRef Name="id" />
@@ -73,6 +71,7 @@ warning 6002: The table/view 'FreshFood.dbo.events' does not have a primary key 
           <Property Name="start_time" Type="datetime" />
           <Property Name="end_time" Type="datetime" />
           <Property Name="top_hot" Type="bit" />
+          <Property Name="total_view" Type="int" />
           <Property Name="status" Type="bit" />
         </EntityType>
         <EntityType Name="feedbacks">
@@ -82,6 +81,7 @@ warning 6002: The table/view 'FreshFood.dbo.events' does not have a primary key 
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user_id" Type="int" />
           <Property Name="product_id" Type="int" />
+          <Property Name="title" Type="nvarchar" MaxLength="500" />
           <Property Name="star" Type="int" />
           <Property Name="comment" Type="nvarchar(max)" />
           <Property Name="start_time" Type="datetime" />
@@ -107,11 +107,10 @@ warning 6002: The table/view 'FreshFood.dbo.events' does not have a primary key 
           <Property Name="name" Type="nvarchar" MaxLength="500" />
           <Property Name="description" Type="nvarchar" MaxLength="500" />
           <Property Name="image" Type="nvarchar" MaxLength="1000" />
-          <Property Name="more_images" Type="xml" />
+          <Property Name="more_images" Type="nvarchar(max)" />
           <Property Name="detail" Type="nvarchar(max)" />
           <Property Name="keywords" Type="varchar" MaxLength="400" />
-          <Property Name="includeVAT" Type="bit" />
-          <Property Name="sort_order" Type="int" />
+          <Property Name="includeVAT" Type="int" />
           <Property Name="price" Type="decimal" Precision="20" Scale="0" />
           <Property Name="price_promotion" Type="decimal" Precision="20" Scale="0" />
           <Property Name="top_hot" Type="bit" />
@@ -146,7 +145,7 @@ warning 6002: The table/view 'FreshFood.dbo.events' does not have a primary key 
           <Property Name="start_time" Type="datetime" />
           <Property Name="status" Type="bit" />
         </EntityType>
-        <Association Name="FK__events__admin_id__0A9D95DB">
+        <Association Name="FK__events__admin_id__0D7A0286">
           <End Role="admins" Type="Self.admins" Multiplicity="0..1" />
           <End Role="events" Type="Self.events" Multiplicity="*" />
           <ReferentialConstraint>
@@ -187,25 +186,13 @@ warning 6002: The table/view 'FreshFood.dbo.events' does not have a primary key 
           <EntitySet Name="admins" EntityType="Self.admins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="advertises" EntityType="Self.advertises" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="contacts" EntityType="Self.contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="events" EntityType="Self.events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="feedbacks" EntityType="Self.feedbacks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="menus" EntityType="Self.menus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="events" EntityType="Self.events" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [events].[id] AS [id], 
-    [events].[admin_id] AS [admin_id], 
-    [events].[image] AS [image], 
-    [events].[title] AS [title], 
-    [events].[content] AS [content], 
-    [events].[start_time] AS [start_time], 
-    [events].[end_time] AS [end_time], 
-    [events].[top_hot] AS [top_hot], 
-    [events].[status] AS [status]
-    FROM [dbo].[events] AS [events]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK__events__admin_id__0A9D95DB" Association="Self.FK__events__admin_id__0A9D95DB">
+          <AssociationSet Name="FK__events__admin_id__0D7A0286" Association="Self.FK__events__admin_id__0D7A0286">
             <End Role="admins" EntitySet="admins" />
             <End Role="events" EntitySet="events" />
           </AssociationSet>
@@ -226,12 +213,6 @@ warning 6002: The table/view 'FreshFood.dbo.events' does not have a primary key 
           <EntitySet Name="menus" EntityType="FreshFoodModel.menu" />
           <EntitySet Name="roles" EntityType="FreshFoodModel.role" />
           <EntitySet Name="advertises" EntityType="FreshFoodModel.advertis" />
-          <EntitySet Name="products" EntityType="FreshFoodModel.product" />
-          <AssociationSet Name="FK__products__menu_i__5EBF139D" Association="FreshFoodModel.FK__products__menu_i__5EBF139D">
-            <End Role="menu" EntitySet="menus" />
-            <End Role="product" EntitySet="products" />
-          </AssociationSet>
-          <EntitySet Name="feedbacks" EntityType="FreshFoodModel.feedback" />
           <EntitySet Name="abouts" EntityType="FreshFoodModel.about" />
           <EntitySet Name="contacts" EntityType="FreshFoodModel.contact" />
           <EntitySet Name="admins" EntityType="FreshFoodModel.admin" />
@@ -241,9 +222,15 @@ warning 6002: The table/view 'FreshFood.dbo.events' does not have a primary key 
           </AssociationSet>
           <EntitySet Name="users" EntityType="FreshFoodModel.user" />
           <EntitySet Name="events" EntityType="FreshFoodModel.event" />
-          <AssociationSet Name="FK__events__admin_id__0A9D95DB" Association="FreshFoodModel.FK__events__admin_id__0A9D95DB">
+          <AssociationSet Name="FK__events__admin_id__0D7A0286" Association="FreshFoodModel.FK__events__admin_id__0D7A0286">
             <End Role="admin" EntitySet="admins" />
             <End Role="event" EntitySet="events" />
+          </AssociationSet>
+          <EntitySet Name="feedbacks" EntityType="FreshFoodModel.feedback" />
+          <EntitySet Name="products" EntityType="FreshFoodModel.product" />
+          <AssociationSet Name="FK__products__menu_i__5EBF139D" Association="FreshFoodModel.FK__products__menu_i__5EBF139D">
+            <End Role="menu" EntitySet="menus" />
+            <End Role="product" EntitySet="products" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="menu">
@@ -280,56 +267,6 @@ warning 6002: The table/view 'FreshFood.dbo.events' does not have a primary key 
           <Property Name="order" Type="Int32" />
           <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="target" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="status" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="product">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="image" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="more_images" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="keywords" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="includeVAT" Type="Boolean" />
-          <Property Name="sort_order" Type="Int32" />
-          <Property Name="price" Type="Decimal" Precision="20" Scale="0" />
-          <Property Name="price_promotion" Type="Decimal" Precision="20" Scale="0" />
-          <Property Name="top_hot" Type="Boolean" />
-          <Property Name="menu_id" Type="Int32" />
-          <Property Name="start_time" Type="DateTime" Precision="3" />
-          <Property Name="total_product" Type="Int32" />
-          <Property Name="total_sold" Type="Int32" />
-          <Property Name="special" Type="Boolean" />
-          <Property Name="view_count" Type="Int32" />
-          <Property Name="status" Type="Boolean" />
-          <NavigationProperty Name="menu" Relationship="FreshFoodModel.FK__products__menu_i__5EBF139D" FromRole="product" ToRole="menu" />
-        </EntityType>
-        <Association Name="FK__products__menu_i__5EBF139D">
-          <End Type="FreshFoodModel.menu" Role="menu" Multiplicity="0..1" />
-          <End Type="FreshFoodModel.product" Role="product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="menu">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="product">
-              <PropertyRef Name="menu_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="feedback">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="user_id" Type="Int32" />
-          <Property Name="product_id" Type="Int32" />
-          <Property Name="star" Type="Int32" />
-          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="start_time" Type="DateTime" Precision="3" />
           <Property Name="status" Type="Boolean" />
         </EntityType>
         <EntityType Name="about">
@@ -371,7 +308,7 @@ warning 6002: The table/view 'FreshFood.dbo.events' does not have a primary key 
           <Property Name="start_time" Type="DateTime" Precision="3" />
           <Property Name="status" Type="Boolean" />
           <NavigationProperty Name="role1" Relationship="FreshFoodModel.pk_admin_role" FromRole="admin" ToRole="role" />
-          <NavigationProperty Name="events" Relationship="FreshFoodModel.FK__events__admin_id__0A9D95DB" FromRole="admin" ToRole="event" />
+          <NavigationProperty Name="events" Relationship="FreshFoodModel.FK__events__admin_id__0D7A0286" FromRole="admin" ToRole="event" />
         </EntityType>
         <Association Name="pk_admin_role">
           <End Type="FreshFoodModel.role" Role="role" Multiplicity="0..1" />
@@ -413,9 +350,10 @@ warning 6002: The table/view 'FreshFood.dbo.events' does not have a primary key 
           <Property Name="end_time" Type="DateTime" Precision="3" />
           <Property Name="top_hot" Type="Boolean" />
           <Property Name="status" Type="Boolean" />
-          <NavigationProperty Name="admin" Relationship="FreshFoodModel.FK__events__admin_id__0A9D95DB" FromRole="event" ToRole="admin" />
+          <NavigationProperty Name="admin" Relationship="FreshFoodModel.FK__events__admin_id__0D7A0286" FromRole="event" ToRole="admin" />
+          <Property Name="total_view" Type="Int32" />
         </EntityType>
-        <Association Name="FK__events__admin_id__0A9D95DB">
+        <Association Name="FK__events__admin_id__0D7A0286">
           <End Type="FreshFoodModel.admin" Role="admin" Multiplicity="0..1" />
           <End Type="FreshFoodModel.event" Role="event" Multiplicity="*" />
           <ReferentialConstraint>
@@ -424,6 +362,56 @@ warning 6002: The table/view 'FreshFood.dbo.events' does not have a primary key 
             </Principal>
             <Dependent Role="event">
               <PropertyRef Name="admin_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="feedback">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="product_id" Type="Int32" />
+          <Property Name="title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="star" Type="Int32" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="start_time" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="more_images" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="keywords" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="includeVAT" Type="Int32" />
+          <Property Name="price" Type="Decimal" Precision="20" Scale="0" />
+          <Property Name="price_promotion" Type="Decimal" Precision="20" Scale="0" />
+          <Property Name="top_hot" Type="Boolean" />
+          <Property Name="menu_id" Type="Int32" />
+          <Property Name="start_time" Type="DateTime" Precision="3" />
+          <Property Name="total_product" Type="Int32" />
+          <Property Name="total_sold" Type="Int32" />
+          <Property Name="special" Type="Boolean" />
+          <Property Name="view_count" Type="Int32" />
+          <Property Name="status" Type="Boolean" />
+          <NavigationProperty Name="menu" Relationship="FreshFoodModel.FK__products__menu_i__5EBF139D" FromRole="product" ToRole="menu" />
+        </EntityType>
+        <Association Name="FK__products__menu_i__5EBF139D">
+          <End Type="FreshFoodModel.menu" Role="menu" Multiplicity="0..1" />
+          <End Type="FreshFoodModel.product" Role="product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="menu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="menu_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -466,45 +454,6 @@ warning 6002: The table/view 'FreshFood.dbo.events' does not have a primary key 
                 <ScalarProperty Name="start_time" ColumnName="start_time" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="link" ColumnName="link" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="products">
-            <EntityTypeMapping TypeName="FreshFoodModel.product">
-              <MappingFragment StoreEntitySet="products">
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="view_count" ColumnName="view_count" />
-                <ScalarProperty Name="special" ColumnName="special" />
-                <ScalarProperty Name="total_sold" ColumnName="total_sold" />
-                <ScalarProperty Name="total_product" ColumnName="total_product" />
-                <ScalarProperty Name="start_time" ColumnName="start_time" />
-                <ScalarProperty Name="menu_id" ColumnName="menu_id" />
-                <ScalarProperty Name="top_hot" ColumnName="top_hot" />
-                <ScalarProperty Name="price_promotion" ColumnName="price_promotion" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="sort_order" ColumnName="sort_order" />
-                <ScalarProperty Name="includeVAT" ColumnName="includeVAT" />
-                <ScalarProperty Name="keywords" ColumnName="keywords" />
-                <ScalarProperty Name="detail" ColumnName="detail" />
-                <ScalarProperty Name="more_images" ColumnName="more_images" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="code" ColumnName="code" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="feedbacks">
-            <EntityTypeMapping TypeName="FreshFoodModel.feedback">
-              <MappingFragment StoreEntitySet="feedbacks">
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="start_time" ColumnName="start_time" />
-                <ScalarProperty Name="comment" ColumnName="comment" />
-                <ScalarProperty Name="star" ColumnName="star" />
-                <ScalarProperty Name="product_id" ColumnName="product_id" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -570,6 +519,7 @@ warning 6002: The table/view 'FreshFood.dbo.events' does not have a primary key 
           <EntitySetMapping Name="events">
             <EntityTypeMapping TypeName="FreshFoodModel.event">
               <MappingFragment StoreEntitySet="events">
+                <ScalarProperty Name="total_view" ColumnName="total_view" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="top_hot" ColumnName="top_hot" />
                 <ScalarProperty Name="end_time" ColumnName="end_time" />
@@ -578,6 +528,45 @@ warning 6002: The table/view 'FreshFood.dbo.events' does not have a primary key 
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="admin_id" ColumnName="admin_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="feedbacks">
+            <EntityTypeMapping TypeName="FreshFoodModel.feedback">
+              <MappingFragment StoreEntitySet="feedbacks">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="star" ColumnName="star" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="FreshFoodModel.product">
+              <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="view_count" ColumnName="view_count" />
+                <ScalarProperty Name="special" ColumnName="special" />
+                <ScalarProperty Name="total_sold" ColumnName="total_sold" />
+                <ScalarProperty Name="total_product" ColumnName="total_product" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+                <ScalarProperty Name="top_hot" ColumnName="top_hot" />
+                <ScalarProperty Name="price_promotion" ColumnName="price_promotion" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="includeVAT" ColumnName="includeVAT" />
+                <ScalarProperty Name="keywords" ColumnName="keywords" />
+                <ScalarProperty Name="detail" ColumnName="detail" />
+                <ScalarProperty Name="more_images" ColumnName="more_images" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

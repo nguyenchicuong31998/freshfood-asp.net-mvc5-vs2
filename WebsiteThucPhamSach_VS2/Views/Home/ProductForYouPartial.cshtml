@@ -11,14 +11,26 @@
                     product.image = product.image != " " ? product.image : "https://via.placeholder.com/250x250";
                 }
                 @if (product.price_promotion != null) {
-                    <span class="sale">Giảm giá
-                    <span class="d-inline">@product.price_promotion%</span>
+                    <span class="sale saleMoveTop">Giảm giá
+                        <span class="d-inline">
+                            @product.price_promotion%
+                        </span>
                     </span>
+                    <span class="new">Mới</span>
+                    <span class="featured featuredMoveTop">Bán chạy</span>
                 }
                 <img class="img-thumbnail" src="@Url.Content(product.image)" />
                 <div class="featured-item-content pt-3 pb-3">
                     <a href="~/Chi-Tiet-San-Pham?id=@product.id" class="p-2">@product.name</a>
-                    <p class="p-2 d-block">@product.price</p>
+                    <p class="p-2 d-block">
+                        <del>@product.price</del>
+                        <span>
+                            @{
+                                var giamGia = product.price * ((100 - product.price_promotion) / 100);
+                            }
+                            @giamGia
+                        </span>
+                    </p>
                 </div>
             </div>
         }

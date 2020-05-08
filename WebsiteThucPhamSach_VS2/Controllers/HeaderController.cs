@@ -38,8 +38,11 @@ namespace WebsiteThucPhamSach_VS2.Controllers
                 {
                     Session["display_name"] = results.display_name;
                     Session["id"] = results.id;
-                    Session["url"] = Request.Url.AbsoluteUri;
                     Session.Timeout = 30;
+                    if (Session["url"] != null)
+                    {
+                        return Redirect(Session["url"].ToString());
+                    }
                     return Redirect("~/Trang-Chu");
                 }
                 else

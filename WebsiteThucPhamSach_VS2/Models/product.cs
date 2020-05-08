@@ -22,8 +22,7 @@ namespace WebsiteThucPhamSach_VS2.Models
         public string more_images { get; set; }
         public string detail { get; set; }
         public string keywords { get; set; }
-        public Nullable<bool> includeVAT { get; set; }
-        public Nullable<int> sort_order { get; set; }
+        public Nullable<int> includeVAT { get; set; }
         public Nullable<decimal> price { get; set; }
         public Nullable<decimal> price_promotion { get; set; }
         public Nullable<bool> top_hot { get; set; }

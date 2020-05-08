@@ -5,21 +5,21 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="16d8eb76cb8a4fbe84808d337b39a4cb" Name="Diagram1" ZoomLevel="86">
-        <EntityTypeShape EntityType="FreshFoodModel.menu" Width="1.5" PointX="7.375" PointY="5.75" />
+        <EntityTypeShape EntityType="FreshFoodModel.menu" Width="1.5" PointX="5.875" PointY="5.25" />
         <EntityTypeShape EntityType="FreshFoodModel.role" Width="1.5" PointX="7.375" PointY="1.625" />
-        <EntityTypeShape EntityType="FreshFoodModel.advertis" Width="1.5" PointX="5.375" PointY="8.75" />
+        <EntityTypeShape EntityType="FreshFoodModel.advertis" Width="1.5" PointX="3.25" PointY="7.625" />
         <EntityTypeShape EntityType="FreshFoodModel.contact1" Width="1.5" PointX="7.375" PointY="8.75" />
         <EntityTypeShape EntityType="FreshFoodModel.event1" Width="1.5" PointX="3" PointY="8.625" />
-        <EntityTypeShape EntityType="FreshFoodModel.product" Width="1.5" PointX="9.625" PointY="5.375" />
-        <AssociationConnector Association="FreshFoodModel.FK__products__menu_i__5EBF139D" />
-        <EntityTypeShape EntityType="FreshFoodModel.feedback" Width="1.5" PointX="0.75" PointY="8.75" />
         <EntityTypeShape EntityType="FreshFoodModel.about" Width="1.5" PointX="0.75" PointY="5.75" />
         <EntityTypeShape EntityType="FreshFoodModel.contact" Width="1.5" PointX="3.375" PointY="4.75" />
         <EntityTypeShape EntityType="FreshFoodModel.admin" Width="1.5" PointX="9.625" PointY="0.875" />
         <AssociationConnector Association="FreshFoodModel.pk_admin_role" />
         <EntityTypeShape EntityType="FreshFoodModel.user" Width="1.5" PointX="0.75" PointY="1" />
         <EntityTypeShape EntityType="FreshFoodModel.event" Width="1.5" PointX="11.875" PointY="1.125" />
-        <AssociationConnector Association="FreshFoodModel.FK__events__admin_id__0A9D95DB" />
+        <AssociationConnector Association="FreshFoodModel.FK__events__admin_id__0D7A0286" />
+        <EntityTypeShape EntityType="FreshFoodModel.feedback" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="FreshFoodModel.product" Width="1.5" PointX="8.125" PointY="6" />
+        <AssociationConnector Association="FreshFoodModel.FK__products__menu_i__5EBF139D" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

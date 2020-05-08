@@ -1,0 +1,43 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model feedback
+@{
+    ViewBag.Title = "Xem thông tin nhận xét";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h3 class="text-center font-weight-bold mb-3">Thông tin nhận xét</h3>
+            <div class="container">
+                <div class="row jumbotron">
+                    <div class="col-2 p-3">Id:</div>
+                    <div class="col-10 p-3">@Model.id</div>
+                    <div class="col-2 p-3">Họ và tên:</div>
+                    <div class="col-10 p-3">@Html.Action("GetNameUserById", "Feedback", new { @id = Model.user_id })</div>
+                    <div class="col-2  p-3">Tên sản phẩm:</div>
+                    <div class="col-10 p-3">@Html.Action("GetNameProductById", "Feedback", new { @id = Model.product_id })</div>
+                    <div class="col-2 p-3">Tiêu đề:</div>
+                    <div class="col-10 p-3">@Model.title</div>
+                    <div class="col-2 p-3">Số sao:</div>
+                    <div class="col-10 p-3">@Model.star</div>
+                    <div class="col-2 p-3">Nhận xét:</div>
+                    <div class="col-10 p-3">@Model.comment</div>
+                    <div class="col-2 p-3">Ngày nhận xét:</div>
+                    <div class="col-10 p-3">@String.Format("{0:dd/MM/yyyy}", Model.start_time)</div>
+                    <div class="col-2 p-3">Trạng thái:</div>
+                    @{
+                        string name = @Model.status == true ? "Hiển thị" : "Ẩn";
+                    }
+                    <div class="col-10 p-3">@name</div>
+                    <div class="col-12 p-3">
+                        <a class="btn btn-sm p-2 btn-success" href="~/Dashboard/Feedback/Index">Quay lại</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

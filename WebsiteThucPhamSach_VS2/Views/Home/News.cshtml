@@ -1,8 +1,79 @@
-﻿
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model List<@event>
+@using WebsiteThucPhamSach_VS2.Common;
 @{
-    ViewBag.Title = "News";
+    ViewBag.Title = "Tin tức";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    Utils utils = new Utils();
 }
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="wrapper-breadcrumb">
+                <ul class="nav d-flex flex-row border-bottom">
+                    <li class="breadcrumb-item">
+                        <a href="~/Trang-Chu" class="breadcrumb-link">Trang chủ</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="~/Tin-Tuc" class="breadcrumb-link active">Tin tức</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-<h2>News</h2>
+<div class="container mt-4 mb-4">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-center font-weight-bold text-uppercase">@ViewBag.title</h2>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-6 col-lg-3 ">
+            <div class="card mt-4 mb-4">
+                <div class="card-header bg-green  text-white p-4">
+                    BÀI VIẾT MỚI
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var item in Model)
+                    {
+                        if (item.top_hot == true && item.status == true)
+                        {
+                            <li class="list-group-item d-flex flex-row scale-effect">
+                                <img class="img-small mr-3 img-custome" src="@Url.Content(item.image)" alt="lỗi hình ảnh"/>
+                                <a href="~/Chi-Tiet-Tin-Tuc/@item.id" class="title font-weight-bold text-black text-opacity" data-toggle="tooltip" title="@item.title">@utils.add3Dots(item.title, 39)</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-9">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-12 col-sm-12 col-lg-4 col-xl-4">
+                        <div class="card card-hover mt-4 mb-2">
+                            <a href="~/Chi-Tiet-Tin-Tuc/@item.id">
+                               <img class="card-img-top img-custome" src="@Url.Content(item.image)" alt="lỗi hình ảnh">
+                            </a>
+                            <div class="card-body card-body-new">
+                                <div class="new-title">
+                                    <a href="~/Chi-Tiet-Tin-Tuc/@item.id" class="card-title font-weight-bold text-card-title text-black text-opacity" data-toggle="tooltip" title="@item.title">
+                                        @utils.add3Dots(item.title, 70)
+                                    </a>
+                                </div>
+                                <div class="font-weight-normal font-italic text-date">@String.Format("{0:dd/MM/yyyy}",item.start_time)</div>
+                                <p class="card-text">@Html.Raw(utils.add3Dots(item.content, 110))</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
 

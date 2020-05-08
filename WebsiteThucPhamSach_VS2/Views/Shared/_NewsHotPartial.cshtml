@@ -1,12 +1,27 @@
-﻿
-
-            <h2 class="title-share">Tin Tức Nổi Bật</h2>
-            <div class="news-hot">
-                <div>your 1</div>
-                <div>your 2</div>
-                <div>your 3</div>
-                <div>your 4</div>
-                <div>your 5</div>
-                <div>your 6</div>
-                <div>your 7</div>
+﻿@using WebsiteThucPhamSach_VS2.Models
+@using WebsiteThucPhamSach_VS2.Common
+@{ 
+    var listEvents = new EventsModel().getEventByTopHot();
+    Utils utils = new Utils();
+}
+<h2 class="title-share">Tin Tức Nổi Bật</h2>
+<div class="news-hot">
+    @foreach (var item in listEvents)
+    {
+        <div class="card mt-3 ml-3">
+            <a href="~/Chi-Tiet-Tin-Tuc/@item.id">
+                <img class="card-img-top img-custome" src="@Url.Content(item.image)" alt="lỗi hình ảnh">
+            </a>
+            <div class="card-body card-home-new">
+                <div class="new-home-title">
+                    <a href="~/Chi-Tiet-Tin-Tuc/@item.id" class="card-title font-weight-bold text-card-title text-black text-opacity" data-toggle="tooltip" title="@item.title">
+                        @utils.add3Dots(item.title, 70)
+                    </a>
+                </div>
+                <div class="font-weight-normal font-italic text-date">@String.Format("{0:dd/MM/yyyy}", item.start_time)</div>
+                <p class="card-text">@Html.Raw(utils.add3Dots(item.content, 140))</p>
             </div>
+        </div>
+    }
+
+</div>

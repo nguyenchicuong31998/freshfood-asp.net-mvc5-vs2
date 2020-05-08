@@ -78,6 +78,12 @@
       <HintPath>..\packages\LibSassHost.1.2.10\lib\net45\LibSassHost.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.0.0\lib\netstandard1.1\System.Buffers.dll</HintPath>
@@ -168,12 +174,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Dashboard\Controllers\AboutController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\BillController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\ContactController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\EventController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\FeedbackController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\MenuController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\ProductController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\RoleController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\StatisticalController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\UnitController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\UserController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\Dashboard\Models\UsersAdModel.cs" />
@@ -181,7 +191,6 @@
     <Compile Include="Models\AboutsModel.cs" />
     <Compile Include="Areas\Dashboard\Models\AdminsModel.cs" />
     <Compile Include="Areas\Dashboard\Models\LoginModel.cs" />
-    <Compile Include="Areas\Dashboard\Models\MenusModel.cs" />
     <Compile Include="Areas\Dashboard\Models\ProductsAdModel.cs" />
     <Compile Include="Areas\Dashboard\Models\RolesModel.cs" />
     <Compile Include="Common\SessionName.cs" />
@@ -232,9 +241,11 @@
     <Compile Include="Models\feedback.cs">
       <DependentUpon>DBFreshFood.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FeedbacksModel.cs" />
     <Compile Include="Models\menu.cs">
       <DependentUpon>DBFreshFood.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Dashboard\Models\MenusModel.cs" />
     <Compile Include="Models\PersonalInfoModel.cs" />
     <Compile Include="Models\product.cs">
       <DependentUpon>DBFreshFood.tt</DependentUpon>
@@ -1244,6 +1255,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\Slick\ajax-loader.gif" />
     <Content Include="Content\Slick\fonts\slick.svg" />
     <Content Include="Content\Slick\slick-theme.css" />
@@ -1403,6 +1415,9 @@
     <Content Include="Img\tao-xanh-ngot-my.jpg" />
     <Content Include="Img\tao.jpg" />
     <Content Include="Img\thanh-long.jpg" />
+    <Content Include="Img\thanhlong1.jpg" />
+    <Content Include="Img\thanhlong2.jpg" />
+    <Content Include="Img\thanhlong3.jpg" />
     <Content Include="Img\thide.jpg" />
     <Content Include="Img\thit-bo-my.jpg" />
     <Content Include="Img\thitheo.png" />
@@ -1520,6 +1535,9 @@
     <Content Include="Content\Slick\fonts\slick.woff" />
     <Content Include="Content\Slick\fonts\slick.ttf" />
     <Content Include="Content\Slick\fonts\slick.eot" />
+    <Content Include="Css\Client\_news.css" />
+    <Content Include="Areas\Dashboard\Views\Feedback\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Feedback\View.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1588,9 +1606,16 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Home\DetailNew.cshtml" />
+    <Content Include="Views\Home\AddFeedbackPartial.cshtml" />
+    <Content Include="Views\Home\DisplayFeedbackPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Dashboard\Views\Bill\" />
+    <Folder Include="Areas\Dashboard\Views\Statistical\" />
+    <Folder Include="Areas\Dashboard\Views\Unit\" />
+    <Folder Include="Views\Menus\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -106,5 +106,40 @@ namespace WebsiteThucPhamSach_VS2.Common
             }
             return false;
         }
+
+        public string add3Dots(string text,int limit)
+        {
+            var dots = "...";
+            if (text.Length > limit)
+            {
+                text = text.Substring(0, limit) + dots;
+            }
+            return text;
+        }
+
+
+        public string FormatPrice(string _strInput)
+        {
+            string strInput = _strInput;
+            int Length = 0;
+            if (strInput.IndexOf('.') > 0)
+                Length = strInput.Length - (strInput.Length - strInput.IndexOf('.'));
+            else
+                Length = strInput.Length;
+            string afterFormat = "";
+            if (Length <= 3)
+                afterFormat = strInput;
+            else if (Length > 3)
+            {
+                afterFormat = strInput.Insert(Length - 3, ".");
+                Length = afterFormat.IndexOf(".");
+                while (Length > 3)
+                {
+                    afterFormat = afterFormat.Insert(Length - 3, ".");
+                    Length = Length - 3;
+                }
+            }
+            return afterFormat;
+        }
     }
 }

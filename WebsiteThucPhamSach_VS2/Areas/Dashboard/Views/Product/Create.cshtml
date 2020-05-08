@@ -2,55 +2,132 @@
 @model ProductsAdModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Thêm sản phẩm";
     Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
 }
-<div class="container">
-    <div class="row d-flex justify-content-center">
-        <div class="col-8">
-            <div class="box">
-                <div class="box-title forgot-passwrod">THÊM SẢN PHẨM</div>
-                @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    @Html.ValidationSummary(true)
-                    <div class="form-group">
-                        <label for="role-name">Mã Sản Phẩm</label>
-                        @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.code, new { @class = "form-control input-share", @Placeholder = "Vui lòng nhập mã sản phẩm" })
-                        @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.code, "", new { @class = "text-error" })
-                    </div>
-                    <div class="form-group">
-                        <label for="role-name">Tên Sản Phẩm*</label>
-                        @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.name, new { @class = "form-control input-share", @Placeholder = "Vui lòng nhập tên sản phẩm" })
+
+<div class="container mt-4">
+    <div class="row justify-content-lg-center">
+        <div class="col-12 col-lg-8">
+            <h3 class="font-weight-bold text-center text-uppercase">Thêm sản phẩm</h3>
+            @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.ValidationSummary(true);
+                @*<div class="form-group mt-4 mb-4 row">
+                <label class="col-3 col-md-2 col-form-label">Mã sản phẩm<span class="text-danger">*</span>:</label>
+                <div class="col-9 col-md-10">
+                    @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.code, new { @class = "form-control input-share input-size input-height", @Placeholder = "Mã sản phẩm" })
+                    @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.code, "", new { @class = "text-error" })
+                </div>
+            </div>*@
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-3 col-form-label">Tên sản phẩm<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-9">
+                        @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.name, new { @class = "form-control input-share input-size input-height", @Placeholder = "Tên sản phẩm*" })
                         @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.name, "", new { @class = "text-error" })
                     </div>
-                    <div class="form-group">
-                        <label for="role-name">Mô Tả</label>
-                        @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.description, new { @class = "form-control input-share", @Placeholder = "Vui lòng nhập mô tả sản phẩm" })
-                        @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.description, "", new { @class = "text-error" })
+                </div>
+                @*<div class="form-group mt-4 mb-4 row">
+                <label class="col-3 col-md-2 col-form-label">Mô tả<span class="text-danger">*</span>:</label>
+                <div class="col-9 col-md-10">
+                    @Html.TextAreaFor(ProductsAdModel => ProductsAdModel.description, new { @id = "editor1" })
+                    @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.description, "", new { @class = "text-error" })
+                </div>
+            </div>*@
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-3 col-form-label">Hình ảnh<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-9">
+                        @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.image, new { @type = "file", @class = "btn btn-sm d-block" })
+                        @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.image, "", new { @class = "text-error" })
                     </div>
-                    <div class="form-group">
-                        <label for="role-name">Nội dung</label>
-                        @Html.TextAreaFor(ProductsAdModel => ProductsAdModel.description, new { @id = "editor1" })
-                        @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.description, "", new { @class = "text-error" })
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-3 col-form-label">Hình ảnh chi tiết<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-9">
+                        @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.more_images, new { @type = "file", @class = "btn btn-sm d-block" })
+                        @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.more_images, "", new { @class = "text-error" })
                     </div>
-                    <div class="form-group">
-                        <label for="role-name">Hình ảnh*</label>
-                        <div>
-                            @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.image, new { @type = "file", @class = "btn btn-sm d-block" })
-                            @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.image, "", new { @class = "text-error" })
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-3 col-form-label">Nội dung<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-9">
+                        @Html.TextAreaFor(ProductsAdModel => ProductsAdModel.detail, new { @id = "editor1" })
+                        @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.detail, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-3 col-form-label">Giá tiền<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-9">
+                        @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.price, new { @type = "number", @value = "10", @min = "1", @max = "1000000000", @class = "form-control input-share input-size input-height", @Placeholder = "Giá tiền*" })
+                        @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.price, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-3 col-form-label">Phần trăm giảm giá:</label>
+                    <div class="col-9 col-md-9">
+                        <div class="row no-gutters">
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.price_promotion, new { @type = "number", @min = "0", @max = "100", @class = "form-control input-share input-size input-height", @Placeholder = "Phần trăm giảm giá" })
+                                @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.price_promotion, "", new { @class = "text-error" })
+                            </div>
+                            <div class="col-md-1 offset-md-1 d-flex align-items-center">
+                                <div>%</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="role-name">Tổng số lượng*</label>
-                        @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.total_product, new { @class = "form-control input-share", @Placeholder = "Vui lòng nhập tên sản phẩm" })
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-3 col-form-label">Từ khóa<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-9">
+                        @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.keywords, new { @class = "form-control input-share input-size input-height", @Placeholder = "Từ khóa*" })
+                        @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.keywords, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-3 col-form-label">Thuế VAT<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-9">
+                        <div class="row no-gutters">
+                            <div class="col-md-10 ">
+                                @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.includeVAT, new { @type = "number", @Value = "15", @min = "1", @max = "100", @class = "form-control input-share input-size input-height", @Placeholder = "Thuế*" })
+                                @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.includeVAT, "", new { @class = "text-error" })
+                            </div>
+                            <div class="col-md-1 offset-md-1 d-flex align-items-center">
+                                <div>%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-3 col-form-label">Danh mục<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-9">
+                        @Html.DropDownListFor(ProductsAdModel => ProductsAdModel.menu_id, (IEnumerable<SelectListItem>)ViewBag.menus, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.menu_id, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-3 col-form-label">Tổng số lượng<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-9">
+                        @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.total_product, new { @type = "number", @value = "1", @min = "1", @max = "10000", @class = "form-control input-share input-size input-height", @Placeholder = "Tổng số lượng*" })
                         @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.total_product, "", new { @class = "text-error" })
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <input type="submit" onclick="return roleValidate();" class="btn btn-primary submit-product" value="Thêm" />
+                <div class="form-group mt-4 mb-4 row">
+                    <div class="col-3 col-md-3"></div>
+                    <div class="col-9 col-md-9">
+                        <input type="submit" class="btn btn-sm btn-primary p-2" value="Thêm" />
+                        <a href="~/Dashboard/Product/Index" class="btn btn-sm btn-success p-2">Quay lại</a>
                     </div>
-                }
-            </div>
+                </div>
+            }
         </div>
     </div>
 </div>

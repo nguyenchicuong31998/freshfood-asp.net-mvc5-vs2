@@ -1,0 +1,65 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@using WebsiteThucPhamSach_VS2.Common
+@model @event
+@{
+    var listEvents = new EventsModel().getEventByTopHot();
+    Utils utils = new Utils();
+    ViewBag.Title = "Chi tiết tin tức";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="wrapper-breadcrumb">
+                <ul class="nav d-flex flex-row border-bottom">
+                    <li class="breadcrumb-item ">
+                        <a href="~/Trang-Chu" class="breadcrumb-link">Trang chủ</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="~/Tin-Tuc" class="breadcrumb-link">Tin tức</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="~/Chi-Tiet-Tin-Tuc/@Model.id" class="breadcrumb-link active">@Model.title</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12 col-lg-3">
+            <div class="card mt-4 mb-4">
+                <div class="card-header bg-green  text-white p-4">
+                    BÀI VIẾT MỚI
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var item in listEvents)
+                    {
+                        if (item.top_hot == true)
+                        {
+                            <li class="list-group-item d-flex flex-row scale-effect">
+                                <img class="img-small mr-3 img-custome" src="@Url.Content(item.image)" alt="lỗi hình ảnh" />
+                                <a href="~/Chi-Tiet-Tin-Tuc/@item.id" class="title font-weight-bold text-black text-opacity" data-toggle="tooltip" title="@item.title">@utils.add3Dots(item.title, 39)</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-12 col-lg-9">
+            <div class="row">
+                <div class="col-12 mt-4 wrapper-box-shadow p-5">
+                    <h2 class="text-center font-weight-bold mb-5 p-4">
+                        @Model.title
+                    </h2>
+                    <div class="mt-2 text-justify">
+                        @Html.Raw(Model.content)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

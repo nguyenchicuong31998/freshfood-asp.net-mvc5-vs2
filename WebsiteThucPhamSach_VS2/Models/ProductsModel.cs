@@ -14,7 +14,7 @@ namespace WebsiteThucPhamSach_VS2.Models
 
         public List<product> getProducts()
         {
-            return db.products.Where(p => p.status == true).OrderBy(r => Guid.NewGuid()).ToList();
+            return db.products.Where(p => p.status == true).OrderByDescending(p => p.start_time).Skip(12).OrderBy(r => Guid.NewGuid()).ToList();
         }
         public product getProductById(int id)
         {

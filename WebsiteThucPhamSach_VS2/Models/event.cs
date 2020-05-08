@@ -23,6 +23,7 @@ namespace WebsiteThucPhamSach_VS2.Models
         public Nullable<System.DateTime> end_time { get; set; }
         public Nullable<bool> top_hot { get; set; }
         public Nullable<bool> status { get; set; }
+        public Nullable<int> total_view { get; set; }
     
         public virtual admin admin { get; set; }
     }

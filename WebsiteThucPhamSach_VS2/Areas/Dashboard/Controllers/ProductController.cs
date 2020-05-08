@@ -24,6 +24,9 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            List<menu> menus = new MenusModel().getMenus();
+            SelectList listMenus = new SelectList(menus, "id", "name");
+            ViewBag.menus = listMenus;
             return View();
         }
         [HttpPost]
@@ -54,6 +57,9 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
             {
                 throw e;
             }
+            List<menu> menus = new MenusModel().getMenus();
+            SelectList listMenus = new SelectList(menus, "id", "name");
+            ViewBag.menus = listMenus;
             return View(product);
         }
 

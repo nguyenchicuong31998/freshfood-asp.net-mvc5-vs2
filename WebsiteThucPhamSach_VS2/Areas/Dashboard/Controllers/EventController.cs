@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebsiteThucPhamSach_VS2.Models;
+using WebsiteThucPhamSach_VS2.Common;
 namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
 {
     public class EventController : Controller
@@ -21,19 +23,73 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(EventsModel @event)
         {
+            if (ModelState.IsValid)
+            {
+                if (Request.Files.Count > 0)
+                {
+                    HttpPostedFileBase file = Request.Files[0];
+                    if (file.ContentLength > 0)
+                    {
+                       string fileName = Path.GetFileName(file.FileName);
+                       @event.image = Path.Combine(Server.MapPath("~/Img/"), fileName);
+                       file.SaveAs(@event.image);
+                       @event.image = "~/Img/" + fileName;
+                    }
+                }
+                @event.admin_id = int.Parse(Session[SessionName.adminId].ToString());
+                var created = new EventsModel().create(@event);
+                if (created)
+                {
+                    return Redirect(Request.UrlReferrer.ToString());
+                }
+            }
             return View(@event);
         }
 
         [HttpGet]
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
-            return View();
+            var @event = new EventsModel().getEventById(id);
+            if(@event == null)
+            {
+
+            }
+            EventsModel eventModel = new EventsModel();
+            eventModel.image = @event.image;
+            eventModel.title = @event.title;
+            eventModel.content = @event.content;
+            return View(eventModel);
         }
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Edit(EventsModel @event)
         {
+
+            if (Request.Files.Count > 0)
+            {
+                HttpPostedFileBase file = Request.Files[0];
+                if (file.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileName(file.FileName);
+                    @event.image = Path.Combine(Server.MapPath("~/Img/"), fileName);
+                    file.SaveAs(@event.image);
+                    @event.image = "~/Img/" + fileName;
+                }
+                else
+                {
+                    var evented = new EventsModel().getEventById(@event.id);
+                    @event.image = evented.image;
+                }
+            }
+            @event.admin_id = int.Parse(Session[SessionName.adminId].ToString());
+            var updated = new EventsModel().updateById(@event.id, @event);
+            if (updated)
+            {
+                return Redirect(Request.UrlReferrer.ToString());
+            }
             return View(@event);
         }
 

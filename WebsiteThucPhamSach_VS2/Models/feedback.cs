@@ -17,6 +17,7 @@ namespace WebsiteThucPhamSach_VS2.Models
         public int id { get; set; }
         public Nullable<int> user_id { get; set; }
         public Nullable<int> product_id { get; set; }
+        public string title { get; set; }
         public Nullable<int> star { get; set; }
         public string comment { get; set; }
         public Nullable<System.DateTime> start_time { get; set; }
