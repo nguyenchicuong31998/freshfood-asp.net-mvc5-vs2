@@ -125,7 +125,7 @@ namespace WebsiteThucPhamSach_VS2
             //Sản Phẩm
             routes.MapRoute(
                 name: "Sản Phẩm",
-                url: "San-Pham",
+                url: "San-Pham/{id}",
                 defaults: new
                 {
                     controller = "Home",
@@ -133,6 +133,29 @@ namespace WebsiteThucPhamSach_VS2
                     id = UrlParameter.Optional
                 }
             );
+            //Sản Phẩm
+            routes.MapRoute(
+                name: "Danh Mục Trái",
+                url: "Danh-Muc-Trai/{id}",
+                defaults: new
+                {
+                    controller = "Menu",
+                    action = "LeftChildMenusPartial",
+                    id = UrlParameter.Optional
+                }
+            );
+            //Giỏ hàng
+            routes.MapRoute(
+                name: "Giỏ Hàng",
+                url: "Gio-Hang",
+                defaults: new
+                {
+                    controller = "Home",
+                    action = "Cart",
+                    id = UrlParameter.Optional
+                }
+            );
+
             //Giới thiệu
             routes.MapRoute(
                 name: "Giới Thiệu",

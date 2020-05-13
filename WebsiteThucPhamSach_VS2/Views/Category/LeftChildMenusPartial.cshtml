@@ -1,0 +1,15 @@
+﻿
+
+@if ((int)ViewBag.leftChildMenuCount > 0)
+{
+    <span class="category-icon fa fa-plus"></span>
+    <ul id="@ViewBag.categoryId" class="submenu-left collapse" data-parent="#accordionCategory">
+        @foreach (var item in ViewBag.leftChildMenus)
+        {
+            <li class="submenu-left-item">
+                <a href="@Url.Content(item.link + '/'+ item.id)" class="submenu-left-item-link">@item.name</a>
+                @Html.Action("LeftChildMenusPartial", "Category", new { parentId = item.id })
+            </li>
+        }
+    </ul>
+}

@@ -9,8 +9,10 @@
 @import "_personalInfo.css";
 @import "_forgot-password.css";
 @import "_change-password.css";
+@import "_product-detail.css";
+@import "_product.css";
+@import "_cart.css";
 @import "_navigation.css";
 @import "_slide.css";
-@import "_slide-show-gallery.css";
 @import "_news.css";
 @import "_media.css";

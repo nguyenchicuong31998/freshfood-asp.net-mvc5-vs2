@@ -1,0 +1,45 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model List<product>
+@using WebsiteThucPhamSach_VS2.Common
+
+@{ 
+    Utils utils = new Utils();
+}
+
+<h2 class="text-uppercase">Sản Phẩm Thường Được Xem Cùng</h2>
+<hr />
+<div id="slider-related-products" class="card-deck">
+    @foreach (var product in Model)
+        {
+            product.image = product.image != " " ? product.image : "https://via.placeholder.com/250x250";
+            <div class="card card-related mt-3 ml-3">
+                <a href="~/Chi-Tiet-San-Pham/@product.id">
+                    <img class="card-img-top" src="@Url.Content(product.image)" alt="lỗi hình ảnh">
+                </a>
+                <div class="card-body">
+                    <div class="card-title">
+                        <a href="~/Chi-Tiet-San-Pham/@product.id" class="text-black" data-toggle="tooltip" title="@product.name">
+                            @product.name
+                        </a>
+                    </div>
+                    <div class="card-text">
+                        <p>5 Sao</p>
+                        @if (product.price_promotion != null)
+                        {
+                            <span class="price-promotion font-weight-bold d-block">
+                                @{
+                                    var giamGia = String.Format("{0:0}", product.price * ((100 - product.price_promotion) / 100));
+                                }
+                                @utils.FormatPrice(giamGia.ToString()) đ/Kg
+                            </span>
+                            <span class="price font-weight-normal"><del>@utils.FormatPrice(product.price.ToString()) đ/Kg</del></span>
+                        }
+                        else
+                        {
+                            <span class="price font-weight-bold">@utils.FormatPrice(product.price.ToString()) đ/Kg</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+</div>

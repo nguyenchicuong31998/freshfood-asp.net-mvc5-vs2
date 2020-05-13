@@ -1,5 +1,10 @@
 ﻿
 
+#load-more {
+    line-height: 36px;
+    border-radius: 30px;
+}
+
 
 .featured-products-content {
     display: grid;

@@ -1,5 +1,28 @@
 ﻿
-.scale-effect:hover{
+
+.pagination .active {
+    display: block !important;
+    background-color: #337ab7;
+    color: white;
+}
+
+.pagination > li > a, .pagination > li > span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: black;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    opacity: 1;
+}
+
+    .pagination > li > a:hover {
+        opacity: .5;
+    }
+
+.scale-effect:hover {
     transform: scale(0.92);
     transition: ease-in 2s;
 }
@@ -12,17 +35,9 @@
     transform: scale3d(3);
     transition: ease .6s;
 }
-
-.slick-arrow {
-    color: #9bd031;
-    background-color: #9bd031;
-    display: block !important;
+.slick-prev:before, .slick-next:before{
+    color: black;
 }
-    .slick-arrow:hover {
-        color: #9bd031;
-        background-color: #9bd031;
-        display: block !important;
-    }
 
 .card-hover:hover {
     transition: filter .6s, opacity .8s, transform .8s, box-shadow .3s;
@@ -116,7 +131,7 @@ span.new {
 }
 span.featured {
     position: absolute;
-    z-index: 8;
+    z-index: 1 !important;
     top: 0px;
     left: 0;
     display: inline-block;
@@ -135,7 +150,7 @@ span.featured {
 }
 span.sale {
     position: absolute;
-    z-index: 8;
+    z-index: 1 !important;
     top: 0px;
     left: 0;
     display: inline-block;

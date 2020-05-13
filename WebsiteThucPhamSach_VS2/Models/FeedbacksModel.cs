@@ -5,18 +5,11 @@ using System.Web;
 using WebsiteThucPhamSach_VS2.Models;
 using WebsiteThucPhamSach_VS2.Areas.Dashboard.Models;
 using System.ComponentModel.DataAnnotations;
-
+using PagedList;
 namespace WebsiteThucPhamSach_VS2.Models
 {
     public class FeedbacksModel
     {
-
-        public string title { get; set; }
-
-        [Required(ErrorMessage = "Vui lòng chọn đánh giá của bạn về sản phẩm này")]
-        public Nullable<int> star { get; set; }
-        [Required(ErrorMessage = "Vui lòng nhập nội dung nhận xét")]
-        public string comment { get; set; }
 
         FreshFoodEntities db = new FreshFoodEntities();
         
@@ -25,9 +18,12 @@ namespace WebsiteThucPhamSach_VS2.Models
             return db.feedbacks.ToList();
         }
 
-        public List<feedback> GetFeedbacksClientByProductId(int id)
+        public IPagedList<feedback> GetFeedbacksClientByProductId(int id, int? page)
         {
-            return db.feedbacks.OrderByDescending(f=>f.start_time).Where(f=>f.product_id == id && f.status == true).ToList();
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            var feedback = db.feedbacks.OrderByDescending(f => f.start_time).Where(f => f.product_id == id && f.status == true).ToList().ToPagedList(pageNumber, pageSize);
+            return feedback;
         }
         public feedback getFeedbackById(int id)
         {
@@ -90,6 +86,24 @@ namespace WebsiteThucPhamSach_VS2.Models
             {
                 return false;
             }
+        }
+
+        public int getTotalFeedbackByProductId(int id)
+        {
+            int totalFeedback = db.feedbacks.Where(f => f.product_id == id && f.status == true).Count();
+            return totalFeedback;
+        }
+
+        public int getTotalStarByProductId(int id)
+        {
+            var totalStar = db.feedbacks.Where(f => f.product_id == id).Select(f => f.star).Sum();
+            //int totalStar = int.Parse(db.feedbacks.Where(f => f.product_id == id).Select(f => f.star).Sum().ToString());
+            //return totalStar;
+            if(totalStar == null)
+            {
+                return 0;
+            }
+            return int.Parse(totalStar.ToString());
         }
 
 

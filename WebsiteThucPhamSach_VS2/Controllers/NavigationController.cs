@@ -9,24 +9,17 @@ namespace WebsiteThucPhamSach_VS2.Controllers
     public class NavigationController : Controller
     {
         // GET: Navigation
-        FreshFoodEntities db = new FreshFoodEntities();
+        //FreshFoodEntities db = new FreshFoodEntities();
         public PartialViewResult NavigationPartial()
         {
-            var menus = (from n in db.menus
-                        where n.parent_id == null && n.status == true
-                        select n).ToList();
+            var menus = new MenusModel().getMenus();
             return PartialView(menus);
         }
 
 
         public PartialViewResult ChildMenuPartial(int parentId)
         {
-            var childMenus = (
-                               from n in db.menus
-                               where n.parent_id == parentId && n.status == true
-                               select n
-                             ).ToList();
-
+            var childMenus = new MenusModel().getChildMenus(parentId);
             ViewBag.childCount = childMenus.Count();
             ViewBag.childMenus = childMenus;
             return PartialView("ChildMenuPartial");

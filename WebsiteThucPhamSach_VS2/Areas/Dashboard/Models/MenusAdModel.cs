@@ -6,7 +6,7 @@ using WebsiteThucPhamSach_VS2.Models;
 
 namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
 {
-    public class MenusModel
+    public class MenusAdModel
     {
         FreshFoodEntities db = new FreshFoodEntities();
         public List<menu> getMenuOtherOne()

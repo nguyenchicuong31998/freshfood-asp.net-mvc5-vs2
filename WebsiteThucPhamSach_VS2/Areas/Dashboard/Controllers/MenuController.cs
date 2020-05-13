@@ -16,7 +16,7 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
             {
                 return RedirectToAction("Login", "Dashboard");
             }
-            var menus = new MenusModel().getMenus();
+            var menus = new MenusAdModel().getMenus();
             return View(menus);
         }
     }

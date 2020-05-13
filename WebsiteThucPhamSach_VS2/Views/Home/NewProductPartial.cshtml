@@ -1,5 +1,5 @@
 ﻿
-@using WebsiteThucPhamSach_VS2.Common;
+@using WebsiteThucPhamSach_VS2.Common
 @using WebsiteThucPhamSach_VS2.Models
 @model List<product>
 @{
@@ -19,7 +19,8 @@
                 <div class="box-photo">
                     <img class="img-thumbnail" src="@Url.Content(product.image)" />
                     <div class="box-order d-flex align-items-center justify-content-center">
-                        <a href="#" data-toggle="modal" data-target="#modal-quick-view" class="quick-view mr-3 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Xem nhanh"><i class="far fa-eye"></i></a>
+                        @*data-target="#modal-quick-view" data-toggle="modal" *@
+                        <a href="#" data-id="@product.id" class="quick-view mr-3 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Xem nhanh"><i class="far fa-eye"></i></a>
                         <a href="#" class="add-cart d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Thêm vào giỏ hàng"><i class="fas fa-cart-plus"></i></a>
                     </div>
                 </div>
@@ -61,8 +62,15 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="model-content">
-                    <div class="text-black">Bạn cần đăng nhập để sử dụng tính năng này.</div>
+                <div class="model-content container-fluid">
+                    <div class="row">
+                        <div class="col-6 left">
+                            trái 
+                        </div>
+                        <div class="col-6 quick-view-right">
+                     
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

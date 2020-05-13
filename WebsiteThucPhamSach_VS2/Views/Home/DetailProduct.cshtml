@@ -40,7 +40,7 @@
 
                 <div class="row-gallery">
                     <div class="column">
-                        <img class="demo cursor" src="~/Img/thanh-long.jpg" style="width:100%" onclick="currentSlide(1)" alt="Nature and sunrise">
+                        <img class="demo cursor " src="~/Img/thanh-long.jpg" style="width:100%" onclick="currentSlide(1)" alt="Nature and sunrise">
                     </div>
                     <div class="column">
                         <img class="demo cursor" src="~/Img/thanhlong1.jpg" style="width:100%" onclick="currentSlide(2)" alt="Snowy Mountains">
@@ -56,7 +56,21 @@
                 @Model.name
             </h2>
             <div class="mt-2">
-                5 sao (250)
+                @{
+                    float totalStar = ViewBag.AvgStar;
+                }
+                
+                @for (float i = 0; i < totalStar; i++)
+                {
+                    <span class="fas fa-star text-warning"></span>
+                    @*<span class="fa fa-star-half-o text-warning"></span>*@
+                    @*<span class="fa fa-star-half-empty text-warning"></span>*@
+                }
+                @for (float i = (float)totalStar; i < 5; i++)
+                {
+                    <span class="far fa-star text-warning"></span>
+                }
+                @*@ViewBag.AvgStar*@ (@ViewBag.totalFeedback)
             </div>
             <div class="mt-2">
                 Lượt xem: <span class="font-weight-bold">@Model.view_count</span>
@@ -83,38 +97,21 @@
                     <span class="font-weight-bold">@utils.FormatPrice(Model.price.ToString()) đ/Kg</span>
                 }
             </div>
-            <div class="mt-5 mb-2 ">
-                <p>
-                    <i class="fa fa-check-square-o">
-                        Gọi mua hàng 0972 612 445
-                    </i>
-                </p>
-                <p>
-                    <i class="fa fa-check-square-o">
-                        Đảm bảo tươi ngon
-                    </i>
-                </p>
-                <p>
-                    <i class="fa fa-check-square-o">
-                        Giao hàng trực tiếp từ vườn
-                    </i>
-                </p>
-                <p>
-                    <i class="fa fa-check-square-o">
-                        Đổi trả trong vòng 24h
-                    </i>
-                </p>
+            <div class="mt-5 mb-2" style="height:250px;">
+                 <div>@Model.description</div>
             </div>
-            @using (Html.BeginForm("AddItem", "Home", FormMethod.Post))
-            {
+            <div class="column-add-cart">
+                @using (Html.BeginForm("AddItem", "Home", FormMethod.Post))
+                {
 
-                var enable = Model.total_product > 0 ? "" : "disabled";
-                <div class="d-inline">Số lượng:</div>
-                <div class="d-flex">
-                    <input id="soluong" name="soluong" class="nhapsoluong mr-4" type="number" value="1" min="1" max="20" />
-                    <input type="submit" class="btn btn-danger btn-lg" @enable value="Cho vào giỏ hàng" id="submitgh" />
-                </div>
-            }
+                    var enable = Model.total_product > 0 ? "" : "disabled";
+                    <div class="d-inline">Số lượng:</div>
+                    <div class="d-flex mt-3">
+                        <input id="soluong" name="soluong" class="nhapsoluong mr-4" type="number" value="1" min="1" max="20" />
+                        <input type="submit" class="btn btn-danger btn-lg" @enable value="Cho vào giỏ hàng" id="submitgh" />
+                    </div>
+                }
+            </div>
         </div>
     </div>
     <hr />
@@ -125,13 +122,13 @@
                     <a class="nav-link activeBlock active text-uppercase text-black" href="#product-info" role="tab" data-toggle="tab">Mô tả sản phẩm</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-uppercase text-black" href="#feedback" role="tab" data-toggle="tab">Nhận xét (0)</a>
+                    <a class="nav-link text-uppercase text-black" href="#feedback" role="tab" data-toggle="tab">Nhận xét (@ViewBag.totalFeedback)</a>
                 </li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active" id="product-info">
+                <div role="tabpanel" class="tab-pane fade in active mt-5" id="product-info">
                     @Html.Raw(Model.detail)
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="feedback">
@@ -144,10 +141,8 @@
     </div>
     <div class="row mt-5">
         <div class="col-12">
-            <h2 class="text-uppercase">Sản Phẩm Thường Được Xem Cùng</h2>
-            <hr />
             <div class="mt-5 product-slide">
-                ok
+                @Html.Action("RelatedProductPartial", "Home", new { @id = Model.id, @menuId = Model.menu_id })
             </div>
         </div>
     </div>
@@ -156,7 +151,7 @@
             <h2 class="text-uppercase">KHÁCH HÀNG NHẬN XÉT</h2>
             <hr />
             <div id="content-feedback" class="mt-5 ">
-                @Html.Action("DisplayFeedbackPartial", "Home")
+                @Html.Action("DisplayFeedbackPartial", "Home", new { @id = Model.id })
             </div>
         </div>
     </div>
@@ -184,13 +179,25 @@
 
 
 @section scripts{
-    <script type="text/javascript">
+<script type="text/javascript">
         function validateFeedback() {
-            return true;
-        }
-        $('#add-feedback').click(function (e) {
-            //var totalStar = $("input[name='star']:checked").val();
-            e.preventDefault();
+            var isTrue = true;
+            if (!$('input[name="star"]:checked').val()) {
+                $('.validate-star').text("Vui lòng chọn đánh giá của bạn về sản phẩm này");
+                isTrue = false;
+            } else {
+                $('.validate-star').text("");
+            }
+            if (!$('textarea#comment').val()) {
+                $('.validate-comment').text("Vui lòng nhập nội dung nhận xét");
+                isTrue = false;
+            } else {
+                $('.validate-comment').text("");
+            }
+            if (!isTrue) {
+                return false;
+            }
+
             var feedback = {};
             $('#form-add-feedback :input').each(function () {
                 feedback[this.name] = $(this).val();
@@ -205,14 +212,51 @@
                 success: function (res) {
                     if (res.yetLogin == true) {
                         $('#messageLogin').modal('show')
-                    }
-                    if (res.status == true) {
+                     }
+                     if (res.status == true) {
                         $('#content-feedback').load("/Home/DisplayFeedbackPartial/@Model.id");
                         $('#create-feedback').load("/Home/AddFeedbackPartial/@Model.id");
                         alert("Bạn đã bình luận thành công");
-                    }
+                     }
                 }
             })
-        })
-    </script>
+            return false;
+        }
+
+          @*$('#add-feedback').click(function (e) {
+                //var totalStar = $("input[name='star']:checked").val();
+                e.preventDefault();
+                var feedback = {};
+                $('#form-add-feedback :input').each(function () {
+                    feedback[this.name] = $(this).val();
+                });
+                feedback.star = $("input[name='star']:checked").val();
+                feedback.product_id = @Model.id;
+                $.ajax({
+                    url: "/Home/AddFeedbackPartial",
+                    data: { newFeedback: JSON.stringify(feedback) },
+                    dataType: "json",
+                    type: "POST",
+                    success: function (res) {
+                        if (res.yetLogin == true) {
+                            $('#messageLogin').modal('show')
+                        }
+                        if (res.status == true) {
+                            $('#content-feedback').load("/Home/DisplayFeedbackPartial/@Model.id");
+                            $('#create-feedback').load("/Home/AddFeedbackPartial/@Model.id");
+                            alert("Bạn đã bình luận thành công");
+                        }
+                    }
+                })
+            })*@
+        @*$(".pagination li a").click(function (e) {
+            e.preventDefault();
+            var page = $(this).text();
+            $(window).scrollTop($('#content-feedback').offset().top);
+            $("#content-feedback").load("/Home/DisplayFeedbackPartial/@Model.id", { page = page });
+            alert(page);
+        })*@
+
+
+</script>
 }

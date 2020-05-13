@@ -1,6 +1,10 @@
-﻿
+﻿@using WebsiteThucPhamSach_VS2.Models
+@*@using WebsiteThucPhamSach_VS2.Common*@
+@model List<menu>
+@*@using PagedList.Mvc;
+@model PagedList.PagedList<product>*@
 @{
-    ViewBag.Title = "Products";
+    ViewBag.Title = "Sản phẩm";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 <div class="container mt-4">
@@ -20,5 +24,108 @@
     </div>
 </div>
 
-<h2>Products</h2>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-3 col-lg-3">
+            <h3>Danh Muc</h3>
+        </div>
+        <div class="col-9 col-lg-9 d-flex justify-content-between">
+            <h3>Thực Phẩm</h3>
+            <div>
+                <select class="sort-order-product form-control">
+                    <option value="valued">Mặc định</option>
+                    <option value="alpha-asc">Từ A->Z</option>
+                    <option value="alpha-desc">Từ Z->A</option>
+                    <option value="price-asc">Giá tăng dần</option>
+                    <option value="price-desc">Giá giảm dần</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12 col-lg-3">
+            <div class="row no-gutters">
+                <div class="col-12">
+                    <div class="left-categories categories-group" id="accordionCategory">
+                        <ul class="categories">
+                            @foreach (var category in ViewBag.Categories)
+                            {
+                                <li class="categories-item" aria-expanded="false" aria-controls="@category.id" data-target="#@category.id" data-toggle="collapse">
+                                    <a href="@Url.Content(category.link)/@category.id" class="categories-item-a">
+                                        @category.name
+                                    </a>
+                                    @Html.Action("LeftChildMenusPartial", "Category", new { parentId = category.id })
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12 pt-3 pb-3">
+                    <div class="search-price ">
+                        <h2>Giá</h2>
+                        <div>Chọn khoảng giá</div>
+                        <div class="row no-gutters">
+                            <input class="col-5 search-price start-price" type="text" min="1" max="10000000000" />
+                            <div class="col-2 d-flex justify-content-center"> - </div>
+                            <input class="col-5 search-price end-price" type="text" min="1" max="10000000000" />
+                        </div>
+                        <div class="row no-gutters">
+                            <a href="#" id="ok" class="btn pt-3 pb-3 mt-3 text-white btn-block col-lg-5 btn-search bg-green">OK</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+        </div>
+        <div class="col-12 col-lg-9" id="products-content">
+            @Html.Action("ProductsContentPartial", "Home")
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var order = (document.location.search.slice(1).split("&")[0]).split('order=')[1];
+            var selectedOrder = order == null ? "valued" : order;
+            //var LocGia = document.location.search.slice(1).split('LocGia=')[1];
+            $('.sort-order-product option').each(function (index) {
+                if ($(this).val() == selectedOrder) {
+                    $('.sort-order-product option')[index].selected = true;
+                    return;
+                };
+            });
+
+            $(".sort-order-product").change(function () {
+                var order = $(this).val();
+                //alert(document.location.href.split('?')[0] + "?order=" + encodeURIComponent(order));
+                document.location.replace(document.location.href.split('?')[0] + "?order=" + order);
+                $("#products-content").load("/Home/ProductsContentPartial", {  order: order })
+            })
+
+            function numberWithCommas(x) {
+                return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
+            }
+            $('.start-price').on('change', function () {
+                var ketqua = numberWithCommas($(this).val());
+                $(this).val(ketqua);
+            });
+            $('.end-price').on('change', function () {
+                var ketqua = numberWithCommas($(this).val());
+                $(this).val(ketqua);
+            });
+            //mystring = mystring.replace(/\./g,' ')
+            //$('.btn-search').on('click', function () {
+            //    var price = ($('.start-price').val() == "" ? "0" : $('.start-price').val()) + "&" + ($('.end-price').val() == "" ? "0" : $('.end-price').val());
+            //    price = price.replace(/\./g, '');
+            //    alert(document.location.href);
+            //    //document.location.replace(document.location.href.split('?')[0] + "?price=" + price);
+            //    alert(price);
+            //    document.location.replace(document.location.href + "?price=" + price);
+            //    $("#products-content").load("/Home/ProductsContentPartial", { price: price });
+
+            //});
+        })
+    </script>       
+}

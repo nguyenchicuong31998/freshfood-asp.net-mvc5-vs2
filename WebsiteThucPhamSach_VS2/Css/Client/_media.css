@@ -3,6 +3,10 @@
     .featured-products-content {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .products {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media screen and (min-width: 576px) {
@@ -312,7 +316,9 @@
     .featured-products-content {
         grid-template-columns: repeat(4, 1fr);
     }
-
+    .products {
+        grid-template-columns: repeat(3, 1fr);
+    }
     .custom-slide-img {
         height: 400px;
     }

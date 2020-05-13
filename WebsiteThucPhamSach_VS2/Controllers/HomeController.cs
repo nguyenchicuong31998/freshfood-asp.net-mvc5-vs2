@@ -6,11 +6,13 @@ using System.Web.Mvc;
 using WebsiteThucPhamSach_VS2.Models;
 using WebsiteThucPhamSach_VS2.Common;
 using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace WebsiteThucPhamSach_VS2.Controllers
 {
     public class HomeController : Controller
     {
+        FreshFoodEntities db = new FreshFoodEntities();
         [HandleError]
         public ActionResult Index()
         {
@@ -24,10 +26,41 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             var about = new AboutsModel().getAboutByStatusTrue();
             return View(about);
         }
-
         public ActionResult Products()
         {
+            var menus = new MenusModel().getLeftMenu();
+            ViewBag.Categories = menus;
             return View();
+        }
+        //public void ChildMenuLeft(int parentId)
+        //{
+        //    var leftChildMenus = new MenusModel().getLeftChildMenus(parentId);
+        //    ViewBag.leftChildMenuCount = leftChildMenus.Count();
+        //    ViewBag.leftChildMenus = leftChildMenus;
+        //}
+
+        //public ActionResult Products(int? id, string sortOrder ,int? page)
+        //{
+        //    if (id == null)
+        //    {
+        //        var products = new ProductsModel().getProductsPageList(id ?? 0, sortOrder, page);
+        //        return View(products);
+        //    }
+        //    var productById = new ProductsModel().getProductsPageList(id ?? 0, sortOrder , page);
+        //    return View(productById);
+        //}
+
+        public PartialViewResult ProductsContentPartial(int? id, string order, string price, int? page)
+        {
+            ViewBag.order = order == null ? "valued" : order;
+            //ViewBag.price = price == null ? "" : price;
+            if (id == null)
+            {
+                var products = new ProductsModel().getProductsPageList(id ?? 0, order ,page);
+                return PartialView(products);
+            }
+            var productsById = new ProductsModel().getProductsPageList(id ?? 0, order, page);
+            return PartialView(productsById);
         }
 
         public ActionResult News()
@@ -86,11 +119,35 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             return PartialView(products);
         }
 
+
+        public JsonResult QuickView(int id)
+        {
+            var products = new FreshFoodEntities().products.SingleOrDefault(p=>p.id == id);
+            var json = JsonConvert.SerializeObject(products);
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
+
+        
         public ActionResult DetailProduct(int id)
         {
+            new ProductsModel().updateViewByProductId(id);
             var detailProduct = new ProductsModel().getProductById(id);
+            ViewBag.totalFeedback = new FeedbacksModel().getTotalFeedbackByProductId(id);
+            float totalRate= new FeedbacksModel().getTotalFeedbackByProductId(id);
+            float totalStar = new FeedbacksModel().getTotalStarByProductId(id);
+            ViewBag.AvgStar = float.IsNaN(totalStar / totalRate) ? 0 : (totalStar / totalRate);
             return View(detailProduct);
         }
+
+
+        public ActionResult Cart()
+        {
+            return View();
+        }
+
+
+
 
         [HttpGet]
         public PartialViewResult AddFeedbackPartial()
@@ -129,9 +186,9 @@ namespace WebsiteThucPhamSach_VS2.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult DisplayFeedbackPartial(int id)
+        public PartialViewResult DisplayFeedbackPartial(int id, int? page)
         {
-            var feedbacks = new FeedbacksModel().GetFeedbacksClientByProductId(id);
+            var feedbacks = new FeedbacksModel().GetFeedbacksClientByProductId(id, page);
             return PartialView(feedbacks);
         }
 
@@ -145,6 +202,14 @@ namespace WebsiteThucPhamSach_VS2.Controllers
         {
             var productName = new FeedbacksModel().getNameProductById(id);
             return productName;
+        }
+
+
+
+        public PartialViewResult RelatedProductPartial(int id, int menuId)
+        {
+            var productRelated = new ProductsModel().getProductRelatedById(id, menuId);
+            return PartialView(productRelated);
         }
     }
 }

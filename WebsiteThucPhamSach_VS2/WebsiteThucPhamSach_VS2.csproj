@@ -187,6 +187,7 @@
     <Compile Include="Areas\Dashboard\Controllers\UserController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\Dashboard\Models\UsersAdModel.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="EmailTeamplate\ReplyContact.cs" />
     <Compile Include="Models\AboutsModel.cs" />
     <Compile Include="Areas\Dashboard\Models\AdminsModel.cs" />
@@ -245,7 +246,8 @@
     <Compile Include="Models\menu.cs">
       <DependentUpon>DBFreshFood.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Dashboard\Models\MenusModel.cs" />
+    <Compile Include="Areas\Dashboard\Models\MenusAdModel.cs" />
+    <Compile Include="Models\MenusModel.cs" />
     <Compile Include="Models\PersonalInfoModel.cs" />
     <Compile Include="Models\product.cs">
       <DependentUpon>DBFreshFood.tt</DependentUpon>
@@ -1301,8 +1303,9 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Css\Client\_cart.css" />
+    <Content Include="Css\Client\_product-detail.css" />
     <Content Include="Css\Client\_product.css" />
-    <Content Include="Css\Client\_slide-show-gallery.css" />
     <Content Include="Css\Client\_slide.css" />
     <Content Include="Css\Client\_change-password.css" />
     <Content Include="Css\Client\_footer.css" />
@@ -1485,7 +1488,6 @@
     <Content Include="Areas\Dashboard\Views\Role\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Role\CreatePartial.cshtml" />
     <Content Include="Areas\Dashboard\Views\Role\EditPartial.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Menu\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Product\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Product\Create.cshtml" />
     <Content Include="Areas\Dashboard\Views\Product\Edit.cshtml" />
@@ -1538,6 +1540,7 @@
     <Content Include="Css\Client\_news.css" />
     <Content Include="Areas\Dashboard\Views\Feedback\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Feedback\View.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Menu\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1609,13 +1612,17 @@
     <Content Include="Views\Home\DetailNew.cshtml" />
     <Content Include="Views\Home\AddFeedbackPartial.cshtml" />
     <Content Include="Views\Home\DisplayFeedbackPartial.cshtml" />
+    <Content Include="Views\Home\RelatedProductPartial.cshtml" />
+    <Content Include="Views\Home\Cart.cshtml" />
+    <Content Include="Views\Home\Payment.cshtml" />
+    <Content Include="Views\Home\ProductsContentPartial.cshtml" />
+    <Content Include="Views\Category\LeftChildMenusPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dashboard\Views\Bill\" />
     <Folder Include="Areas\Dashboard\Views\Statistical\" />
     <Folder Include="Areas\Dashboard\Views\Unit\" />
-    <Folder Include="Views\Menus\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

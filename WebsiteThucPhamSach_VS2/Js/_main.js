@@ -2,11 +2,96 @@
 
 $(document).ready(function () {
 
-    //$('#birthday').datepicker({
-    //    dateFormat: 'dd/mm/yy',
-    //    changeYear: true, 
-    //    changeMonth: true
+    //$('#related-products').slick({
+    //    //slidesToShow: 3,
+    //    //centerMode: true,
+    //    //focusOnSelect: true
+    //    //centerMode: true,
+    //    //centerPadding: '60px',
+    //    //swipeToSlide: true,  
+    //    prevArrow: true,
+    //    nextArrow: true,
+    //    slidesToScroll: 4,
+    //    slidesToShow: 4,
+    //    autoplay: true,
+    //    autoplaySpeed: 2000,
     //});
+
+
+    $("#slider-related-products").slick({
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        dots: false,
+        arrows: false,
+        centerMode: false,
+        focusOnSelect: true,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        responsive: [
+            {
+                breakpoint: 992,
+                settings: {
+                    arrows: false,
+                    slidesToShow: 3,
+                    slidesToScroll: 3
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    arrows: false,
+                    slidesToShow: 2,
+                    slidesToScroll: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    arrows: false,
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    });
+
+    $(".slider-news-hot").slick({
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            dots: false,
+            arrows: true,
+            centerMode: false,
+            focusOnSelect: true,
+            autoplay: true,
+            autoplaySpeed: 2000,
+            responsive: [
+                    {
+                        breakpoint: 1200,
+                        settings: {
+                            arrows: true,
+                            slidesToShow: 3,
+                            slidesToScroll: 3,
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            arrows: false,
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            arrows: false,
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+            ]
+     });
+
     $(window).scroll(function () {
         var currentPosition = $(this).scrollTop();
         if (currentPosition > 188) {
@@ -68,6 +153,20 @@ $(document).ready(function () {
     }
     $('.panel-group').on('hidden.bs.collapse', toggleIcon);
     $('.panel-group').on('shown.bs.collapse', toggleIcon);
+
+    function toggleIconMenuLeft(e) {
+        //$(e.target)
+        //    .prev('.categories-item')
+        //    .find('.category-icon')
+        //    .toggleClass('fa-plus fa-minus');
+        //$('.categories-item').click(function (e) {
+        //    $(e.target).prev(".category-icon").toggleClass('fa-plus fa-minus');
+        //});
+        //console.log($('.categories').find('.category-icon'));
+        //console.log($('.left-categories').find(".category-icon"));
+    }
+    $('.categories-group').on('hidden.bs.collapse', toggleIconMenuLeft);
+    $('.categories-group').on('shown.bs.collapse', toggleIconMenuLeft);
 
 })
 
