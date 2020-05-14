@@ -1,7 +1,12 @@
 ﻿
 
 
-
+.img-featured{
+    height: 80px;
+}
+.underline:not(:last-child){
+    border-bottom: 1px solid black;
+}
 
 .products {
     display: grid;
@@ -153,3 +158,5 @@
                     opacity: 0.8;
                     text-decoration: none;
                 }
+
+

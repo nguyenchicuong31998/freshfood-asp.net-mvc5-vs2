@@ -19,8 +19,7 @@
                 <div class="box-photo">
                     <img class="img-thumbnail" src="@Url.Content(product.image)" />
                     <div class="box-order d-flex align-items-center justify-content-center">
-                        @*data-target="#modal-quick-view" data-toggle="modal" *@
-                        <a href="#" data-id="@product.id" class="quick-view mr-3 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Xem nhanh"><i class="far fa-eye"></i></a>
+                        <a href="#" data-id="@product.id" class="quick-view  mr-3 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Xem nhanh"><i class="far fa-eye"></i></a>
                         <a href="#" class="add-cart d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Thêm vào giỏ hàng"><i class="fas fa-cart-plus"></i></a>
                     </div>
                 </div>
@@ -53,26 +52,3 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal-quick-view" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content ">
-            <div class="modal-body ml-3 mr-3">
-                <div class="modal-close">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="model-content container-fluid">
-                    <div class="row">
-                        <div class="col-6 left">
-                            trái 
-                        </div>
-                        <div class="col-6 quick-view-right">
-                     
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

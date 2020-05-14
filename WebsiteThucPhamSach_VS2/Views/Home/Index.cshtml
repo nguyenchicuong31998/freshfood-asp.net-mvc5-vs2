@@ -19,10 +19,10 @@
             <div class="new-product-main mb-2">
                 @Html.Action("NewProductPartial", "Home")
             </div>
-                @*@Html.Partial("_LeavesPartial")
-            <div class="featured-product-main mb-2">
-                @Html.Action("FeaturedProductPartial", "Home")
-            </div>>*@
+            @*@Html.Partial("_LeavesPartial")
+                <div class="featured-product-main mb-2">
+                    @Html.Action("FeaturedProductPartial", "Home")
+                </div>>*@
             @Html.Partial("_LeavesPartial")
             <div class="sell-product-main">
                 @Html.Action("ProductForYouPartial", "Home")
@@ -36,44 +36,28 @@
 </div>
 
 @*<div class="featured-news">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                @Html.Partial("_LeavesPartial")
-                @Html.Partial("_NewsHotPartial")
-            </div>
-        </div>
-    </div>
+   <div class="container">
+      <div class="row">
+         <div class="col-12">
+            @Html.Partial("_LeavesPartial")
+            @Html.Partial("_NewsHotPartial")
+         </div>
+      </div>
+   </div>
 </div>*@
+
 
 
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
 
-            //$(".quick-view").click(function () {
-            //    let id = $(this).data("id");
-            //    $.ajax({
-            //        url: "/Home/QuickView",
-            //        data: {id:id},
-            //        dataType: "json",
-            //        type: "POST",
-            //        success: function (data) {
-            //            console.log(JSON.parse(data));
-            //            //var product = JSON.parse(res.producted);
-            //            //console.log(product);
-            //            //string text = "<div>" + product.name + "</div>";
-            //            //$(".quick-view-right").html(text);
-            //        }
-            //    })
-            //});
-
-
             var sizeFaqs = $('.product-for-your').length;
             var sizeDefault = 12;
             if (sizeFaqs < sizeDefault) {
                 $("#load-more").hide();
             }
+
             $('.product-for-your').hide();
             $('.product-for-your:lt(' + sizeDefault + ')').show();
             $('#load-more').click(function () {

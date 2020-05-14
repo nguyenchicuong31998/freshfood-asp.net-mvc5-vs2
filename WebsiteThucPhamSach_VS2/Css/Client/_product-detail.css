@@ -53,7 +53,9 @@
 
 
 /*---- RELATED PRODUCT ------*/
-
+.draggable{
+    width: 100%;
+}
 .card-related {
     height: 370px;
 }

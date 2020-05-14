@@ -1,0 +1,27 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@using WebsiteThucPhamSach_VS2.Common
+@{ 
+    var products = new ProductsModel().getFeaturedProducts();
+    Utils utils = new Utils();
+}
+<h2 class="title-share text-left bg-green text-white p-3">Sản Phẩm Bán Chạy</h2>
+<div class="border border-dark">
+    <div class="container-fluid">
+        @foreach (var product in products)
+        {
+            <div class="row mt-4 mb-4">
+                <div class="col-5">
+                    <a class="~/Chi-Tiet-San-Pham/@product.id">
+                        <img class="img-thumbnail img-featured" src="@Url.Content(product.image)" alt="@product.name" />
+                    </a>
+                </div>
+                <div class="col-7 p-0">
+                    <a href="~/Chi-Tiet-San-Pham/@product.id" class="text-black font-weight-bold text-opacity">@product.name</a>
+                    <div>300000 đ/Kg</div>
+                    <div>300000 đ/Kg</div>
+                </div>
+            </div>
+            <div class="underline"></div>
+        }
+    </div>
+</div>

@@ -117,6 +117,11 @@ namespace WebsiteThucPhamSach_VS2.Models
             return db.products.OrderByDescending(p => p.view_count).Take(12).ToList();
         }
 
+        public List<product> getFeaturedProducts()
+        {
+            return db.products.OrderByDescending(p => p.total_sold).Where(p => p.status == true ).Take(5).ToList();
+        }
+
         public void updateViewByProductId(int id)
         {
             try

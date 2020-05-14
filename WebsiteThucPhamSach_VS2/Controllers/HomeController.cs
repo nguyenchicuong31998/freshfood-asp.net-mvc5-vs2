@@ -211,5 +211,11 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             var productRelated = new ProductsModel().getProductRelatedById(id, menuId);
             return PartialView(productRelated);
         }
+
+        public PartialViewResult ModalProductPartial(int id)
+        {
+            var product = new ProductsModel().getProductById(id);
+            return PartialView(product);
+        }
     }
 }

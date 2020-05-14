@@ -17,6 +17,13 @@ $(document).ready(function () {
     //    autoplaySpeed: 2000,
     //});
 
+    $(".quick-view").click(function (e) {
+        e.preventDefault();
+        let id = $(this).data("id");
+        $("#modal-product").load("/Home/ModalProductPartial/" + id, function () {
+            $("#modal-quick-view").modal('show');
+        });
+     });
 
     $("#slider-related-products").slick({
         slidesToShow: 4,

@@ -1,0 +1,93 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@using WebsiteThucPhamSach_VS2.Common
+@model product
+
+@{
+    Utils utils = new Utils();
+}
+
+<div class="modal fade pr-0 pr-lg-2" id="modal-quick-view" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+            <div class="modal-body ml-3 mr-3 pb-5">
+                <div class="modal-close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="model-content container-fluid">
+                    <div class="row">
+                        <div class="col-6 left">
+                            <div class="mySlides" style="display:block">
+                                <img src="~/Img/thanh-long.jpg" style="width:84%">
+                            </div>
+
+                            <div class="mySlides">
+                                <img src="~/Img/thanhlong1.jpg" style="width:84%">
+                            </div>
+
+                            <div class="mySlides">
+                                <img src="~/Img/thanhlong2.jpg" style="width:84%">
+                            </div>
+
+                            <div class="row-gallery">
+                                <div class="column">
+                                    <img class="demo cursor " src="~/Img/thanh-long.jpg" style="width:100%" onclick="currentSlide(1)" alt="Nature and sunrise">
+                                </div>
+                                <div class="column">
+                                    <img class="demo cursor" src="~/Img/thanhlong1.jpg" style="width:100%" onclick="currentSlide(2)" alt="Snowy Mountains">
+                                </div>
+                                <div class="column">
+                                    <img class="demo cursor" src="~/Img/thanhlong2.jpg" style="width:100%" onclick="currentSlide(3)" alt="Snowy Mountains">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 quick-view-right">
+                            <h2 class="font-weight-bold mt-3 mb-3">
+                                @Model.name
+                            </h2>
+                            <div class="mt-3 mb-3">
+                                @{
+                                    var statusName = Model.total_product > 0 ? "Còn hàng" : "Đã hết hàng";
+                                }
+                                Trạng thái:  
+                                <span class="text-danger ml-2 font-weight-bold">@statusName</span>
+                            </div>
+                            <div class="mt-2 mb-2">
+                                @if (Model.price_promotion != null)
+                                {
+                                    <span class="mr-5 font-weight-bold">
+                                        @{
+                                            var giamGia = String.Format("{0:0}", Model.price * ((100 - Model.price_promotion) / 100));
+                                        }
+                                        @utils.FormatPrice(giamGia.ToString()) đ/Kg
+                                    </span>
+                                    <span class="font-weight-normal"><del>@utils.FormatPrice(Model.price.ToString()) đ/Kg</del></span>
+                                }
+                                else
+                                {
+                                    <span class="font-weight-bold">@utils.FormatPrice(Model.price.ToString()) đ/Kg</span>
+                                }
+                            </div>
+                            <div class="mt-3 mb-2" style="height:135px;">
+                                <div>@Model.description</div>
+                            </div>
+                            <div class="column-add-cart">
+                                @using (Html.BeginForm("AddItem", "Home", FormMethod.Post))
+                                {
+
+                                    var enable = Model.total_product > 0 ? "" : "disabled";
+                                    <div class="d-inline">Số lượng:</div>
+                                    <div class="d-flex mt-3">
+                                        <input id="soluong" name="soluong" class="nhapsoluong mr-4" type="number" value="1" min="1" max="20" />
+                                        <input type="submit" class="btn btn-danger btn-lg-lg btn-sm" @enable value="Cho vào giỏ hàng" id="submitgh" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
