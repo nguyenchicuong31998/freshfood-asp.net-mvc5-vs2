@@ -23,7 +23,7 @@
                         </a>
                     </div>
                     <div class="card-text">
-                        <p>5 Sao</p>
+                        <p>@Html.Action("RatingStar", "Common", new { id = product.id })</p>
                         @if (product.price_promotion != null)
                         {
                             <span class="price-promotion font-weight-bold d-block">

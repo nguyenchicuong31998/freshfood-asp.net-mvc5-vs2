@@ -55,22 +55,25 @@
             <h2 class="font-weight-bold mt-3 mb-3">
                 @Model.name
             </h2>
-            <div class="mt-2">
+            <div class="mt-2 d-flex">
                 @{
-                    float totalStar = ViewBag.AvgStar;
+                    int totalFeedback = new FeedbacksModel().getTotalFeedbackByProductId(Model.id);
+                    float totalRate = new FeedbacksModel().getTotalFeedbackByProductId(Model.id);
+                    float totalStar = new FeedbacksModel().getTotalStarByProductId(Model.id);
+                    float avgStar = float.IsNaN(totalStar / totalRate) ? 0 : (totalStar / totalRate);
                 }
-                
-                @for (float i = 0; i < totalStar; i++)
-                {
-                    <span class="fas fa-star text-warning"></span>
-                    @*<span class="fa fa-star-half-o text-warning"></span>*@
-                    @*<span class="fa fa-star-half-empty text-warning"></span>*@
-                }
-                @for (float i = (float)totalStar; i < 5; i++)
-                {
-                    <span class="far fa-star text-warning"></span>
-                }
-                @*@ViewBag.AvgStar*@ (@ViewBag.totalFeedback)
+                <div id="@("rateYo"+ Model.id)"></div> <a href="#content-feedback" class="ml-3 text-primary">Xem (@totalFeedback) đánh giá</a>
+                <script>
+                     document.addEventListener('DOMContentLoaded', function () {
+                          $("#@("rateYo"+ Model.id)").rateYo({
+                                    rating: @avgStar,
+                                    readOnly: true,
+                                    starWidth: "20px",
+                                    spacing: "5px",
+                                    ratedFill: "#ffc120"
+                              });
+                          });
+                </script>
             </div>
             <div class="mt-2">
                 Lượt xem: <span class="font-weight-bold">@Model.view_count</span>
@@ -100,17 +103,15 @@
             <div class="mt-5 mb-2" style="height:250px;">
                  <div>@Model.description</div>
             </div>
-            <div class="column-add-cart">
-                @using (Html.BeginForm("AddItem", "Home", FormMethod.Post))
-                {
-
+            <div id="box-quantity" class="column-add-cart">
+                @{
                     var enable = Model.total_product > 0 ? "" : "disabled";
-                    <div class="d-inline">Số lượng:</div>
-                    <div class="d-flex mt-3">
-                        <input id="soluong" name="soluong" class="nhapsoluong mr-4" type="number" value="1" min="1" max="20" />
-                        <input type="submit" class="btn btn-danger btn-lg" @enable value="Cho vào giỏ hàng" id="submitgh" />
-                    </div>
                 }
+                <div class="d-inline">Số lượng:</div>
+                <div class="d-flex mt-3">
+                    <input id="soluong" name="soluong" class="nhapsoluong mr-4" type="number" value="1" min="1" max="20" />
+                    <input id="soluong" name="soluong" data-id="@Model.id" type="submit" class="btn btn-danger btn-lg add-cart" @enable value="Cho vào giỏ hàng" id="submitgh" />
+                </div>
             </div>
         </div>
     </div>
@@ -147,7 +148,7 @@
         </div>
     </div>
     <div class="row mt-5">
-        <div class="col-12">
+        <div  class="col-12">
             <h2 class="text-uppercase">KHÁCH HÀNG NHẬN XÉT</h2>
             <hr />
             <div id="content-feedback" class="mt-5 ">
@@ -179,10 +180,19 @@
 
 @section scripts{
 <script type="text/javascript">
-
+        $(function () {
+            $("#rating-star").rateYo({
+                rating: 0,
+                starWidth: "25px",
+                spacing: "5px",
+                ratedFill: "#ffc120",
+                fullStar: true
+            });
+        });
         function validateFeedback() {
             var isTrue = true;
-            if (!$('input[name="star"]:checked').val()) {
+            var totalStar = $("#rating-star").rateYo("option", "rating");
+            if (totalStar < 1) {
                 $('.validate-star').text("Vui lòng chọn đánh giá của bạn về sản phẩm này");
                 isTrue = false;
             } else {
@@ -194,6 +204,7 @@
             } else {
                 $('.validate-comment').text("");
             }
+
             if (!isTrue) {
                 return false;
             }
@@ -202,7 +213,7 @@
             $('#form-add-feedback :input').each(function () {
                 feedback[this.name] = $(this).val();
             });
-            feedback.star = $("input[name='star']:checked").val();
+            feedback.star = totalStar;
             feedback.product_id = @Model.id;
             $.ajax({
                 url: "/Home/AddFeedbackPartial",

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebsiteThucPhamSach_VS2.Areas.Dashboard.Models;
+using WebsiteThucPhamSach_VS2.Models;
 using WebsiteThucPhamSach_VS2.Common;
 
 namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
@@ -18,6 +19,7 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
                 return RedirectToAction("Login", "Dashboard");
             }
             ViewBag.totalUser = new UsersAdModel().totalUser();
+            ViewBag.totalFeeback = new FeedbacksModel().totalFeedbacks();
             return View();
         }
 

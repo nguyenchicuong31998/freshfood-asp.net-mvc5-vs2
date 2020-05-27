@@ -2,6 +2,29 @@
 
 $(document).ready(function () {
 
+    $('.add-cart').off('click').on('click', function (e) {
+        e.preventDefault();
+        let id = $(this).data('id');
+        let quantity = $("#soluong").val();
+        quantity = !quantity ? 1 : parseInt(quantity);
+        $.ajax({
+            url: "/Home/AddCart",
+            data: {
+                id: id,
+                quantity: quantity
+            },
+            dataType: "JSON",
+            type: "POST",
+            success: function (res) {
+                if (res.status == true) {
+                    location.href = "#info-cart";
+                    $('.header').load("/Header/HeaderPartial");
+                }
+            }
+        })
+    });
+
+
     //$('#related-products').slick({
     //    //slidesToShow: 3,
     //    //centerMode: true,
@@ -22,8 +45,31 @@ $(document).ready(function () {
         let id = $(this).data("id");
         $("#modal-product").load("/Home/ModalProductPartial/" + id, function () {
             $("#modal-quick-view").modal('show');
+            $('.add-cart').off('click').on('click', function (e) {
+                e.preventDefault();
+                let id = $(this).data('id');
+                let quantity = $("#soluong").val();
+                quantity = !quantity ? 1 : parseInt(quantity);
+                $.ajax({
+                    url: "/Home/AddCart",
+                    data: {
+                        id: id,
+                        quantity: quantity
+                    },
+                    dataType: "JSON",
+                    type: "POST",
+                    success: function (res) {
+                        if (res.status == true) {
+                            location.href = "#info-cart";
+                            $('.header').load("/Header/HeaderPartial");
+                            $("#modal-quick-view").modal('hide');
+                        }
+                    }
+                })
+            });
         });
-     });
+    });
+
 
     $("#slider-related-products").slick({
         slidesToShow: 4,

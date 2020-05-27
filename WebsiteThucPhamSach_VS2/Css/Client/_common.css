@@ -1,22 +1,25 @@
 ﻿
-
-.pagination .active {
-    display: block !important;
-    background-color: #337ab7;
-    color: white;
+.jq-ry-container{
+    padding: 0px !important;
 }
+    .jq-ry-container > .jq-ry-group-wrapper > .jq-ry-group.jq-ry-rated-group{
+        z-index: 0;
+    }
+    .jq-ry-container > .jq-ry-group-wrapper > .jq-ry-group {
+        z-index: 0;
+    }
 
-.pagination > li > a, .pagination > li > span {
-    position: relative;
-    float: left;
-    padding: 6px 12px;
-    margin-left: -1px;
-    line-height: 1.42857143;
-    color: black;
-    text-decoration: none;
-    border: 1px solid #ddd;
-    opacity: 1;
-}
+    .pagination > li > a, .pagination > li > span {
+        position: relative;
+        float: left;
+        padding: 6px 12px;
+        margin-left: -1px;
+        line-height: 1.42857143;
+        color: black;
+        text-decoration: none;
+        border: 1px solid #ddd;
+        opacity: 1;
+    }
 
     .pagination > li > a:hover {
         opacity: .5;
@@ -48,13 +51,32 @@
     transition: ease .6s;
 }
 
-.img-custome{
-    object-fit: cover;
+.img-custom {
+    /*object-fit: cover;*/
+    width: 45px;
+    height: 50px;
 }
 
 .img-small{
     width: 45px;
     height:50px;
+}
+.dotted-underline {
+    border-bottom: dashed 2px #ebebeb;
+    text-decoration: none;
+}
+
+.select-control {
+    font-size: 13px;
+    margin-top: 3px;
+    color: gray;
+    height: 30px;
+    width: 150px;
+    border: solid 1px #ebebeb;
+    background-color: #fff !important;
+}
+.mr-8{
+    margin-right: 54px;
 }
 
 .text-date {
@@ -70,6 +92,9 @@
 }
 .text-black{
     color: black;
+}
+.cusor-pointer{
+    cursor:pointer;
 }
 .text-opacity {
     color: black;
@@ -183,6 +208,10 @@ span.sale {
 }
 .bg-green {
     background-color: #9bd031;
+}
+
+.bg-gray {
+    background-color: #e9ecef;
 }
 
 .img-responsive {

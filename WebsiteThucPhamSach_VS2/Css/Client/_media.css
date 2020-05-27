@@ -306,6 +306,13 @@
     body{
         font-size: 1.6rem;
     }
+    
+    /*Rating star */
+    .total-feedback{
+        font-size: 14px;
+    }
+    /*end*/
+
     .card-body-new {
         height: 210px;
     }

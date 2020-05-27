@@ -122,6 +122,10 @@ namespace WebsiteThucPhamSach_VS2.Controllers
                     Session["id"] = createdUser.id;
                     Session["display_name"] = createdUser.display_name;
                     Session.Timeout = 30;
+                    if (Session["url"] != null)
+                    {
+                        return Redirect(Session["url"].ToString());
+                    }
                     return Redirect("~/Trang-Chu");
                 }
                 else
@@ -129,6 +133,10 @@ namespace WebsiteThucPhamSach_VS2.Controllers
                     Session["id"] = userExisted.id;
                     Session["display_name"] = userExisted.display_name;
                     Session.Timeout = 30;
+                    if (Session["url"] != null)
+                    {
+                        return Redirect(Session["url"].ToString());
+                    }
                     return Redirect("~/Trang-Chu");
                 }
             }

@@ -73,16 +73,15 @@
                                 <div>@Model.description</div>
                             </div>
                             <div class="column-add-cart">
-                                @using (Html.BeginForm("AddItem", "Home", FormMethod.Post))
-                                {
-
-                                    var enable = Model.total_product > 0 ? "" : "disabled";
+                                    @{ 
+                                        var enable = Model.total_product > 0 ? "" : "disabled";
+                                    }
                                     <div class="d-inline">Số lượng:</div>
                                     <div class="d-flex mt-3">
                                         <input id="soluong" name="soluong" class="nhapsoluong mr-4" type="number" value="1" min="1" max="20" />
-                                        <input type="submit" class="btn btn-danger btn-lg-lg btn-sm" @enable value="Cho vào giỏ hàng" id="submitgh" />
+                                        @*<input type="submit" class="btn btn-danger btn-lg-lg btn-sm" @enable value="Cho vào giỏ hàng" id="submitgh" />*@
+                                        <input type="submit" class="btn btn-danger btn-lg-lg btn-sm add-cart" data-id="@Model.id" @enable value="Cho vào giỏ hàng" />
                                     </div>
-                                }
                             </div>
                         </div>
                     </div>

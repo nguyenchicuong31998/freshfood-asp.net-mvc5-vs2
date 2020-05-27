@@ -1,0 +1,101 @@
+﻿@using WebsiteThucPhamSach_VS2.Common
+@using WebsiteThucPhamSach_VS2.Models
+@model List<Cart>
+@{ 
+    Utils utils = new Utils();
+    Decimal totalMoney = 0;
+}
+
+<div class="container mt-4">
+    <div class="row">
+        @if (Model.Count() > 0)
+        {
+            <div class="col-12 col-lg-9">
+                <div class="row no-gutters cart-product">
+                    @foreach (var cartItem in Model)
+                    {
+                        {
+                            if(cartItem.price_promotion > 0)
+                            {
+
+                                var giamGia = String.Format("{0:0}", cartItem.price * ((100 - cartItem.price_promotion) / 100) * cartItem.quantity);
+                                totalMoney += Decimal.Parse(giamGia.ToString());
+                            }
+                            else
+                            {
+                                totalMoney += cartItem.totalMoney;
+                            }
+                        }
+                        <div class="col-2 mb-3">
+                            <div class="cart-image">
+                                <img class="rounded" src="@Url.Content(cartItem.image)" alt="Lỗi ảnh" />
+                            </div>
+                        </div>
+                        <div class="col-5 mb-3">
+                            <div>@cartItem.name</div>
+                            <a class="btnDelete" href="" data-id="@cartItem.id" >Xóa</a>
+                        </div>
+                        <div class="col-5 mb-3 d-flex flex-row">
+                            <div class="w-50">
+                                @if (cartItem.price_promotion > 0)
+                                {
+                                    <span class="d-block font-weight-bold">
+                                        @{
+                                            var giamGia = String.Format("{0:0}", cartItem.price * ((100 - cartItem.price_promotion) / 100));
+                                        }
+                                        @utils.FormatPrice(giamGia.ToString()) đ
+                                    </span>
+                                    <span class="d-block "><del class="font-weight-normal mr-2">@utils.FormatPrice(cartItem.price.ToString()) đ</del> | <span class="font-weight-bold d-inline-block ml-2">-@cartItem.price_promotion%</span></span>
+                                }
+                                else
+                                {
+
+                                    <span class="font-weight-bold">@utils.FormatPrice(cartItem.price.ToString()) đ</span>
+                                }
+                            </div>
+                            <div class="w-50">
+                                <div class="quantity buttons_added">
+                                    <input type="button" data-id="@cartItem.id" value="-" class="quantity-minus minus">
+                                    <input type="number" step="1" min="1" max="20" name="quantity" value="@cartItem.quantity" title="Qty" class="input-text qty text" size="4" pattern="" inputmode="">
+                                    <input type="button" data-id="@cartItem.id" value="+" class="quantity-plus plus">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>       
+            </div>
+            <div class="col-12 col-lg-3">
+                <div class="cart-total-prices">
+                    <div class="d-flex justify-content-between">
+                        <span>Tạm tính:</span>
+                        <span>@utils.FormatPrice(totalMoney.ToString()) đ</span>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between">
+                        <span>Thành tiền:</span>   
+                        <span class="text-danger font-weight-bold">@utils.FormatPrice(totalMoney.ToString()) đ</span>
+                    </div>
+                    <div class="text-right">(Đã bao gồm VAT nếu có)</div>
+                </div>
+                <a href="~/Thanh-Toan" class="btn btn-danger mt-4 p-3 d-block text-light display-4">Tiến hành đặt hàng</a>
+                @*<div class="mt-5 cart-code-discount">
+                    <div>Mã giảm giá/ Quà tặng</div>
+                    <hr />
+                    <div class="w-100">
+                        <input class="discount-input" type="text" />
+                        <a href="#" class="discount-submit">Đồng ý</a>
+                    </div>
+                </div>*@
+            </div>
+        }
+        else
+        {
+            <div class="col-12 mt-5">
+                <p class="text-center">Không có sản phẩm nào trong giỏ hàng của bạn.</p>
+                <div class="d-flex justify-content-center">
+                    <a href="~/Trang-Chu" class="btn btn-continue">Tiếp Tục Mua Sắm</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

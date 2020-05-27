@@ -5,13 +5,16 @@ using System.Web;
 using System.Web.Mvc;
 using WebsiteThucPhamSach_VS2.Models;
 using WebsiteThucPhamSach_VS2.Common;
+using WebsiteThucPhamSach_VS2.EmailTeamplate;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace WebsiteThucPhamSach_VS2.Controllers
 {
     public class HomeController : Controller
     {
+
         FreshFoodEntities db = new FreshFoodEntities();
         [HandleError]
         public ActionResult Index()
@@ -32,12 +35,6 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             ViewBag.Categories = menus;
             return View();
         }
-        //public void ChildMenuLeft(int parentId)
-        //{
-        //    var leftChildMenus = new MenusModel().getLeftChildMenus(parentId);
-        //    ViewBag.leftChildMenuCount = leftChildMenus.Count();
-        //    ViewBag.leftChildMenus = leftChildMenus;
-        //}
 
         //public ActionResult Products(int? id, string sortOrder ,int? page)
         //{
@@ -141,12 +138,138 @@ namespace WebsiteThucPhamSach_VS2.Controllers
         }
 
 
-        public ActionResult Cart()
+        public ActionResult Carts()
         {
             return View();
         }
 
+        private List<Cart> getProductInCookie()
+        {
+            List<Cart> carts = new List<Cart>();
 
+            if(Request.Cookies["CartCookie"] != null)
+            {
+                string cartCookies = Request.Cookies["CartCookie"].Value;
+                carts = JsonConvert.DeserializeObject<List<Cart>>(cartCookies);
+            }
+            return carts;
+        }
+
+        public int getProductCountInCart()
+        {
+            var cartProduct = this.getProductInCookie();
+            return cartProduct.Count();
+        }
+        public JsonResult UpdateQuantityProductById(int id, int quantity)
+        {
+            var cartProduct = this.getProductInCookie();
+            Cart cart = cartProduct.FirstOrDefault(p => p.id == id);
+            cart.quantity = quantity;
+            Response.Cookies.Clear();
+            Response.Cookies["CartCookie"].Value = new JavaScriptSerializer().Serialize(cartProduct);
+            return Json(new
+            {
+               status = true
+            });
+        }
+        public JsonResult DeleteProductById(int id)
+        {
+            var cartProduct = this.getProductInCookie();
+            cartProduct.RemoveAll(p => p.id == id);
+            Response.Cookies.Clear();
+            Response.Cookies["CartCookie"].Value = new JavaScriptSerializer().Serialize(cartProduct);
+            return Json(new
+            {
+                status = true
+            });
+        }
+
+        public PartialViewResult CartsContentPartial()
+        {
+            var carts = this.getProductInCookie();
+            foreach(Cart cart in carts)
+            {
+                cart.name = Server.UrlDecode(cart.name);
+            }
+            return PartialView(carts);
+        }
+
+        public JsonResult AddCart(int id, int quantity)
+        {
+            var cartProduct = this.getProductInCookie();
+            if(cartProduct.FirstOrDefault(p=>p.id == id) == null)
+            {
+                product product = db.products.Find(id);
+                Cart cart = new Cart()
+                {
+                    id = product.id,
+                    name = Server.UrlEncode(product.name),
+                    image = product.image,
+                    quantity = quantity,
+                    price = Decimal.Parse(product.price.ToString()),
+                };
+                if(product.price_promotion > 0)
+                {
+                    cart.price_promotion = Decimal.Parse(product.price_promotion.ToString());
+                }
+                cartProduct.Add(cart);
+                Response.Cookies["CartCookie"].Value = new JavaScriptSerializer().Serialize(cartProduct);
+            }
+            else
+            {
+
+                Cart cart = cartProduct.FirstOrDefault(p => p.id == id);
+                cart.quantity += quantity;
+                Response.Cookies["CartCookie"].Value = new JavaScriptSerializer().Serialize(cartProduct);
+            }
+            //if (Request.Cookies["CartCookie"] == null)
+            //{
+            //    product product = db.products.Find(id);
+ 
+            //    Cart cart = new Cart()
+            //    {
+            //        id = product.id,
+            //        name = Server.UrlEncode(product.name),
+            //        image = product.image,
+            //        quantity = quantity,
+            //        price = Decimal.Parse(product.price.ToString()),
+               
+            //    };  
+            //    //cart.name = Server.UrlEncode(cart.name);
+            //    Response.Cookies["CartCookie"].Value = new JavaScriptSerializer().Serialize(cart);
+            //}
+            //else
+            //{
+            //    product product = db.products.Find(id);
+              
+            //    Cart cart = new Cart()
+            //    {
+            //        id = product.id,
+            //        name = Server.UrlEncode(product.name),
+            //        image = product.image,
+            //        quantity = quantity,
+            //        price = Decimal.Parse(product.price.ToString()),
+
+            //    };  
+            //    //cart.name = Server.UrlEncode(cart.name);
+            //    //Response.Cookies["CartCookie"].Value = "["+ Request.Cookies["CartCookie"].Value + ","+ new JavaScriptSerializer().Serialize(cart)+"]";
+            //    Response.Cookies["CartCookie"].Value =  Request.Cookies["CartCookie"].Value + "|" + new JavaScriptSerializer().Serialize(cart);
+
+            //}
+            if (Session["id"] == null)
+            {
+                Response.Cookies["CartCookie"].Expires = DateTime.Now.AddMinutes(15);
+            }
+            else
+            {
+                Response.Cookies["CartCookie"].Expires = DateTime.Now.AddDays(30);
+            }
+
+            return Json(new
+            {
+                status = true
+            });
+        }
 
 
         [HttpGet]
@@ -210,6 +333,73 @@ namespace WebsiteThucPhamSach_VS2.Controllers
         {
             var productRelated = new ProductsModel().getProductRelatedById(id, menuId);
             return PartialView(productRelated);
+        }
+        [HttpGet]
+        public ActionResult Payment()
+        {
+            Session["url"] = Request.UrlReferrer.ToString();
+            if (Session["id"] == null)
+            {
+                return Redirect("~/Dang-Nhap");
+            }
+            var user = new UsersModels().getUserById(int.Parse(Session["id"].ToString()));
+            PaymentModel payment = new PaymentModel();
+            payment.id = user.id;
+            payment.display_name = user.display_name;
+            payment.phone_number = user.phone_number;
+            payment.address = user.address;
+            payment.email = user.email;
+            return View(payment);
+        }
+
+        [HttpPost]
+        public ActionResult Payment(PaymentModel payment)
+        {
+            try
+            {
+                
+                //var userId = 
+                Response.Cookies["CartCookie"].Expires = DateTime.Now.AddDays(-1);
+                //var body = new PaymentSuccess().body();
+                //new Utils().SendEmail(payment.email, "Chúc mừng bạn đã mua sản phẩm thành công", body, "", "");
+                return Redirect("~/Trang-Chu");
+            }catch(Exception e)
+            {
+                
+            }
+            return View(payment);
+        }
+        private int addOrderAndReturnUserId()
+        {
+            return 1;
+        }
+        private decimal totalMoney()
+        {
+            var carts = this.getProductInCookie();
+            decimal totalMoney = 0;
+            foreach(Cart cart in carts)
+            {
+                if(cart.price_promotion > 0)
+                {
+                    var giamGia = String.Format("{0:0}", cart.price * ((100 - cart.price_promotion) / 100) * cart.quantity);
+                    totalMoney += Decimal.Parse(giamGia.ToString());
+                }
+                else
+                {
+                    totalMoney += cart.price;
+                }
+            }
+            return totalMoney;
+        }
+
+        public PartialViewResult YourOrderPartial()
+        {
+            var carts = this.getProductInCookie();
+            foreach (Cart cart in carts)
+            {
+                cart.name = Server.UrlDecode(cart.name);
+            }
+            return PartialView(carts);
         }
 
         public PartialViewResult ModalProductPartial(int id)

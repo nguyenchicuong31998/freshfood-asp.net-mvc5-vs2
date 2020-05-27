@@ -188,6 +188,8 @@
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\Dashboard\Models\UsersAdModel.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="EmailTeamplate\PaymentSuccess.cs" />
     <Compile Include="EmailTeamplate\ReplyContact.cs" />
     <Compile Include="Models\AboutsModel.cs" />
     <Compile Include="Areas\Dashboard\Models\AdminsModel.cs" />
@@ -243,11 +245,13 @@
       <DependentUpon>DBFreshFood.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FeedbacksModel.cs" />
+    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\menu.cs">
       <DependentUpon>DBFreshFood.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Dashboard\Models\MenusAdModel.cs" />
     <Compile Include="Models\MenusModel.cs" />
+    <Compile Include="Models\PaymentModel.cs" />
     <Compile Include="Models\PersonalInfoModel.cs" />
     <Compile Include="Models\product.cs">
       <DependentUpon>DBFreshFood.tt</DependentUpon>
@@ -1541,6 +1545,8 @@
     <Content Include="Areas\Dashboard\Views\Feedback\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Feedback\View.cshtml" />
     <Content Include="Areas\Dashboard\Views\Menu\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Bill\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Statistical\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1613,17 +1619,18 @@
     <Content Include="Views\Home\AddFeedbackPartial.cshtml" />
     <Content Include="Views\Home\DisplayFeedbackPartial.cshtml" />
     <Content Include="Views\Home\RelatedProductPartial.cshtml" />
-    <Content Include="Views\Home\Cart.cshtml" />
+    <Content Include="Views\Home\Carts.cshtml" />
     <Content Include="Views\Home\Payment.cshtml" />
     <Content Include="Views\Home\ProductsContentPartial.cshtml" />
     <Content Include="Views\Category\LeftChildMenusPartial.cshtml" />
     <Content Include="Views\Home\ModalProductPartial.cshtml" />
     <Content Include="Views\Shared\_FeaturedProductPartial.cshtml" />
+    <Content Include="Views\Home\CartsContentPartial.cshtml" />
+    <Content Include="Views\Common\RatingStar.cshtml" />
+    <Content Include="Views\Home\YourOrderPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Dashboard\Views\Bill\" />
-    <Folder Include="Areas\Dashboard\Views\Statistical\" />
     <Folder Include="Areas\Dashboard\Views\Unit\" />
   </ItemGroup>
   <ItemGroup>

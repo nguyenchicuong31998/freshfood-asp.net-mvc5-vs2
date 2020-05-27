@@ -12,6 +12,8 @@ namespace WebsiteThucPhamSach_VS2
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            
+
             //Đăng xuất
             routes.MapRoute(
                 name: "Đăng Xuất",
@@ -151,7 +153,19 @@ namespace WebsiteThucPhamSach_VS2
                 defaults: new
                 {
                     controller = "Home",
-                    action = "Cart",
+                    action = "Carts",
+                    id = UrlParameter.Optional
+                }
+            );
+
+            //Thanh toán
+            routes.MapRoute(
+                name: "Thanh Toán",
+                url: "Thanh-Toan",
+                defaults: new
+                {
+                    controller = "Home",
+                    action = "Payment",
                     id = UrlParameter.Optional
                 }
             );

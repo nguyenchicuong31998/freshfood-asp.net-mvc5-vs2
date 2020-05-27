@@ -15,16 +15,17 @@
             <div class="products-item p-3">
                 @{
                     product.image = product.image != " " ? product.image : "https://via.placeholder.com/250x250";
+                    var enable = product.total_product > 0 ? "" : "visibility: hidden";
                 }
                 @if (product.price_promotion > 0)
                 {
-                    <span class="sale">Giảm giá: @product.price_promotion%</span>
+                    <span class="sale">Giảm giá: -@product.price_promotion%</span>
                 }
                 <div class="box-photo">
                     <img class="img-thumbnail img-custome" src="@Url.Content(product.image)" />
                     <div class="box-order d-flex align-items-center justify-content-center">
                         <a href="#" data-id="@product.id" class="quick-view mr-3 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Xem nhanh"><i class="far fa-eye"></i></a>
-                        <a href="#" class="add-cart d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Thêm vào giỏ hàng"><i class="fas fa-cart-plus"></i></a>
+                        <a href="#" data-id="@product.id" style="@enable" class="add-cart d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Thêm vào giỏ hàng"><i class="fas fa-cart-plus"></i></a>
                     </div>
                 </div>
                 <div class="products-item-content pt-3 pb-3">
@@ -32,7 +33,7 @@
                         <a href="~/Chi-Tiet-San-Pham/@product.id" class="p-2 text-black">@product.name</a>
                     </div>
                     <div class="product-star">
-                        5 sao (250)
+                        @Html.Action("RatingStar", "Common", new { id = product.id })
                     </div>
                     <div class="product-price">
                         @if (product.price_promotion != null)

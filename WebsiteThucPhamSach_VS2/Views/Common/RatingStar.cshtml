@@ -1,0 +1,16 @@
+﻿
+
+<div class="d-flex">
+    <div id="@("rateYo"+ ViewBag.id)"></div> <div class="ml-2 total-feedback">(@ViewBag.totalFeedback)</div>
+</div>
+<script>
+       document.addEventListener('DOMContentLoaded', function () {
+            $("#@("rateYo"+ ViewBag.id)").rateYo({
+                 rating: @ViewBag.AvgStar,
+                 readOnly: true,
+                 starWidth: "18px",
+                 spacing: "5px",
+                 ratedFill: "#ffc120"
+             });
+        });
+</script>

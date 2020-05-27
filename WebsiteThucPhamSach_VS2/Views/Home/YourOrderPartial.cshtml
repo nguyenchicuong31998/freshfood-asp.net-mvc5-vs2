@@ -1,0 +1,57 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@using WebsiteThucPhamSach_VS2.Common
+@model List<Cart>
+@{ 
+    Utils utils = new Utils();
+    Decimal totalMoney = 0;
+}
+
+<div class="your-order pt-5">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var cartItem in Model)
+                    {
+                        if (cartItem.price_promotion > 0)
+                        {
+                           
+                            var giamGia = String.Format("{0:0}", cartItem.price * ((100 - cartItem.price_promotion) / 100) * cartItem.quantity);
+                            totalMoney += Decimal.Parse(giamGia.ToString());
+                        }
+                        else
+                        {
+                            totalMoney += cartItem.totalMoney;
+                        }
+                        <tr>
+                            <td data-toggle="tooltip" title="@cartItem.name">@utils.add3Dots(cartItem.name, 25)</td>
+                            <td>@cartItem.quantity</td>
+                            <td>
+                                @{
+                                    var priceDiscount = String.Format("{0:0}", cartItem.price * ((100 - cartItem.price_promotion) / 100));
+                                    cartItem.price = cartItem.price_promotion > 0 ? Decimal.Parse(priceDiscount.ToString()) : cartItem.price;
+                                }
+                                @utils.FormatPrice(cartItem.price.ToString()) đ
+                            </td>
+                            <td>@utils.FormatPrice(cartItem.totalMoney.ToString()) đ</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    @*<div>Tổng phụ: @utils.FormatPrice(@totalMoney.ToString()) đ</div>*@
+    @*@{
+        totalMoney = totalMoney + 40000;
+    }*@
+    <div class="d-flex justify-content-end w-100">
+      <span class="mr-5">Tổng tiền:</span> 
+      <span class="font-weight-bold text-danger mr-8 ml-4">@utils.FormatPrice(totalMoney.ToString()) đ</span>
+    </div>
+</div>
