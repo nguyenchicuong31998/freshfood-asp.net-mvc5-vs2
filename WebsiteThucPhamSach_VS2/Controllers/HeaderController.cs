@@ -19,6 +19,8 @@ namespace WebsiteThucPhamSach_VS2.Controllers
         Utils utils = new Utils();
         public PartialViewResult  HeaderPartial()
         {
+            var menus = new MenusModel().getMenus();
+            ViewBag.Menu = menus;
             return PartialView();
         }
 

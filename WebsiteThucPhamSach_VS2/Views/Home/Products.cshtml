@@ -2,10 +2,11 @@
 @*@using WebsiteThucPhamSach_VS2.Common*@
 @model List<menu>
 @*@using PagedList.Mvc;
-@model PagedList.PagedList<product>*@
+    @model PagedList.PagedList<product>*@
 @{
     ViewBag.Title = "Sản phẩm";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    string Name = ViewBag.Name == "" ? "Tất cả sản phẩm" : ViewBag.Name;
 }
 <div class="container mt-4">
     <div class="row">
@@ -16,7 +17,7 @@
                         <a href="~/Trang-Chu" class="breadcrumb-link">Trang chủ</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="~/San-Pham" class="breadcrumb-link active">Sản phẩm</a>
+                        <a href="~/San-Pham" class="breadcrumb-link active">@Name</a>
                     </li>
                 </ul>
             </div>
@@ -26,11 +27,9 @@
 
 <div class="container mt-4">
     <div class="row">
-        <div class="col-3 col-lg-3">
-            <h3 class="title-share text-left">Danh Muc</h3>
-        </div>
-        <div class="col-9 col-lg-9 d-flex justify-content-between">
-            <h3 class="title-share">Thực Phẩm</h3>
+        <div class="offset-lg-3 col-12 col-lg-9 d-flex justify-content-between">
+
+            <h3 class="title-share pt-3">@Name</h3>
             <div>
                 <select class="sort-order-product select-control">
                     <option value="valued">Mặc định</option>
@@ -45,12 +44,14 @@
     <div class="row mt-4">
         <div class="col-12 col-lg-3">
             <div class="row no-gutters">
-                <div class="col-12">
+                <div class="col-12 d-none d-lg-block">
+                    <h3 class="title-share pt-3 pb-3">Danh Mục</h3>
                     <div class="left-categories categories-group" id="accordionCategory">
                         <ul class="categories">
                             @foreach (var category in ViewBag.Categories)
                             {
-                                <li class="categories-item" aria-expanded="false" aria-controls="@category.id" data-target="#@category.id" data-toggle="collapse">
+                                @*<li class="categories-item" aria-expanded="false" aria-controls="@category.id" data-target="#@category.id" data-toggle="collapse">*@
+                                <li class="categories-item">
                                     <a href="@Url.Content(category.link)/@category.id" class="categories-item-a">
                                         @category.name
                                     </a>
@@ -60,28 +61,30 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-12 mt-4 pt-3 pb-3">
+                <div class="col-6 col-lg-12 mt-4 pt-3 pb-3 d-none d-lg-block">
                     <div class="search-price ">
                         <h3 class="title-share text-left">Giá</h3>
-                        <div>Chọn khoảng giá</div>
+                        <div class="pt-3 pb-3">Chọn khoảng giá</div>
                         <div class="row no-gutters">
-                            <input class="col-5 search-price start-price" type="text" min="1" max="10000000000" />
+                            <input oninput="validity.valid||(value=1);" class="col-5 search-price start-price" type="text" min="1" max="10000000000" />
                             <div class="col-2 d-flex justify-content-center"> - </div>
-                            <input class="col-5 search-price end-price" type="text" min="1" max="10000000000" />
+                            <input oninput="validity.valid||(value=1);" class="col-5 search-price end-price" type="text" min="1" max="10000000000" />
                         </div>
                         <div class="row no-gutters">
                             <a href="#" id="ok" class="btn pt-3 pb-3 mt-3 text-white btn-block col-lg-5 btn-search bg-green">OK</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 mt-4">
-                     @Html.Partial("_FeaturedProductPartial")
+                <div class="col-12 col-lg-12 mt-4 d-none d-lg-block">
+                    @Html.Partial("_FeaturedProductPartial")
                 </div>
             </div>
-
         </div>
         <div class="col-12 col-lg-9" id="products-content">
             @Html.Action("ProductsContentPartial", "Home")
+        </div>
+        <div class="col-12 col-lg-12 d-block d-lg-none mt-5">
+            @Html.Partial("_FeaturedProductPartial")
         </div>
     </div>
 </div>
@@ -104,17 +107,17 @@
                 var order = $(this).val();
                 //alert(document.location.href.split('?')[0] + "?order=" + encodeURIComponent(order));
                 document.location.replace(document.location.href.split('?')[0] + "?order=" + order);
-                $("#products-content").load("/Home/ProductsContentPartial", {  order: order })
+                $("#products-content").load("/Home/ProductsContentPartial", { order: order })
             })
 
             function numberWithCommas(x) {
                 return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
             }
-            $('.start-price').on('change', function () {
+            $('.start-price').on('blur', function () {
                 var ketqua = numberWithCommas($(this).val());
                 $(this).val(ketqua);
             });
-            $('.end-price').on('change', function () {
+            $('.end-price').on('blur', function () {
                 var ketqua = numberWithCommas($(this).val());
                 $(this).val(ketqua);
             });
@@ -130,5 +133,5 @@
 
             //});
         })
-    </script>       
+    </script>
 }

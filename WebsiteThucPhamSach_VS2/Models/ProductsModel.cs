@@ -19,9 +19,10 @@ namespace WebsiteThucPhamSach_VS2.Models
             return products;
         }
 
+
         public IPagedList<product> getProductsPageList(int id, string order, int? page)
         {
-            int pageSize = 6;
+            int pageSize = 12;
             int pageNumber = (page ?? 1);
             var products = from s in db.products
                            where s.status == true

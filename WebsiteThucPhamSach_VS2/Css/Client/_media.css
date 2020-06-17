@@ -19,6 +19,10 @@
     .new-title {
         height: 50px;
     }
+
+    .products {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 
@@ -26,6 +30,10 @@
 
     body{
         font-size: 1.2rem;
+    }
+
+    .products {
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .card-body-new {

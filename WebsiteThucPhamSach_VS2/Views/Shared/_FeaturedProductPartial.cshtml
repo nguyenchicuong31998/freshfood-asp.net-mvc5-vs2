@@ -5,17 +5,17 @@
     Utils utils = new Utils();
 }
 <h3 class="title-share text-left pb-3">Sản Phẩm Bán Chạy</h3>
-<div class="dotted-underline"></div>
+@*<div class="dotted-underline"></div>*@
 <div>
         @foreach (var product in products)
         {
-            <div class="row mt-4 mb-4">
-                <div class="col-5">
+            <div class="box-featured d-flex ">
+                <div class="box-photo-featured">
                     <a href="~/Chi-Tiet-San-Pham/@product.id">
                         <img class="img-thumbnail img-featured" src="@Url.Content(product.image)" alt="@product.name" />
                     </a>
                 </div>
-                <div class="col-7 p-0">
+                <div class="box-content-featured pl-3">
                     <a href="~/Chi-Tiet-San-Pham/@product.id" class="text-black font-weight-bold text-opacity" data-toggle="tooltip" title="@product.name">@utils.add3Dots(product.name, 25)</a>
                     @if (product.price_promotion != null)
                     {
@@ -33,6 +33,5 @@
                     }
                 </div>
             </div>
-            <div class="dotted-underline"></div>
         }
 </div>

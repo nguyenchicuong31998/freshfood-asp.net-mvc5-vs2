@@ -19,5 +19,11 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             ViewBag.AvgStar = float.IsNaN(totalStar / totalRate) ? 0 : (totalStar / totalRate);
             return PartialView();
         }
+         
+        public PartialViewResult GalleryForDetailProduct(string moreImages)
+        {
+            ViewBag.moreImages = moreImages;
+            return PartialView();
+        }
     }
 }

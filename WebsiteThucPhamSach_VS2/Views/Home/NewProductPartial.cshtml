@@ -18,7 +18,9 @@
                 }
                 <span class="new">Mới</span>
                 <div class="box-photo">
-                    <img class="img-thumbnail" src="@Url.Content(product.image)" />
+                    @if(product.image != null) { 
+                       <img class="img-thumbnail" src="@Url.Content(product.image)" />
+                    }
                     <div class="box-order d-flex align-items-center justify-content-center">
                         <a href="#" data-id="@product.id" class="quick-view  mr-3 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Xem nhanh"><i class="far fa-eye"></i></a>
                         <a href="JavaScript:void(0)" data-id="@product.id" style="@enable" class="add-cart d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Thêm vào giỏ hàng"><i class="fas fa-cart-plus"></i></a>
@@ -38,13 +40,13 @@
                                 @{
                                     var giamGia = String.Format("{0:0}", product.price * ((100 - product.price_promotion) / 100));
                                 }
-                                @utils.FormatPrice(giamGia.ToString()) đ/Kg
+                                @utils.FormatPrice(giamGia.ToString()) đ
                             </span>
-                            <span class="price font-weight-normal"><del>@utils.FormatPrice(product.price.ToString()) đ/Kg</del></span>
+                            <span class="price font-weight-normal"><del>@utils.FormatPrice(product.price.ToString()) đ</del></span>
                         }
                         else
                         {
-                            <span class="price font-weight-bold">@utils.FormatPrice(product.price.ToString()) đ/Kg</span>
+                            <span class="price font-weight-bold">@utils.FormatPrice(product.price.ToString()) đ</span>
                         }
                     </div>
                 </div>

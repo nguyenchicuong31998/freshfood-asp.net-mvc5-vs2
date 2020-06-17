@@ -1,0 +1,33 @@
+﻿@using Newtonsoft.Json;
+@{
+    List<string> moreImages = JsonConvert.DeserializeObject<List<string>>(ViewBag.moreImages);
+}
+@if (moreImages.Count() > 0)
+{
+    foreach (var image in moreImages)
+    {
+
+        <div class="pictureLarge">
+            <img src="@Url.Content(image)" alt="lỗi ảnh"/>
+        </div>
+    }
+
+        <div class="row-gallery mt-2">
+            @for (var index = 0; index < moreImages.Count(); index++)
+            {
+                <div class="column mr-2">
+                    @{
+                        var activeEnable = index == 0 ? "activeImageDetail" : "";
+                    }
+                    <img class="slideImage cursor @activeEnable" src="@Url.Content(moreImages[index])" style="width:100%" onclick="currentSlide(@index + 1)" alt="Nature and sunrise">
+                </div>
+            }
+
+            @*<div class="column">
+                <img class="demo cursor" src="~/Img/thanhlong1.jpg" style="width:100%" onclick="currentSlide(2)" alt="Snowy Mountains">
+            </div>
+            <div class="column">
+                <img class="demo cursor" src="~/Img/thanhlong2.jpg" style="width:100%" onclick="currentSlide(3)" alt="Snowy Mountains">
+            </div>*@
+        </div>
+}

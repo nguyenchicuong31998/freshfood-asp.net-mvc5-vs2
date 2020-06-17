@@ -1628,6 +1628,8 @@
     <Content Include="Views\Home\CartsContentPartial.cshtml" />
     <Content Include="Views\Common\RatingStar.cshtml" />
     <Content Include="Views\Home\YourOrderPartial.cshtml" />
+    <Content Include="Views\Category\ChildMenuMobilePartial.cshtml" />
+    <Content Include="Views\Common\GalleryForDetailProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

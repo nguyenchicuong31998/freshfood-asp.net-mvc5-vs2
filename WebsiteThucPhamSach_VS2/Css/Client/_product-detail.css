@@ -7,14 +7,96 @@
 }
 
 
-.mySlides {
+.left .pictureLarge {
     display: none;
+    border: 1px solid #9bd031;
+    border-radius: 8px;
+}
+    .left .pictureLarge img {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .left .pictureLarge:nth-child(1) {
+        display: block;
+    }
+.left .product-desc {
+    min-height: 50px;
 }
 
 
-.cursor {
-    cursor: pointer;
+
+.left .row-gallery:after {
+    content: "";
+    display: table;
+    clear: both;
 }
+
+.left .column {
+    float: left;
+    width: 20%;
+    border-radius: 8px;
+}
+
+    .left .column:hover {
+        border: 1px solid #9bd031;
+    }
+
+.left .slideImage {
+    opacity: 0.8;
+    padding: 5px;
+}
+
+.left .column .slideImage.activeImageDetail {
+    display: block;
+    border: 1px solid #9bd031;
+}
+
+.left .column .slideImage.activeImageDetail {
+    display: block;
+    border: 1px solid #9bd031;
+}
+
+    /*.active,
+    .demo:hover {
+        opacity: 1;
+        display: block;
+    }*/
+.activeImageDetail {
+    opacity: 1;
+    display: block;
+    border: 1px solid #9bd031;
+    border-radius: 8px;
+}
+
+.add-cart{
+    font-size: 1.3rem;
+}
+
+.column-add-cart div > input {
+    height: 37px;
+}
+
+.pictureLarge {
+    display: none;
+    border: 1px solid #9bd031;
+    border-radius: 8px;
+}
+
+   .pictureLarge img {
+        width: 80%;
+        padding: 15px;
+    }
+
+     .pictureLarge:nth-child(1) {
+        display: block;
+    }
+
+.product-desc {
+    min-height: 50px;
+}
+
+
 
 .row-gallery:after {
     content: "";
@@ -24,31 +106,27 @@
 
 .column {
     float: left;
-    width: 16.66%;
+    width: 20%;
+    border-radius: 8px;
 }
 
-    .column:hover {
-        border: 2px solid red;
+   .column:hover {
+        border: 1px solid #9bd031;
     }
 
-.demo {
+ .slideImage {
     opacity: 0.8;
+    padding: 5px;
 }
-.column .demo.active {
+
+.column .slideImage.activeImageDetail {
     display: block;
-    border: 2px solid red;
+    border: 1px solid #9bd031;
 }
 
-    .active,
-    .demo:hover {
-        opacity: 1;
-        display: block;
-    }
-
-
-
-.column-add-cart div > input{
-    height: 37px;
+.column .slideImage.activeImageDetail {
+    display: block;
+    border: 1px solid #9bd031;
 }
 
 
@@ -72,3 +150,21 @@
         height: 220px;
         border: 1px solid rgb(239, 239, 239);
     }
+
+@media screen and (min-width: 768px) {
+    .product-desc {
+        min-height: 40px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .product-desc {
+        min-height: 210px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .product-desc {
+        min-height: 185px;
+    }
+}

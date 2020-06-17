@@ -45,5 +45,16 @@ namespace WebsiteThucPhamSach_VS2.Models
                              ).ToList();
             return childMenusLeft;
         }
+
+        public string getNameMenuById(int? id)
+        {
+            if(id != null)
+            {
+                var menu = db.menus.SingleOrDefault(p => p.id == id);
+                string name = menu.name;
+                return name == "" ? "" : name;
+            }
+            return "";
+        }
     }
 }

@@ -17,40 +17,36 @@
                 </div>
                 <div class="model-content container-fluid">
                     <div class="row">
-                        <div class="col-6 left">
-                            <div class="mySlides" style="display:block">
-                                <img src="~/Img/thanh-long.jpg" style="width:84%">
-                            </div>
-
-                            <div class="mySlides">
-                                <img src="~/Img/thanhlong1.jpg" style="width:84%">
-                            </div>
-
-                            <div class="mySlides">
-                                <img src="~/Img/thanhlong2.jpg" style="width:84%">
-                            </div>
-
-                            <div class="row-gallery">
-                                <div class="column">
-                                    <img class="demo cursor " src="~/Img/thanh-long.jpg" style="width:100%" onclick="currentSlide(1)" alt="Nature and sunrise">
-                                </div>
-                                <div class="column">
-                                    <img class="demo cursor" src="~/Img/thanhlong1.jpg" style="width:100%" onclick="currentSlide(2)" alt="Snowy Mountains">
-                                </div>
-                                <div class="column">
-                                    <img class="demo cursor" src="~/Img/thanhlong2.jpg" style="width:100%" onclick="currentSlide(3)" alt="Snowy Mountains">
-                                </div>
-                            </div>
+                        <div class="col-12 col-md-6 left">
+                            @Html.Action("GalleryForDetailProduct", "Common", new { moreImages = Model.more_images})        
                         </div>
-                        <div class="col-6 quick-view-right">
+                        <div class="col-12 col-md-6 quick-view-right">
                             <h2 class="font-weight-bold mt-3 mb-3">
                                 @Model.name
                             </h2>
+                            <div class="mt-2 d-flex">
+                                @{
+                                    int totalFeedback = new FeedbacksModel().getTotalFeedbackByProductId(Model.id);
+                                    float totalRate = new FeedbacksModel().getTotalFeedbackByProductId(Model.id);
+                                    float totalStar = new FeedbacksModel().getTotalStarByProductId(Model.id);
+                                    float avgStar = float.IsNaN(totalStar / totalRate) ? 0 : (totalStar / totalRate);
+                                }
+                                <div id="@("rateYo"+ Model.id + "modal")" class="mr-3"></div>  (@totalFeedback) đánh giá
+                                <script type="text/javascript">
+                                      $("#@("rateYo"+ Model.id + "modal")").rateYo({
+                                                rating: @avgStar,
+                                                readOnly: true,
+                                                starWidth: "20px",
+                                                spacing: "5px",
+                                                ratedFill: "#ffc120"
+                                      });
+                                </script>
+                            </div>
                             <div class="mt-3 mb-3">
                                 @{
                                     var statusName = Model.total_product > 0 ? "Còn hàng" : "Đã hết hàng";
                                 }
-                                Trạng thái:  
+                                Trạng thái:
                                 <span class="text-danger ml-2 font-weight-bold">@statusName</span>
                             </div>
                             <div class="mt-2 mb-2">
@@ -69,19 +65,19 @@
                                     <span class="font-weight-bold">@utils.FormatPrice(Model.price.ToString()) đ/Kg</span>
                                 }
                             </div>
-                            <div class="mt-3 mb-2" style="height:135px;">
+                            <div class="mt-3 mb-2 product-desc">
+                                <div>Mô tả:</div>
                                 <div>@Model.description</div>
                             </div>
-                            <div class="column-add-cart">
-                                    @{ 
-                                        var enable = Model.total_product > 0 ? "" : "disabled";
-                                    }
-                                    <div class="d-inline">Số lượng:</div>
-                                    <div class="d-flex mt-3">
-                                        <input id="soluong" name="soluong" class="nhapsoluong mr-4" type="number" value="1" min="1" max="20" />
-                                        @*<input type="submit" class="btn btn-danger btn-lg-lg btn-sm" @enable value="Cho vào giỏ hàng" id="submitgh" />*@
-                                        <input type="submit" class="btn btn-danger btn-lg-lg btn-sm add-cart" data-id="@Model.id" @enable value="Cho vào giỏ hàng" />
-                                    </div>
+                            <div class="column-add-cart pl-1">
+                                @{
+                                    var enable = Model.total_product > 0 ? "" : "disabled";
+                                }
+                                <div class="d-inline">Số lượng:</div>
+                                <div class="d-flex mt-3 p-2">
+                                    <input id="soluong" onblur="value = value == '' ? 1 : value;" oninput="validity.valid||(value=1);" name="soluong" class="nhapsoluong p-3 mr-4" type="number" value="1" min="1" max="20" />
+                                    <input type="submit" class="btn bg-green text-light font-weight-bold btn-lg-lg btn-sm add-cart" data-id="@Model.id" @enable value="Cho vào giỏ hàng" />
+                                </div>
                             </div>
                         </div>
                     </div>

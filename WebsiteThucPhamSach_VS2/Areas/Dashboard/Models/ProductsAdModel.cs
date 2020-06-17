@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using WebsiteThucPhamSach_VS2.Models;
@@ -13,8 +14,9 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
         [Required(ErrorMessage = "Vui lòng nhập tên sản phẩm")]
         public string name { get; set; }
         public string description { get; set; }
-        [Required(ErrorMessage = "Vui lòng chọn hình sản phẩm")]
+        [Required(ErrorMessage = "Vui lòng chọn hình ảnh sản phẩm")]
         public string image { get; set; }
+        [Required(ErrorMessage = "Vui lòng chọn hình ảnh chi tiết sản phẩm")]
         public string more_images { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập mô tả chi tiết sản phẩm")]
         public string detail { get; set; }
@@ -39,7 +41,7 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
         FreshFoodEntities db = new FreshFoodEntities();
         public List<product> getProducts()
         {
-            return db.products.ToList();
+            return db.products.OrderByDescending(p=>p.start_time).ToList();
         }
         
         public product GetProductById(int id)
@@ -73,5 +75,39 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
             db.SaveChanges();
             return true;
         }
+
+        public bool updateProductById(int id, ProductsAdModel productAd)
+        {
+            try
+            {
+                var product = this.GetProductById(id);
+                if(product != null)
+                {
+                    product.code = productAd.code;
+                    product.name = productAd.name;
+                    product.description = productAd.description;
+                    product.image = productAd.image;
+                    product.more_images = productAd.more_images;
+                    product.detail = productAd.detail;
+                    product.keywords = productAd.keywords;
+                    product.includeVAT = productAd.includeVAT;
+                    product.price = productAd.price;
+                    product.price_promotion = productAd.price_promotion;
+                    product.menu_id = int.Parse(productAd.menu_id.ToString());
+                    product.start_time = productAd.start_time;
+                    product.total_product = productAd.total_product;
+                    db.Entry(product).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch(Exception e)
+            {
+
+            }
+            return false;
+        }
+
     }
 }

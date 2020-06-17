@@ -30,13 +30,13 @@
                                 @{
                                     var giamGia = String.Format("{0:0}", product.price * ((100 - product.price_promotion) / 100));
                                 }
-                                @utils.FormatPrice(giamGia.ToString()) đ/Kg
+                                @utils.FormatPrice(giamGia.ToString()) đ
                             </span>
-                            <span class="price font-weight-normal"><del>@utils.FormatPrice(product.price.ToString()) đ/Kg</del></span>
+                            <span class="price font-weight-normal"><del>@utils.FormatPrice(product.price.ToString()) đ</del></span>
                         }
                         else
                         {
-                            <span class="price font-weight-bold">@utils.FormatPrice(product.price.ToString()) đ/Kg</span>
+                            <span class="price font-weight-bold">@utils.FormatPrice(product.price.ToString()) đ</span>
                         }
                     </div>
                 </div>

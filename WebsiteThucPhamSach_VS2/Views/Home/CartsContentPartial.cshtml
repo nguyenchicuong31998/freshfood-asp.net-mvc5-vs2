@@ -11,58 +11,55 @@
         @if (Model.Count() > 0)
         {
             <div class="col-12 col-lg-9">
-                <div class="row no-gutters cart-product">
-                    @foreach (var cartItem in Model)
+                @foreach(var cartItem in Model)
+                {
                     {
+                        if (cartItem.price_promotion > 0)
                         {
-                            if(cartItem.price_promotion > 0)
-                            {
 
-                                var giamGia = String.Format("{0:0}", cartItem.price * ((100 - cartItem.price_promotion) / 100) * cartItem.quantity);
-                                totalMoney += Decimal.Parse(giamGia.ToString());
+                            var giamGia = String.Format("{0:0}", cartItem.price * ((100 - cartItem.price_promotion) / 100) * cartItem.quantity);
+                            totalMoney += Decimal.Parse(giamGia.ToString());
+                        }
+                        else
+                        {
+                            totalMoney += cartItem.totalMoney;
+                        }
+                    }
+                <div class="box-card d-flex">
+                    <div class="box-photo">
+                        <img class="rounded img-thumbnail" src="@Url.Content(cartItem.image)" alt="Lỗi ảnh" />
+                    </div>
+                    <div class="w-100 box-content d-flex flex-column flex-md-row">
+                        <div class="info w-100 mb-1 m-md-0">
+                            <div>@utils.add3Dots(cartItem.name, 180)</div>
+                            <a class="btnDelete" href="#" data-id="@cartItem.id">Xóa</a>
+                        </div>
+                        <div class="price w-75 mb-2 mt-1 m-md-0 w-lg-100">
+                            @if (cartItem.price_promotion > 0)
+                            {
+                                <span class="d-block font-weight-bold">
+                                    @{
+                                        var giamGia = String.Format("{0:0}", cartItem.price * ((100 - cartItem.price_promotion) / 100));
+                                    }
+                                    @utils.FormatPrice(giamGia.ToString()) đ
+                                </span>
+                                <span class="d-block "><del class="font-weight-normal mr-2">@utils.FormatPrice(cartItem.price.ToString()) đ</del> | <span class="font-weight-bold d-inline-block ml-2">-@cartItem.price_promotion%</span></span>
                             }
                             else
                             {
-                                totalMoney += cartItem.totalMoney;
+                                <span class="font-weight-bold">@utils.FormatPrice(cartItem.price.ToString()) đ</span>
                             }
-                        }
-                        <div class="col-2 mb-3">
-                            <div class="cart-image">
-                                <img class="rounded" src="@Url.Content(cartItem.image)" alt="Lỗi ảnh" />
+                        </div>
+                        <div class="w-50 mb-1 mt-2 m-md-0 box-quantity">
+                            <div class="quantity buttons_added">
+                                <input type="button" data-id="@cartItem.id" value="-" class="quantity-minus minus">
+                                <input data-id="@cartItem.id" type="number" onblur="updateQuantity(this);" oninput="validity.valid||(value=1);" step="1" min="1" max="20" name="quantity" value="@cartItem.quantity" title="Qty" class="input-text qty text" size="4" pattern="" inputmode="">
+                                <input type="button" data-id="@cartItem.id" value="+" class="quantity-plus plus">
                             </div>
                         </div>
-                        <div class="col-5 mb-3">
-                            <div>@cartItem.name</div>
-                            <a class="btnDelete" href="" data-id="@cartItem.id" >Xóa</a>
-                        </div>
-                        <div class="col-5 mb-3 d-flex flex-row">
-                            <div class="w-50">
-                                @if (cartItem.price_promotion > 0)
-                                {
-                                    <span class="d-block font-weight-bold">
-                                        @{
-                                            var giamGia = String.Format("{0:0}", cartItem.price * ((100 - cartItem.price_promotion) / 100));
-                                        }
-                                        @utils.FormatPrice(giamGia.ToString()) đ
-                                    </span>
-                                    <span class="d-block "><del class="font-weight-normal mr-2">@utils.FormatPrice(cartItem.price.ToString()) đ</del> | <span class="font-weight-bold d-inline-block ml-2">-@cartItem.price_promotion%</span></span>
-                                }
-                                else
-                                {
-
-                                    <span class="font-weight-bold">@utils.FormatPrice(cartItem.price.ToString()) đ</span>
-                                }
-                            </div>
-                            <div class="w-50">
-                                <div class="quantity buttons_added">
-                                    <input type="button" data-id="@cartItem.id" value="-" class="quantity-minus minus">
-                                    <input type="number" step="1" min="1" max="20" name="quantity" value="@cartItem.quantity" title="Qty" class="input-text qty text" size="4" pattern="" inputmode="">
-                                    <input type="button" data-id="@cartItem.id" value="+" class="quantity-plus plus">
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>       
+                    </div>
+                </div>
+                }
             </div>
             <div class="col-12 col-lg-3">
                 <div class="cart-total-prices">

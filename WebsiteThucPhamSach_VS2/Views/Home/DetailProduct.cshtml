@@ -26,29 +26,7 @@
     <div class="row">
         <div class="col-12 col-sm-6">
             <div class="containers">
-                <div class="mySlides">
-                    <img src="~/Img/thanh-long.jpg" style="width:84%">
-                </div>
-
-                <div class="mySlides">
-                    <img src="~/Img/thanhlong1.jpg" style="width:84%">
-                </div>
-
-                <div class="mySlides">
-                    <img src="~/Img/thanhlong2.jpg" style="width:84%">
-                </div>
-
-                <div class="row-gallery">
-                    <div class="column">
-                        <img class="demo cursor " src="~/Img/thanh-long.jpg" style="width:100%" onclick="currentSlide(1)" alt="Nature and sunrise">
-                    </div>
-                    <div class="column">
-                        <img class="demo cursor" src="~/Img/thanhlong1.jpg" style="width:100%" onclick="currentSlide(2)" alt="Snowy Mountains">
-                    </div>
-                    <div class="column">
-                        <img class="demo cursor" src="~/Img/thanhlong2.jpg" style="width:100%" onclick="currentSlide(3)" alt="Snowy Mountains">
-                    </div>
-                </div>
+                @Html.Action("GalleryForDetailProduct", "Common", new { moreImages = Model.more_images })
             </div>
         </div>
         <div class="col-12 col-sm-6">
@@ -82,7 +60,7 @@
                 @{
                     var statusName = Model.total_product > 0 ? "Còn hàng" : "Đã hết hàng";
                 }
-                <span class="text-danger font-weight-bold">@statusName</span>
+                <span>Trạng thái:</span><span class="text-danger font-weight-bold"> @statusName</span>
             </div>
             <div class=" mt-2 mb-2">
                 @if (Model.price_promotion != null)
@@ -100,8 +78,9 @@
                     <span class="font-weight-bold">@utils.FormatPrice(Model.price.ToString()) đ/Kg</span>
                 }
             </div>
-            <div class="mt-5 mb-2" style="height:250px;">
-                 <div>@Model.description</div>
+            <div class="mt-3 mb-2" style="height:190px;">
+                <div>Mô tả:</div>
+                <div>@Model.description</div>
             </div>
             <div id="box-quantity" class="column-add-cart">
                 @{

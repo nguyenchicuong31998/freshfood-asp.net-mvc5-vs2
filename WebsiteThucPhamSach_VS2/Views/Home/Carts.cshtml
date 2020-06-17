@@ -47,6 +47,22 @@
 
 @section scripts{
     <script type="text/javascript">
+        function updateQuantity(el) {
+            var id = el.getAttribute('data-id');
+            var value = el.value;
+            var quantity = value == '' ? 1 : value;
+            $.ajax({
+                url: "/Home/UpdateQuantityProductById",
+                data: { id: id, quantity: quantity },
+                dataType: "json",
+                type: "POST",
+                success: function (res) {
+                    if (res.status == true) {
+                        location.reload();
+                    }
+                }
+            })
+        }
         $(document).ready(function () {
             $('.btnDelete').click(function () {
                 let id = $(this).data('id');

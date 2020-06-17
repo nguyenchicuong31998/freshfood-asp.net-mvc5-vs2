@@ -2,7 +2,7 @@
 
 @if ((int)ViewBag.leftChildMenuCount > 0)
 {
-    <span class="category-icon fa fa-plus"></span>
+    <span class="category-icon fa fa-plus" aria-expanded="false" aria-controls="@ViewBag.categoryId" data-target="#@ViewBag.categoryId" data-toggle="collapse"></span>
     <ul id="@ViewBag.categoryId" class="submenu-left collapse" data-parent="#accordionCategory">
         @foreach (var item in ViewBag.leftChildMenus)
         {

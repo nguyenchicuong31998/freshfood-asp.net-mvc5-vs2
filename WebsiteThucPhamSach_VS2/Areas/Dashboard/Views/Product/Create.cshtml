@@ -45,7 +45,7 @@
                 <div class="form-group mt-4 mb-4 row">
                     <label class="col-3 col-md-3 col-form-label">Hình ảnh chi tiết<span class="text-danger">*</span>:</label>
                     <div class="col-9 col-md-9">
-                        @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.more_images, new { @type = "file", @class = "btn btn-sm d-block" })
+                        @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.more_images, new { @type = "file", @multiple = "multiple", @class = "btn btn-sm d-block" })
                         @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.more_images, "", new { @class = "text-error" })
                     </div>
                 </div>

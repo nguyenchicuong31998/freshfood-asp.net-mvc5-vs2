@@ -29,10 +29,11 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             var about = new AboutsModel().getAboutByStatusTrue();
             return View(about);
         }
-        public ActionResult Products()
+        public ActionResult Products(int? id)
         {
             var menus = new MenusModel().getLeftMenu();
             ViewBag.Categories = menus;
+            ViewBag.Name = new MenusModel().getNameMenuById(id);
             return View();
         }
 
@@ -357,12 +358,14 @@ namespace WebsiteThucPhamSach_VS2.Controllers
         {
             try
             {
-                
-                //var userId = 
-                Response.Cookies["CartCookie"].Expires = DateTime.Now.AddDays(-1);
-                //var body = new PaymentSuccess().body();
-                //new Utils().SendEmail(payment.email, "Chúc mừng bạn đã mua sản phẩm thành công", body, "", "");
-                return Redirect("~/Trang-Chu");
+                if (ModelState.IsValid)
+                {
+                    //var userId = 
+                    Response.Cookies["CartCookie"].Expires = DateTime.Now.AddDays(-1);
+                    //var body = new PaymentSuccess().body();
+                    //new Utils().SendEmail(payment.email, "Chúc mừng bạn đã mua sản phẩm thành công", body, "", "");
+                    return Redirect("~/Trang-Chu");
+                }
             }catch(Exception e)
             {
                 

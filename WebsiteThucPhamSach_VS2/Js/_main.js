@@ -25,6 +25,8 @@ $(document).ready(function () {
     });
 
 
+
+
     //$('#related-products').slick({
     //    //slidesToShow: 3,
     //    //centerMode: true,
@@ -215,11 +217,10 @@ $(document).ready(function () {
         //$('.categories-item').click(function (e) {
         //    $(e.target).prev(".category-icon").toggleClass('fa-plus fa-minus');
         //});
-        //console.log($('.categories').find('.category-icon'));
-        //console.log($('.left-categories').find(".category-icon"));
+        $(e.target).parent().find(".category-icon").toggleClass('fa-plus');
+        $(e.target).parent().find(".category-icon").toggleClass('fa-plus fa-minus');
     }
     $('.categories-group').on('hidden.bs.collapse', toggleIconMenuLeft);
     $('.categories-group').on('shown.bs.collapse', toggleIconMenuLeft);
-
 })
 
