@@ -126,7 +126,7 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
             return View(productAd);
         }
         [HttpPost]
-        //[ValidateInput(false)]
+        [ValidateInput(false)]
         public ActionResult Edit(ProductsAdModel product)
         {
             var producted = new ProductsAdModel().GetProductById(product.id);

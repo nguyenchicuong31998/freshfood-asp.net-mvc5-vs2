@@ -410,5 +410,15 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             var product = new ProductsModel().getProductById(id);
             return PartialView(product);
         }
+
+        //public ActionResult TimKiem(string txttimkiem)
+        //{
+        //    var SanPham = db.SANPHAMs.SqlQuery("select * from SANPHAM Where TENSP like '%' + @timkiem + '%'", new SqlParameter("timkiem", txttimkiem)).ToList();
+        //    return View(SanPham);
+        //}
+        public ActionResult SearchProduct()
+        {
+            return View();
+        }
     }
 }

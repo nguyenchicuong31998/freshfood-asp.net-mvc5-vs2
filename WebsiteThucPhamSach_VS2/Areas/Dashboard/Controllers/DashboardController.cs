@@ -20,6 +20,7 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
             }
             ViewBag.totalUser = new UsersAdModel().totalUser();
             ViewBag.totalFeeback = new FeedbacksModel().totalFeedbacks();
+            ViewBag.totalProduct = new ProductsAdModel().getTotalProducts();
             return View();
         }
 

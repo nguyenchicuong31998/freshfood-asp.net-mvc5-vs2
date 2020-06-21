@@ -1,0 +1,68 @@
+﻿@using WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
+@model MenusAdModel
+@{
+    ViewBag.Title = "Sửa danh mục";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-lg-center">
+        <div class="col-12 col-lg-8">
+            <h3 class="font-weight-bold text-center">Sửa danh mục</h3>
+            @using (Html.BeginForm("Edit", "Menu", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.ValidationSummary(true);
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Id:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextBoxFor(MenusAdModel => MenusAdModel.id, new { @readonly = "readonly", @class = "form-control input-share input-size input-height", @Placeholder = "Họ và tên*" })
+                        @Html.ValidationMessageFor(MenusAdModel => MenusAdModel.id, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Tên danh mục<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextBoxFor(MenusAdModel => MenusAdModel.name, new { @class = "form-control input-share input-size input-height", @Placeholder = "Tên danh mục*" })
+                        @Html.ValidationMessageFor(MenusAdModel => MenusAdModel.name, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Cấp danh mục<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextBoxFor(MenusAdModel => MenusAdModel.order, new { @class = "form-control input-share input-size input-height", @min = "1", @max = "3", @type = "number", @Placeholder = "Cấp danh mục*" })
+                        @Html.ValidationMessageFor(MenusAdModel => MenusAdModel.order, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Danh mục Cha<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.DropDownListFor(MenusAdModel => MenusAdModel.parent_id, (IEnumerable<SelectListItem>)ViewBag.menus, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(MenusAdModel => MenusAdModel.parent_id, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Link danh mục(nếu có):</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextBoxFor(MenusAdModel => MenusAdModel.link, new { @class = "form-control input-share input-size input-height", @Placeholder = "Link danh mục" })
+                        @Html.ValidationMessageFor(MenusAdModel => MenusAdModel.link, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <div class="col-3 col-md-2"></div>
+                    <div class="col-9 col-md-10">
+                        <input type="submit" class="btn btn-sm btn-primary p-2" value="Lưu" />
+                        <a href="~/Dashboard/Menu/Index" class="btn btn-sm btn-success p-2">Quay lại</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+

@@ -85,7 +85,7 @@
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.status').click(function () {
+            $(".table-responsive").on('click', '.status', function () {
                 let id = $(this).data("id");
                 $.ajax({
                     url: "/Dashboard/User/OpenStatus",
@@ -99,8 +99,7 @@
                     }
                 })
             });
-
-            $('.btnDeleteUser').click(function () {
+            $(".table-responsive").on('click', '.btnDeleteUser', function () {
                 if (confirm("Bạn chắc chắn muốn xóa khách hàng này không?")) {
                     let id = $(this).data("id");
                     $.ajax({

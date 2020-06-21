@@ -39,9 +39,9 @@
                                     <input type="submit" class="status btn btn-info" data-id="@item.id" value="@name" />
                                 </td>
                                 <td>
-                                    <a href="~/Dashboard/Role/Edit?id=@item.id" class="btnUpdateRole p-2 text-warning" data-toggle="tooltip" title="Sửa">
+                                    @*<a href="~/Dashboard/Role/Edit?id=@item.id" class="btnUpdateRole p-2 text-warning" data-toggle="tooltip" title="Sửa">
                                         <i class="fas fa-edit"></i>
-                                    </a>
+                                    </a>*@
                                     <a href="#" data-id="@item.id" class="btnDeleteRole p-2"  data-toggle="tooltip" title="Xóa">
                                         <i class="fas fa-trash-alt text-danger"></i>
                                     </a>
@@ -97,8 +97,7 @@
             //    //    $("#wrapper-create-role").html(response);
             //    //});
             //});
-
-            $('.btnDeleteRole').click(function () {
+            $('.table-responsive').on('click', ".btnDeleteRole", function () {
                 if (confirm("Bạn có chắc chắn muốn xóa nhóm quyền này không?")) {
                     let id = $(this).data('id');
                     $.ajax({
@@ -119,8 +118,7 @@
                     return false;
                 }
             });
-
-            $('.status').click(function () {
+            $('.table-responsive').on('click', ".status", function () {
                 let id = $(this).data("id");
                 $.ajax({
                     url: "/Dashboard/Role/OpenStatus",

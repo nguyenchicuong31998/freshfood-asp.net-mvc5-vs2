@@ -1,0 +1,14 @@
+﻿
+
+@if ((int)ViewBag.GrandchildrenCount > 0)
+{
+    <span class="grandchildren__icon fa fa-plus" aria-expanded="false" aria-controls="@ViewBag.categoryId+mobile" data-target="#@ViewBag.categoryId+mobile" data-toggle="collapse"></span>
+    <ul id="@ViewBag.categoryId+mobile" style="list-style-type: none;" class="collapse">
+        @foreach (var item in ViewBag.Grandchildren)
+        {
+            <li class="grandchildren__item">
+                <a href="@Url.Content(item.link + '/'+ item.id)" class="menu-child__link">@item.name</a>
+            </li>
+        }
+    </ul>
+}

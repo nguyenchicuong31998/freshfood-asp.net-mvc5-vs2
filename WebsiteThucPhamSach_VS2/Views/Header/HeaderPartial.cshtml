@@ -58,6 +58,15 @@
                 <br />Bán kính trên 100 Km
             </div>
         </div>
+        @*@using (Html.BeginForm("TimKiem", "Home", FormMethod.Post))
+        {
+            <ul class="nav navbar-right">
+                <li>
+                    <input name="txttimkiem" type="text" class="form-control nho" placeholder="Tìm kiếm" />
+                    <input type="submit" class="btn btn-default btn-image" value="" />
+                </li>
+            </ul>
+        }*@
         <div class="header__search">
             <input class="header__input" type="text" placeholder="Tìm kiếm" />
             <i class="header__icon-search fa fa-search"></i>
@@ -103,10 +112,14 @@
             @foreach (var item in ViewBag.Menu)
             {
                 <li class="nav-vertical__item">
+                    @{
+                        item.link = item.link == null ? "#": item.link;
+                    }
                     <a href="@Url.Content(item.link)" class="nav-vertical__link">@item.name</a>
                     @Html.Action("ChildMenuMobilePartial", "Category", new { parentId = item.id })
                 </li>
             }
+
             @*<li class="nav-vertical__item"><a href="~/Dang-Nhap" class="nav-vertical__link">Đăng nhập</a></li>
         <li class="nav-vertical__item"><a href="~/Dang-Ky" class="nav-vertical__link">Đăng ký</a></li>
         <li class="nav-vertical__item"><a href="~/Trang-Chu" class="nav-vertical__link">Trang chủ</a></li>

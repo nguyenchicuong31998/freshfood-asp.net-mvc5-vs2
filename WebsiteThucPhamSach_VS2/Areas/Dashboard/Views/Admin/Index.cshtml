@@ -92,20 +92,28 @@
 
         $(document).ready(function () {
             $('.admin').addClass("active");
-
-
-            $('.btnDeleteAdmin').off('click').on('click', function () {
+            $('.table-responsive').on('click', ".btnDeleteAdmin", function () {
                 if (confirm("Bạn chắc chắn muốn xóa quản trị viên này?")) {
                     let id = $(this).data('id');
                     $.ajax({
-
-                    })
+                        url: '/Dashboard/Admin/Delete',
+                        data: { id: id },
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function (res) {
+                            if (res.status == true) {
+                                alert("Bạn đã xóa thành công");
+                            } else {
+                                alert("Xóa thất bại");
+                            }
+                            location.reload();
+                        }
+                    });
                 } else {
                     return false;
                 }
             });
-
-            $('.status').click(function () {
+            $('.table-responsive').on('click', ".status", function () {
                 $.ajax({
                     url: "/Dashboard/Admin/OpenStatus",
                     data: { id: $(this).data("id") },
@@ -114,7 +122,6 @@
                     success: function (res) {
                         if (res.status == true) {
                             window.location.href = "/Dashboard/Admin/Index";
-                            //$('#dataTable').load("/Dashboard/Admin/Index");
                         }
                     }
                 })

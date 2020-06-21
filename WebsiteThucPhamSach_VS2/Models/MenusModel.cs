@@ -13,7 +13,7 @@ namespace WebsiteThucPhamSach_VS2.Models
         public List<menu> getMenus()
         {
             var menus = (from n in db.menus
-                         where n.parent_id == null && n.status == true
+                         where n.parent_id == null || n.parent_id == 0 && n.status == true
                          select n).ToList();
             return menus;
         }

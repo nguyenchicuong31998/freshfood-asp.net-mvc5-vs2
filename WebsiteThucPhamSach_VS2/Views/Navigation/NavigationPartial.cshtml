@@ -7,7 +7,10 @@
          @foreach (var item in Model)
          {
                <li class="parent">
-                   <a href="@Url.Content(item.link)">@item.name</a>
+                    @{
+                        item.link = item.link == null ? "#": item.link;
+                    }
+                    <a href="@Url.Content(item.link)">@item.name</a>
                    @Html.Action("ChildMenuPartial", "Navigation", new { parentId = item.id })
                </li>
           }

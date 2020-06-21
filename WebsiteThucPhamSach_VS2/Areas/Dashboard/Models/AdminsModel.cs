@@ -124,5 +124,24 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
                 throw e;
             }
         }
+
+        public bool deleteAdminById(int id)
+        {
+            try
+            {
+                var admin = this.getAdminById(id);
+                if (admin != null)
+                {
+                    db.admins.Remove(admin);
+                    db.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }

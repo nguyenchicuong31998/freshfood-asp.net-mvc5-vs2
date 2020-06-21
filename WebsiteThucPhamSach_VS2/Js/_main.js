@@ -201,13 +201,25 @@ $(document).ready(function () {
 
 
     function toggleIcon(e) {
-        $(e.target)
-            .prev('.nav-vertical__item')
-            .find(".nav-vertical__icon")
-            .toggleClass('fa-plus fa-minus');
+        //$(e.target)
+        //    .prev('.nav-vertical__item')
+        //    .parent()
+        //    .find(".nav-vertical__icon")
+        //    .toggleClass('fa-plus fa-minus');
+        $(e.target).parent().find(".nav-vertical__icon").toggleClass('fa-plus');
+        $(e.target).parent().find(".nav-vertical__icon").toggleClass('fa-plus fa-minus');
+
     }
     $('.panel-group').on('hidden.bs.collapse', toggleIcon);
     $('.panel-group').on('shown.bs.collapse', toggleIcon);
+
+
+    function toggleIconGrandParent(e) {
+        $(e.target).parent().find(".grandchildren__icon").toggleClass('fa-plus');
+        $(e.target).parent().find(".grandchildren__icon").toggleClass('fa-plus fa-minus');
+    }
+    $('.menu-child__item').on('hidden.bs.collapse', toggleIconGrandParent);
+    $('.menu-child__item').on('shown.bs.collapse', toggleIconGrandParent);
 
     function toggleIconMenuLeft(e) {
         //$(e.target)

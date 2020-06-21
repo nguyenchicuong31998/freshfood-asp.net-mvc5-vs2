@@ -9,6 +9,8 @@ using WebsiteThucPhamSach_VS2.EmailTeamplate;
 using System.Configuration;
 using Facebook;
 using System.Data;
+using Microsoft.Owin.Security.Google;
+using Microsoft.Owin;
 
 namespace WebsiteThucPhamSach_VS2.Controllers
 {
@@ -61,6 +63,31 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             return Redirect("~/Trang-Chu");
         }
 
+        public ActionResult LoginGoogle()
+        {
+            //var google = 
+            var googleOAuth2AuthenticationOptions = new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = ConfigurationManager.AppSettings["GgAppId"],
+                ClientSecret = ConfigurationManager.AppSettings["GgAppSecret"],
+                CallbackPath = new PathString("/signin-google")
+            };
+            //var accessToken = loginInfo.ExternalIdentity.Claims.Where(c => c.Type.Equals("urn:google:accesstoken")).Select(c => c.Value).FirstOrDefault();
+            //Uri apiRequestUri = new Uri("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + accessToken);
+            //using (var webClient = new System.Net.WebClient())
+            //{
+            //    var json = webClient.DownloadString(apiRequestUri);
+            //    dynamic result = JsonConvert.DeserializeObject(json);
+            //    userPicture = result.picture;
+            //}
+
+            return View();
+        }
+
+        //public ActionResult signin-google()
+        //{
+
+        //}
         private Uri RedirectUriFaceBook
         {
             get
@@ -72,6 +99,7 @@ namespace WebsiteThucPhamSach_VS2.Controllers
                 return uriBuilder.Uri;
             }
         }
+
         public ActionResult LoginFacebook()
         {
             var fb = new FacebookClient();
@@ -145,11 +173,6 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             return View();
         }
 
-        public ActionResult LoginGoogle()
-        {
-
-            return View();
-        }
 
         public ActionResult Register()
         {

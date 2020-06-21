@@ -39,4 +39,11 @@ body {
         margin: 10px 0px;
     }
 
-
+.custom-tag {
+    border: 1px solid #28a745;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    width: auto;
+    display: inline-block;
+}

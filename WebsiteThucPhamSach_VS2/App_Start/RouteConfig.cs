@@ -82,6 +82,15 @@ namespace WebsiteThucPhamSach_VS2
                 defaults: new { controller = "Header", action = "LoginFacebook", id = UrlParameter.Optional },
                 namespaces: new string[] { "WebsiteThucPhamSach.Controllers" }
             );
+
+            //Đăng nhập google
+            routes.MapRoute(
+                name: "Đăng nhập google",
+                url: "Dang-Nhap-Google",
+                defaults: new { controller = "Header", action = "LoginGoogle", id = UrlParameter.Optional },
+                namespaces: new string[] { "WebsiteThucPhamSach.Controllers" }
+            );
+
             //Liên hệ
             routes.MapRoute(
                 name: "Liên hệ",
@@ -154,6 +163,18 @@ namespace WebsiteThucPhamSach_VS2
                 {
                     controller = "Home",
                     action = "Carts",
+                    id = UrlParameter.Optional
+                }
+            );
+
+            //Tìm kiếm
+            routes.MapRoute(
+                name: "Tìm Kiếm",
+                url: "Tim-Kiem",
+                defaults: new
+                {
+                    controller = "Home",
+                    action = "SearchProduct",
                     id = UrlParameter.Optional
                 }
             );

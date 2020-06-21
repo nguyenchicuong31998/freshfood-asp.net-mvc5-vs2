@@ -1,13 +1,13 @@
 ﻿
 @if ((int)ViewBag.ChildMenuMobileCount > 0)
 {
-    <span class="nav-vertical__icon fa fa-plus" aria-expanded="false" aria-controls="@ViewBag.categoryId" data-target="#@ViewBag.categoryId+mobile" data-toggle="collapse"></span>
-    <ul id="@ViewBag.categoryId+mobile" class="menu-child collapse" data-parent="#accordionMobile">
+    <span class="nav-vertical__icon fa fa-plus" aria-expanded="false" aria-controls="@ViewBag.categoryId" data-target="#@ViewBag.categoryId" data-toggle="collapse"></span>
+    <ul id="@ViewBag.categoryId" style="list-style-type: none;" class="menu-child collapse" data-parent="#accordionMobile">
         @foreach (var item in ViewBag.ChildMenuMobile)
         {
             <li class="menu-child__item">
                 <a href="@Url.Content(item.link + '/'+ item.id)" class="menu-child__link">@item.name</a>
-                @Html.Action("ChildMenuMobilePartial", "Category", new { parentId = item.id })
+                @Html.Action("GrandChildrenPartial", "Category", new { parentId = item.id })
             </li>
         }
     </ul>

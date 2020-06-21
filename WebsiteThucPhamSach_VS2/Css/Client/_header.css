@@ -219,18 +219,14 @@
         cursor: pointer;
     }
 
-    .menu-child {
-    list-style-type: none;
-    background-color: #9bd031;
-    margin: 0px;
-    display: block;
-}
 
 .menu-child__item {
-    padding: 10px 20px;
-    width: 100%;
+    padding: 10px 0px 10px 20px;
+    margin-right: -2px;
+    width: 103%;
     /*border-bottom: 1px solid white;*/
 }
+
 
 .menu-child__link {
     color: white;
@@ -272,3 +268,16 @@
                     opacity: 0.8;
                     text-decoration: none;
                 }
+
+
+.grandchildren__icon {
+    color: white;
+    float: right;
+    font-size: 1rem;
+}
+
+.grandchildren__item{
+    width: 100%;
+    padding: 10px 0px 0px 20px;
+
+}

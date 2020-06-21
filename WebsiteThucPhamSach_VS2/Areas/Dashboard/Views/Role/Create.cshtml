@@ -12,16 +12,26 @@
             @using (Html.BeginForm("Create", "Role", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.ValidationSummary(true);
-                <div class="form-group mt-4 mb-4 row">
+                @*<div class="form-group mt-4 mb-4 row">
                     <label class="col-3 col-md-3 col-form-label">Tên nhóm quyền<span class="text-danger">*</span>:</label>
                     <div class="col-9 col-md-9">
                         @Html.TextBoxFor(role => role.name, new { @class = "form-control input-share input-size input-height", @Placeholder = "Họ và tên*" })
                         @Html.ValidationMessageFor(role => role.name, "", new { @class = "text-error" })
                     </div>
-                </div>
+                </div>*@
+
                 <div class="form-group mt-4 mb-4 row">
-                    <div class="col-3 col-md-3"></div>
-                    <div class="col-9 col-md-9">
+                    <label class="col-3 col-md-2 col-form-label">Quyền:</label>
+                    <div class="col-9 col-md-10">
+                        @*@Html.DropDownList("role", (IEnumerable<SelectListItem>)ViewBag.roles, new { @class = "form-control" })*@
+                        @Html.DropDownListFor(role => role.name, (IEnumerable<SelectListItem>)ViewBag.roles, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(role => role.name, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <div class="col-3 col-md-2"></div>
+                    <div class="col-9 col-md-10">
                         <input type="submit" onclick="return roleValidate();" class="btn btn-sm btn-primary p-2" value="Thêm" />
                         <a href="~/Dashboard/Role/Index" class="btn btn-sm btn-success p-2">Quay lại</a>
                     </div>

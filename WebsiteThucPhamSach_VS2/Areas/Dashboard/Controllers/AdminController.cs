@@ -100,5 +100,21 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
             }
             return Json(new { status = true }, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult Delete(int id)
+        {
+            var deleted = new AdminsModel().deleteAdminById(id);
+            if (deleted)
+            {
+                return Json(new
+                {
+                    status = true
+                });
+            }
+            return Json(new
+            {
+                status = false
+            });
+        }
     }
 }

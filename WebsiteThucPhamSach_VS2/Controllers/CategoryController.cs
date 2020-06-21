@@ -27,5 +27,14 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             ViewBag.ChildMenuMobile = ChildMenuMobile;
             return PartialView("ChildMenuMobilePartial");
         }
+
+        public PartialViewResult GrandchildrenPartial(int parentId)
+        {
+            var Grandchildren = new MenusModel().getLeftChildMenus(parentId);
+            ViewBag.categoryId = parentId;
+            ViewBag.GrandchildrenCount = Grandchildren.Count();
+            ViewBag.Grandchildren = Grandchildren;
+            return PartialView("GrandchildrenPartial");
+        }
     }
 }

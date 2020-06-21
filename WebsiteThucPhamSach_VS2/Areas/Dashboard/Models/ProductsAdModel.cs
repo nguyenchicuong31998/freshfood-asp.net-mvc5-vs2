@@ -49,6 +49,12 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
             var product = db.products.SingleOrDefault(p => p.id == id);
             return product != null ? product : null;
         }
+
+        public int getTotalProducts()
+        {
+            int totalProducts = db.products.Count();
+            return totalProducts == null ? 0 : totalProducts;
+        }
         
         public bool createProduct(ProductsAdModel productAd)
         {

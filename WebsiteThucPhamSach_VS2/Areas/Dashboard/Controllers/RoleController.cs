@@ -22,24 +22,44 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
             return View(roles);
         }
 
+
+        private void listRoles()
+        {
+            List<role> roles = new List<role>();
+            roles.Add(new role(){ id = 1, name = "Quản lý" });
+            roles.Add(new role(){ id = 2, name = "Nhân viên" });
+            SelectList listRoles = new SelectList(roles,"name", "name");
+            ViewBag.roles = listRoles;
+        }
+
         [HttpGet]
         public ActionResult Create()
         {
+            this.listRoles();
             return View();
         }
         [HttpPost]
         public ActionResult Create(role role)
         {
-            if (ModelState.IsValid)
+            var checkName = new RolesModel().checkRoleExists(role.name);
+            if (checkName)
             {
-                role.status = true;
-                var created = new RolesModel().createRole(role);
-                if (created)
+                ModelState.AddModelError("name", "Quyền đã tồn tại");
+            }
+            else
+            {
+                if (ModelState.IsValid)
                 {
-                    return Redirect(Request.UrlReferrer.ToString());
+                    role.status = true;
+                    var created = new RolesModel().createRole(role);
+                    if (created)
+                    {
+                        return Redirect(Request.UrlReferrer.ToString());
+                    }
                 }
             }
-            return View();
+            this.listRoles();
+            return View(role);
         }
 
 
@@ -47,6 +67,7 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
         public ActionResult Edit(int id)
         {
             var roled = new RolesModel().getRoleById(id);
+            this.listRoles();
             return View(roled);
         }
         [HttpPost]
