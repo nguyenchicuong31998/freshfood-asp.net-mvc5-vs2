@@ -12,13 +12,16 @@ namespace WebsiteThucPhamSach_VS2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class menu
+    public partial class provider
     {
         public int id { get; set; }
         public string name { get; set; }
-        public string link { get; set; }
-        public Nullable<int> parent_id { get; set; }
-        public Nullable<int> order { get; set; }
+        public string description { get; set; }
+        public string address { get; set; }
+        public string phone_number { get; set; }
+        public string email { get; set; }
+        public string link_google_map { get; set; }
+        public Nullable<System.DateTime> start_time { get; set; }
         public Nullable<bool> status { get; set; }
     }
 }

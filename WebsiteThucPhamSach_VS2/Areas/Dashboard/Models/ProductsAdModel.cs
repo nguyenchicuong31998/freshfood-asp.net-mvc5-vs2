@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
@@ -27,8 +28,11 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
         public Nullable<decimal> price { get; set; }
         public Nullable<decimal> price_promotion { get; set; }
         public Nullable<bool> top_hot { get; set; }
-        [Required(ErrorMessage = "Vui lòng nhập chọn danh mục sản phẩm")]
-        public Nullable<int> menu_id { get; set; }
+        [Required(ErrorMessage = "Vui lòng chọn danh mục sản phẩm")]
+        public string[] menu_id { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng chọn nhà cung cấp")]
+        public Nullable<int> provider_id { get; set; }
         public Nullable<System.DateTime> start_time { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập tổng số lượng sản phẩm")]
         public Nullable<int> total_product { get; set; }
@@ -48,6 +52,12 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
         {
             var product = db.products.SingleOrDefault(p => p.id == id);
             return product != null ? product : null;
+        }
+
+        public string getNameByProviderId(int id)
+        {
+            var provider = new ProviderModel().getProviderActiveById(id);
+            return provider.name != "" ? provider.name : "";
         }
 
         public int getTotalProducts()
@@ -70,7 +80,8 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
             product.price = productAd.price;
             product.price_promotion = productAd.price_promotion;
             product.top_hot = false;
-            product.menu_id = int.Parse(productAd.menu_id.ToString());
+            product.menu_id = JsonConvert.SerializeObject(productAd.menu_id);
+            product.provider_id = int.Parse(productAd.provider_id.ToString());
             product.start_time = productAd.start_time;
             product.total_product = productAd.total_product;
             product.total_sold = 0;
@@ -99,7 +110,8 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
                     product.includeVAT = productAd.includeVAT;
                     product.price = productAd.price;
                     product.price_promotion = productAd.price_promotion;
-                    product.menu_id = int.Parse(productAd.menu_id.ToString());
+                    product.menu_id = JsonConvert.SerializeObject(productAd.menu_id);
+                    product.provider_id = int.Parse(productAd.provider_id.ToString());
                     product.start_time = productAd.start_time;
                     product.total_product = productAd.total_product;
                     db.Entry(product).State = EntityState.Modified;
@@ -113,6 +125,45 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
 
             }
             return false;
+        }
+
+        public bool deleteById(int id)
+        {
+            try
+            {
+                var product = this.GetProductById(id);
+                if (product != null)
+                {
+                    db.products.Remove(product);
+                    db.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public bool changeStatusById(int id)
+        {
+            try
+            {
+                var product = this.GetProductById(id);
+                if (product != null)
+                {
+                    product.status = !product.status;
+                    db.Entry(product).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
     }

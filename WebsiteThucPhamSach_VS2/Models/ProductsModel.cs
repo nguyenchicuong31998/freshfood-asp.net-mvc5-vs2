@@ -6,6 +6,7 @@ using WebsiteThucPhamSach_VS2.Models;
 using WebsiteThucPhamSach_VS2.Common;
 using System.Data.Entity.SqlServer;
 using PagedList;
+using Newtonsoft.Json;
 
 namespace WebsiteThucPhamSach_VS2.Models
 {
@@ -57,7 +58,7 @@ namespace WebsiteThucPhamSach_VS2.Models
                     }
                     if (id != 0)
                     {
-                        listProductAsc = listProductAsc.Where(p => p.menu_id == id).ToList();
+                      listProductAsc = listProductAsc.Where(p => p.menu_id.Contains(id.ToString())).ToList();
                     }
                     return listProductAsc.ToPagedList(pageNumber, pageSize);
                 case "price-desc":
@@ -82,7 +83,9 @@ namespace WebsiteThucPhamSach_VS2.Models
                     }
                     if (id != 0)
                     {
-                        listProductDesc = listProductDesc.Where(p => p.menu_id == id).ToList();
+                        
+                        //listProductDesc = listProductDesc.Where(p => p.menu_id == id).ToList();
+                        listProductDesc = listProductDesc.Where(p => p.menu_id.Contains(id.ToString())).ToList();
                     }
                     return listProductDesc.ToPagedList(pageNumber, pageSize);
                 default:
@@ -92,9 +95,10 @@ namespace WebsiteThucPhamSach_VS2.Models
             if (id == 0)
             {
                 //products = products.Skip(1);
-                return products.ToPagedList(pageNumber, pageSize); 
+                return products.ToPagedList(pageNumber, pageSize);
             }
-            products = products.Where(p=>p.menu_id == id);
+            //products = products.Where(p => p.menu_id == id);
+            products = products.Where(p => p.menu_id.Contains(id.ToString()));
             return products.ToPagedList(pageNumber, pageSize);
         }
 
@@ -105,7 +109,7 @@ namespace WebsiteThucPhamSach_VS2.Models
 
         public List<product> getProductRelatedById(int id, int menuId)
         {
-            return db.products.Where(p => p.status == true && p.menu_id == menuId && p.id != id).OrderByDescending(p => Guid.NewGuid()).Take(15).ToList();
+            return db.products.Where(p => p.status == true && p.menu_id.Contains(menuId.ToString()) && p.id != id).OrderByDescending(p => Guid.NewGuid()).Take(15).ToList();
         }
 
         public List<product> getProductsByNewStartTime()
@@ -121,6 +125,12 @@ namespace WebsiteThucPhamSach_VS2.Models
         public List<product> getFeaturedProducts()
         {
             return db.products.OrderByDescending(p => p.total_sold).Where(p => p.status == true ).Take(5).ToList();
+        }
+
+        public List<string> getListNameProducts()
+        {
+            var listNameProducts = db.products.Where(p => p.status == true).OrderBy(p => p.name).Select(p => p.name).ToList();    
+            return listNameProducts;                     
         }
 
         public void updateViewByProductId(int id)

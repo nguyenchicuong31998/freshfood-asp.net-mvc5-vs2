@@ -64,13 +64,18 @@
                 <li>
                     <input name="txttimkiem" type="text" class="form-control nho" placeholder="Tìm kiếm" />
                     <input type="submit" class="btn btn-default btn-image" value="" />
-                </li>
+                </li>   
             </ul>
         }*@
+      @using (Html.BeginForm("SearchProduct", "Home", FormMethod.Post))
+      {
         <div class="header__search">
-            <input class="header__input" type="text" placeholder="Tìm kiếm" />
-            <i class="header__icon-search fa fa-search"></i>
+            <input id="search__tags" name="searchTags" class="search__input" type="text" placeholder="Tìm kiếm" />
+            <input type="submit" class="header__icon-search fa fa-search">
+            @*<input type="submit" class="btn btn-default btn-image" value="" />*@
+
         </div>
+      }
     </div>
     <div class="header__box">
         <div class="header__info">

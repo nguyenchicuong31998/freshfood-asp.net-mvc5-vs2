@@ -22,6 +22,11 @@ namespace WebsiteThucPhamSach_VS2.Models
         [EmailAddress(ErrorMessage = "Địa chỉ email không hợp lệ")]
         [StringLength(40)]
         public string email { get; set; }
+        [Required(ErrorMessage = "Vui lòng chọn hình thức thanh toán")]
+        public string form_payment { get; set; }
+        [Required(ErrorMessage = "Vui lòng chọn hình thức giao hàng")]
+        public string form_delivery { get; set; }
+
         public string password { get; set; }
         public Nullable<bool> status { get; set; }
     }

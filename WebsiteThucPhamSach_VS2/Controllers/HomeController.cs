@@ -9,6 +9,7 @@ using WebsiteThucPhamSach_VS2.EmailTeamplate;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using System.Text;
+using System.Data.SqlClient;
 
 namespace WebsiteThucPhamSach_VS2.Controllers
 {
@@ -335,6 +336,26 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             var productRelated = new ProductsModel().getProductRelatedById(id, menuId);
             return PartialView(productRelated);
         }
+
+        private void getFormPayment()
+        {
+            List<FormPayment> formPayment = new List<FormPayment>();
+            formPayment.Add(new FormPayment(1, "Thanh toán trước khi giao hàng"));
+            formPayment.Add(new FormPayment(2, "Thanh toán Stripe"));
+            formPayment.Add(new FormPayment(3, "Thanh toán Paypal"));
+            formPayment.Add(new FormPayment(4, "Thanh toán Bảo Kim"));
+            SelectList formPaymentSelect = new SelectList(formPayment, "name", "name");
+            ViewBag.formPayment = formPaymentSelect;
+        }
+        private void getFormDelivery()
+        {
+            List<FormDelivery> formDelivery = new List<FormDelivery>();
+            formDelivery.Add(new FormDelivery(1, "Giao trực tiếp"));
+            formDelivery.Add(new FormDelivery(2, "Chuyển giao"));
+            SelectList formDeliverySelect = new SelectList(formDelivery, "name", "name");
+            ViewBag.formDelivery = formDeliverySelect;
+        }
+
         [HttpGet]
         public ActionResult Payment()
         {
@@ -350,6 +371,8 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             payment.phone_number = user.phone_number;
             payment.address = user.address;
             payment.email = user.email;
+            this.getFormPayment();
+            this.getFormDelivery();
             return View(payment);
         }
 
@@ -360,6 +383,7 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             {
                 if (ModelState.IsValid)
                 {
+
                     //var userId = 
                     Response.Cookies["CartCookie"].Expires = DateTime.Now.AddDays(-1);
                     //var body = new PaymentSuccess().body();
@@ -370,6 +394,8 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             {
                 
             }
+            this.getFormPayment();
+            this.getFormDelivery();
             return View(payment);
         }
         private int addOrderAndReturnUserId()
@@ -416,9 +442,18 @@ namespace WebsiteThucPhamSach_VS2.Controllers
         //    var SanPham = db.SANPHAMs.SqlQuery("select * from SANPHAM Where TENSP like '%' + @timkiem + '%'", new SqlParameter("timkiem", txttimkiem)).ToList();
         //    return View(SanPham);
         //}
-        public ActionResult SearchProduct()
+        public JsonResult getListNameProducts()
         {
-            return View();
+            var list = new ProductsModel().getListNameProducts();
+            return Json(new { data = list }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult SearchProduct(string searchTags)
+        {
+            var products = db.products.SqlQuery("select * from products Where name like '%' + @timkiem + '%'", new SqlParameter("timkiem", searchTags)).ToList();
+            ViewBag.keyword = searchTags;
+            return View(products);
         }
     }
 }

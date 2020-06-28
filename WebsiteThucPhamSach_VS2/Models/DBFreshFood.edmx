@@ -91,7 +91,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="300" />
           <Property Name="link" Type="nvarchar" MaxLength="500" />
           <Property Name="parent_id" Type="int" />
@@ -114,12 +114,27 @@
           <Property Name="price" Type="decimal" Precision="20" Scale="0" />
           <Property Name="price_promotion" Type="decimal" Precision="20" Scale="0" />
           <Property Name="top_hot" Type="bit" />
-          <Property Name="menu_id" Type="int" />
+          <Property Name="provider_id" Type="int" />
+          <Property Name="menu_id" Type="nvarchar" MaxLength="200" />
           <Property Name="start_time" Type="datetime" />
           <Property Name="total_product" Type="int" />
           <Property Name="total_sold" Type="int" />
           <Property Name="special" Type="bit" />
           <Property Name="view_count" Type="int" />
+          <Property Name="status" Type="bit" />
+        </EntityType>
+        <EntityType Name="providers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="description" Type="nvarchar" MaxLength="500" />
+          <Property Name="address" Type="nvarchar(max)" />
+          <Property Name="phone_number" Type="varchar" MaxLength="11" />
+          <Property Name="email" Type="varchar" MaxLength="250" />
+          <Property Name="link_google_map" Type="nvarchar(max)" />
+          <Property Name="start_time" Type="datetime" />
           <Property Name="status" Type="bit" />
         </EntityType>
         <EntityType Name="roles">
@@ -157,18 +172,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__products__menu_i__5EBF139D">
-          <End Role="menus" Type="Self.menus" Multiplicity="0..1" />
-          <End Role="products" Type="Self.products" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="menus">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="products">
-              <PropertyRef Name="menu_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="pk_admin_role">
           <End Role="roles" Type="Self.roles" Multiplicity="0..1" />
           <End Role="admins" Type="Self.admins" Multiplicity="*" />
@@ -190,15 +193,12 @@
           <EntitySet Name="feedbacks" EntityType="Self.feedbacks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="menus" EntityType="Self.menus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="providers" EntityType="Self.providers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__events__admin_id__0D7A0286" Association="Self.FK__events__admin_id__0D7A0286">
             <End Role="admins" EntitySet="admins" />
             <End Role="events" EntitySet="events" />
-          </AssociationSet>
-          <AssociationSet Name="FK__products__menu_i__5EBF139D" Association="Self.FK__products__menu_i__5EBF139D">
-            <End Role="menus" EntitySet="menus" />
-            <End Role="products" EntitySet="products" />
           </AssociationSet>
           <AssociationSet Name="pk_admin_role" Association="Self.pk_admin_role">
             <End Role="roles" EntitySet="roles" />
@@ -210,7 +210,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="FreshFoodModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="FreshFoodEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="menus" EntityType="FreshFoodModel.menu" />
           <EntitySet Name="roles" EntityType="FreshFoodModel.role" />
           <EntitySet Name="advertises" EntityType="FreshFoodModel.advertis" />
           <EntitySet Name="abouts" EntityType="FreshFoodModel.about" />
@@ -228,23 +227,9 @@
           </AssociationSet>
           <EntitySet Name="feedbacks" EntityType="FreshFoodModel.feedback" />
           <EntitySet Name="products" EntityType="FreshFoodModel.product" />
-          <AssociationSet Name="FK__products__menu_i__5EBF139D" Association="FreshFoodModel.FK__products__menu_i__5EBF139D">
-            <End Role="menu" EntitySet="menus" />
-            <End Role="product" EntitySet="products" />
-          </AssociationSet>
+          <EntitySet Name="menus" EntityType="FreshFoodModel.menu" />
+          <EntitySet Name="providers" EntityType="FreshFoodModel.provider" />
         </EntityContainer>
-        <EntityType Name="menu">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="parent_id" Type="Int32" />
-          <Property Name="order" Type="Int32" />
-          <Property Name="status" Type="Boolean" />
-          <Property Name="link" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="products" Relationship="FreshFoodModel.FK__products__menu_i__5EBF139D" FromRole="menu" ToRole="product" />
-        </EntityType>
         <EntityType Name="role">
           <Key>
             <PropertyRef Name="id" />
@@ -394,45 +379,46 @@
           <Property Name="price" Type="Decimal" Precision="20" Scale="0" />
           <Property Name="price_promotion" Type="Decimal" Precision="20" Scale="0" />
           <Property Name="top_hot" Type="Boolean" />
-          <Property Name="menu_id" Type="Int32" />
+          <Property Name="provider_id" Type="Int32" />
+          <Property Name="menu_id" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="start_time" Type="DateTime" Precision="3" />
           <Property Name="total_product" Type="Int32" />
           <Property Name="total_sold" Type="Int32" />
           <Property Name="special" Type="Boolean" />
           <Property Name="view_count" Type="Int32" />
           <Property Name="status" Type="Boolean" />
-          <NavigationProperty Name="menu" Relationship="FreshFoodModel.FK__products__menu_i__5EBF139D" FromRole="product" ToRole="menu" />
         </EntityType>
-        <Association Name="FK__products__menu_i__5EBF139D">
-          <End Type="FreshFoodModel.menu" Role="menu" Multiplicity="0..1" />
-          <End Type="FreshFoodModel.product" Role="product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="menu">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="product">
-              <PropertyRef Name="menu_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="menu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="link" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="parent_id" Type="Int32" />
+          <Property Name="order" Type="Int32" />
+          <Property Name="status" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="provider">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="phone_number" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="link_google_map" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="start_time" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="FreshFoodModelStoreContainer" CdmEntityContainer="FreshFoodEntities">
-          <EntitySetMapping Name="menus">
-            <EntityTypeMapping TypeName="FreshFoodModel.menu">
-              <MappingFragment StoreEntitySet="menus">
-                <ScalarProperty Name="link" ColumnName="link" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="order" ColumnName="order" />
-                <ScalarProperty Name="parent_id" ColumnName="parent_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="roles">
             <EntityTypeMapping TypeName="FreshFoodModel.role">
               <MappingFragment StoreEntitySet="roles">
@@ -556,6 +542,7 @@
                 <ScalarProperty Name="total_product" ColumnName="total_product" />
                 <ScalarProperty Name="start_time" ColumnName="start_time" />
                 <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+                <ScalarProperty Name="provider_id" ColumnName="provider_id" />
                 <ScalarProperty Name="top_hot" ColumnName="top_hot" />
                 <ScalarProperty Name="price_promotion" ColumnName="price_promotion" />
                 <ScalarProperty Name="price" ColumnName="price" />
@@ -567,6 +554,33 @@
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="menus">
+            <EntityTypeMapping TypeName="FreshFoodModel.menu">
+              <MappingFragment StoreEntitySet="menus">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="order" ColumnName="order" />
+                <ScalarProperty Name="parent_id" ColumnName="parent_id" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="providers">
+            <EntityTypeMapping TypeName="FreshFoodModel.provider">
+              <MappingFragment StoreEntitySet="providers">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="link_google_map" ColumnName="link_google_map" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

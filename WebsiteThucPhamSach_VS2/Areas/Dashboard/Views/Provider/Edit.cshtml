@@ -1,0 +1,76 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model ProviderModel
+@{
+    ViewBag.Title = "Sửa nhà cung cấp";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-lg-center">
+        <div class="col-12 col-lg-8">
+            <h3 class="font-weight-bold text-center">Sửa nhà cung cấp</h3>
+            @using (Html.BeginForm("Edit", "Provider", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.ValidationSummary(true);
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Tên nhà cung cấp<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextBoxFor(ProviderModel => ProviderModel.name, new { @class = "form-control input-share input-size input-height", @Placeholder = "Tên nhà cung cấp*" })
+                        @Html.ValidationMessageFor(ProviderModel => ProviderModel.name, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Mô tả:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextAreaFor(ProviderModel => ProviderModel.description, new { @class = "form-control  input-size", @rows = "6", @Placeholder = "Mô tả" })
+                        @Html.ValidationMessageFor(ProviderModel => ProviderModel.description, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Địa chỉ<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextBoxFor(ProviderModel => ProviderModel.address, new { @class = "form-control input-share input-size input-height", @Placeholder = "Địa chỉ*" })
+                        @Html.ValidationMessageFor(ProviderModel => ProviderModel.address, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Số điện thoại<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextBoxFor(ProviderModel => ProviderModel.phone_number, new { @class = "form-control input-share input-size input-height", @Placeholder = "Số điện thoại*" })
+                        @Html.ValidationMessageFor(ProviderModel => ProviderModel.phone_number, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Email<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextBoxFor(ProviderModel => ProviderModel.email, new { @class = "form-control input-share input-size input-height", @Placeholder = "Email*" })
+                        @Html.ValidationMessageFor(ProviderModel => ProviderModel.email, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-2 col-form-label">Đường dẫn địa chỉ google map:</label>
+                    <div class="col-9 col-md-10">
+                        @Html.TextBoxFor(ProviderModel => ProviderModel.link_google_map, new { @class = "form-control input-share input-size input-height", @Placeholder = "Đường dẫn địa chỉ google map" })
+                        @Html.ValidationMessageFor(ProviderModel => ProviderModel.link_google_map, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <div class="col-3 col-md-2"></div>
+                    <div class="col-9 col-md-10">
+                        <input type="submit" class="btn btn-sm btn-primary p-2" value="Lưu" />
+                        <a href="~/Dashboard/Provider/Index" class="btn btn-sm btn-success p-2">Quay lại</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

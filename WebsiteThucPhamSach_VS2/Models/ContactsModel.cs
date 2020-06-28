@@ -97,16 +97,5 @@ namespace WebsiteThucPhamSach_VS2.Models
             return false;
         }
 
-        public contact changStatusById()
-        {
-            try
-            {
-
-            }catch(Exception e)
-            {
-                throw e;
-            }
-            return null;
-        }
     }
 }

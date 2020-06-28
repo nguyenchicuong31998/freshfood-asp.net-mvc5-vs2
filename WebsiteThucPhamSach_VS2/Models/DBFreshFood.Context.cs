@@ -25,7 +25,6 @@ namespace WebsiteThucPhamSach_VS2.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<menu> menus { get; set; }
         public virtual DbSet<role> roles { get; set; }
         public virtual DbSet<advertis> advertises { get; set; }
         public virtual DbSet<about> abouts { get; set; }
@@ -35,5 +34,7 @@ namespace WebsiteThucPhamSach_VS2.Models
         public virtual DbSet<@event> events { get; set; }
         public virtual DbSet<feedback> feedbacks { get; set; }
         public virtual DbSet<product> products { get; set; }
+        public virtual DbSet<menu> menus { get; set; }
+        public virtual DbSet<provider> providers { get; set; }
     }
 }

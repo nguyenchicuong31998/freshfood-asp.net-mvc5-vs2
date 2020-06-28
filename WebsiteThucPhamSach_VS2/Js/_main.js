@@ -24,7 +24,16 @@ $(document).ready(function () {
         })
     });
 
-
+    $.ajax({
+        url: "/Home/getListNameProducts",
+        dataType: "JSON",
+        type: "GET",
+        success: function (res) {
+            $('#search__tags').autocomplete({
+                source: res.data
+            });
+        }
+    })
 
 
     //$('#related-products').slick({

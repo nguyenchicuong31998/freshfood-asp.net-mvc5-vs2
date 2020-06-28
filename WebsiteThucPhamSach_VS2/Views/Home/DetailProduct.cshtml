@@ -122,7 +122,9 @@
     <div class="row mt-5">
         <div class="col-12">
             <div class="mt-5 product-slide">
-                @Html.Action("RelatedProductPartial", "Home", new { @id = Model.id, @menuId = Model.menu_id })
+                @Model.menu_id
+                @Model.menu_id.Split(',')[0].Split('[')[1].Split('"')[1]
+                @Html.Action("RelatedProductPartial", "Home", new { @id = Model.id, @menuId = int.Parse(Model.menu_id.Split(',')[0].Split('[')[1].Split('"')[1])})
             </div>
         </div>
     </div>

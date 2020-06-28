@@ -6,6 +6,7 @@
     Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
 }
 
+
 <div class="container mt-4">
     <div class="row justify-content-lg-center">
         <div class="col-12 col-lg-8">
@@ -14,12 +15,12 @@
             {
                 @Html.ValidationSummary(true);
                 @*<div class="form-group mt-4 mb-4 row">
-                <label class="col-3 col-md-2 col-form-label">Mã sản phẩm<span class="text-danger">*</span>:</label>
-                <div class="col-9 col-md-10">
-                    @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.code, new { @class = "form-control input-share input-size input-height", @Placeholder = "Mã sản phẩm" })
-                    @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.code, "", new { @class = "text-error" })
-                </div>
-            </div>*@
+                        <label class="col-3 col-md-2 col-form-label">Mã sản phẩm<span class="text-danger">*</span>:</label>
+                        <div class="col-9 col-md-10">
+                            @Html.TextBoxFor(ProductsAdModel => ProductsAdModel.code, new { @class = "form-control input-share input-size input-height", @Placeholder = "Mã sản phẩm" })
+                            @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.code, "", new { @class = "text-error" })
+                        </div>
+                    </div>*@
                 <div class="form-group mt-4 mb-4 row">
                     <label class="col-3 col-md-3 col-form-label">Tên sản phẩm<span class="text-danger">*</span>:</label>
                     <div class="col-9 col-md-9">
@@ -28,12 +29,12 @@
                     </div>
                 </div>
                 @*<div class="form-group mt-4 mb-4 row">
-                <label class="col-3 col-md-2 col-form-label">Mô tả<span class="text-danger">*</span>:</label>
-                <div class="col-9 col-md-10">
-                    @Html.TextAreaFor(ProductsAdModel => ProductsAdModel.description, new { @id = "editor1" })
-                    @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.description, "", new { @class = "text-error" })
-                </div>
-            </div>*@
+                        <label class="col-3 col-md-2 col-form-label">Mô tả<span class="text-danger">*</span>:</label>
+                        <div class="col-9 col-md-10">
+                            @Html.TextAreaFor(ProductsAdModel => ProductsAdModel.description, new { @id = "editor1" })
+                            @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.description, "", new { @class = "text-error" })
+                        </div>
+                    </div>*@
                 <div class="form-group mt-4 mb-4 row">
                     <label class="col-3 col-md-3 col-form-label">Hình ảnh<span class="text-danger">*</span>:</label>
                     <div class="col-9 col-md-9">
@@ -107,8 +108,16 @@
                 <div class="form-group mt-4 mb-4 row">
                     <label class="col-3 col-md-3 col-form-label">Danh mục<span class="text-danger">*</span>:</label>
                     <div class="col-9 col-md-9">
-                        @Html.DropDownListFor(ProductsAdModel => ProductsAdModel.menu_id, (IEnumerable<SelectListItem>)ViewBag.menus, new { @class = "form-control" })
+                        @Html.DropDownListFor(ProductsAdModel => ProductsAdModel.menu_id, (IEnumerable<SelectListItem>)ViewBag.menus, "--Chọn danh mục sản phẩm--", new { @name="menu", @multiple = "true", @class = "form-control selectMenus" })
                         @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.menu_id, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-4 row">
+                    <label class="col-3 col-md-3 col-form-label">Nhà cung cấp<span class="text-danger">*</span>:</label>
+                    <div class="col-9 col-md-9">
+                        @Html.DropDownListFor(ProductsAdModel => ProductsAdModel.provider_id, (IEnumerable<SelectListItem>)ViewBag.providers, "--Chọn nhà cung cấp--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(ProductsAdModel => ProductsAdModel.provider_id, "", new { @class = "text-error" })
                     </div>
                 </div>
 
@@ -135,3 +144,13 @@
 
 
 
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".selectMenus").select2({
+                tags: true,
+                placeholder:"--Chọn danh mục sản phẩm--"
+            });
+        });
+    </script>
+}

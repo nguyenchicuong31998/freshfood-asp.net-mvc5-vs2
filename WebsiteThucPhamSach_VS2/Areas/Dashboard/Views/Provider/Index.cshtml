@@ -1,0 +1,104 @@
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model List<provider>
+
+@{
+    ViewBag.Title = "Quản lý nhà cung cấp";
+    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+
+<div class="container-fluid p-3">
+    <a href="~/Dashboard/Provider/Create" class="btn btn-primary btn-sm mt-3 mb-3 p-2 provider">Thêm mới</a>
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Nhà cung cấp</div>
+        <div class="card-body">
+            <div class="table-responsive text-nowrap">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên nhà cung cấp</th>
+                            <th>Mô tả</th>
+                            <th>Địa chỉ</th>
+                            <th>Số điện thoại</th>
+                            <th>Email</th>
+                            <th>Đường dẫn địa chỉ google map</th>
+                            <th>Trạng thái</th>
+                            <th>Công cụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var name = item.status == true ? "Hiển thị" : "Ẩn";
+                            <tr>
+                                <td>@item.id</td>
+                                <td>@item.name</td>
+                                <td>
+                                    @item.description
+                                </td>
+                                <td>@item.address</td>
+                                <td>@item.phone_number</td>
+                                <td>@item.email</td>
+                                <td>@item.link_google_map</td>
+                                <td>
+                                    <input type="submit" class="status btn btn-info" data-id="@item.id" value="@name" />
+                                </td>
+                                <td>
+                                    <a href="~/Dashboard/Provider/Edit/@item.id" data-id="@item.id" class="btnUpdateProvider p-2 text-warning" data-toggle="tooltip" title="Sửa">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" id="@item.id" data-id="@item.id" class="btnDeleteProvider p-2" data-toggle="tooltip" title="Xóa">
+                                        <i class="fas fa-trash-alt text-danger"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.table-responsive').on('click', ".status", function () {
+                $.ajax({
+                    url: "/Dashboard/Provider/ChangeStatus",
+                    data: { id: $(this).data("id") },
+                    dataType: "json",
+                    type: "POST",
+                    success: function (res) {
+                        if (res.status == true) {
+                            window.location.href = "/Dashboard/Provider/Index";
+                        }
+                    }
+                })
+            })
+
+            $(".table-responsive").on('click', '.btnDeleteProvider', function () {
+                if (confirm("Bạn có chắc chắn muốn xóa nhà cung cấp này không?")) {
+                    var id = $(this).data("id");
+                    $.ajax({
+                        url: "/Dashboard/Provider/DeleteMenuById?id=" + id,
+                        dataType: "json",
+                        type: "POST",
+                        success: function (res) {
+                            if (res.status == true) {
+                                alert("Bạn đã xóa thành công");
+                            } else {
+                                alert("Xóa thất bại");
+                            }
+                            window.location.href = "/Dashboard/Provider/Index";
+                        }
+                    })
+                } else {
+                    return false;
+                }
+            });
+        });
+    </script>
+}

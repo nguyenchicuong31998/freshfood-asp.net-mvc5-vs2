@@ -27,42 +27,89 @@
         <div class="row">
             <div class="col-12 col-lg-6">
                 <h2 class="text-uppercase mb-5">Thông tin thanh toán</h2>
-                <div class="form-group row">
+                <div class="form-group row mb-4">
                     <label class="col-12" for="">Họ và tên*</label>
                     <div class="col-12">
                         @Html.TextBoxFor(PaymentModel => PaymentModel.display_name, new { @class = "form-control input-share input-size input-height", @Placeholder = "Họ và tên*" })
                         @Html.ValidationMessageFor(PaymentModel => PaymentModel.display_name, "", new { @class = "text-error" })
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mb-4">
                     <label class="col-12" for="">Số điện thoại*</label>
                     <div class="col-12">
                         @Html.TextBoxFor(PaymentModel => PaymentModel.phone_number, new { @class = "form-control input-share input-size input-height", @Placeholder = "Số điện thoại*" })
                         @Html.ValidationMessageFor(PaymentModel => PaymentModel.phone_number, "", new { @class = "text-error" })
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mb-4">
                     <label class="col-12" for="">Địa chỉ*</label>
                     <div class="col-12">
                         @Html.TextAreaFor(PaymentModel => PaymentModel.address, new { @class = "form-control input-share input-size", @rows = "4", @Placeholder = "Địa chỉ*" })
                         @Html.ValidationMessageFor(PaymentModel => PaymentModel.address, "", new { @class = "text-error" })
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mb-4">
                     <label class="col-12" for="">Email*</label>
                     <div class="col-12">
                         @Html.TextBoxFor(PaymentModel => PaymentModel.email, new { @class = "form-control input-share input-size input-height", @Placeholder = "Email*" })
                         @Html.ValidationMessageFor(PaymentModel => PaymentModel.email, "", new { @class = "text-error" })
                     </div>
                 </div>
+
+                <div class="form-group row mb-4">
+                    <label class="col-12" for="">Hình thức thanh toán*</label>
+                    <div class="col-12">
+                        @Html.DropDownListFor(PaymentModel => PaymentModel.form_payment, (IEnumerable<SelectListItem>)ViewBag.formPayment, "--Chọn hình thức thanh toán --", new { @class = "form-control input-share input-size input-height", @style = "height:35px;" })
+                        @Html.ValidationMessageFor(PaymentModel => PaymentModel.form_payment, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group row mb-4">
+                    <label class="col-12" for="">Hình thức giao hàng*</label>
+                    <div class="col-12">
+                        @Html.DropDownListFor(PaymentModel => PaymentModel.form_delivery, (IEnumerable<SelectListItem>)ViewBag.formDelivery, "-- Chọn hình thức giao hàng --", new { @class = "form-control input-share input-size input-height", @style="height:35px;" })
+                        @Html.ValidationMessageFor(PaymentModel => PaymentModel.form_delivery, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
             </div>
             <div class="col-12 col-lg-6">
                 <h2 class="text-uppercase mb-5">Đơn hàng của bạn</h2>
                 @Html.Action("YourOrderPartial", "Home")
                 <div class="d-flex justify-content-end mt-4">
-                    <input class="btn btn-primary btn-lg" type="submit" value="Thanh toán" />
+                    <input id="normal" class="btn btn-primary btn-lg" type="submit" value="Thanh toán" />
+                    <input id="paypal" class="btn btn-primary btn-lg" type="submit" value="payment" />
                 </div>
             </div>
         </div>
     </div>
+}
+@section scripts{
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#paypal').css("display", "none");
+            $('#form_payment').change(function () {
+                console.log("vaoo", $('#form_payment').prop('selectedIndex'));
+                var index = $('#form_payment').prop('selectedIndex');
+                switch (index) {
+                    case 1:
+                        $('#paypal').css("display", "none");
+                        $('#normal').css("display", "block");
+                        console.log("Vaoo");
+                        break;
+                    case 2:
+                        $('#normal').css("display", "none");
+                        $('#paypal').css("display", "block");
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        break;
+                }
+            })
+        })
+    </script>
 }

@@ -26,14 +26,13 @@ namespace WebsiteThucPhamSach_VS2.Models
         public Nullable<decimal> price { get; set; }
         public Nullable<decimal> price_promotion { get; set; }
         public Nullable<bool> top_hot { get; set; }
-        public Nullable<int> menu_id { get; set; }
+        public Nullable<int> provider_id { get; set; }
+        public string menu_id { get; set; }
         public Nullable<System.DateTime> start_time { get; set; }
         public Nullable<int> total_product { get; set; }
         public Nullable<int> total_sold { get; set; }
         public Nullable<bool> special { get; set; }
         public Nullable<int> view_count { get; set; }
         public Nullable<bool> status { get; set; }
-    
-        public virtual menu menu { get; set; }
     }
 }

@@ -1,8 +1,37 @@
-﻿
+﻿@using WebsiteThucPhamSach_VS2.Models
+@model List<product>
 @{
-    ViewBag.Title = "SearchProduct";
+    ViewBag.Title = "Tìm kiếm";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="wrapper-breadcrumb">
+                <ul class="nav d-flex flex-row border-bottom">
+                    <li class="breadcrumb-item ">
+                        <a href="~/Trang-Chu" class="breadcrumb-link">Trang chủ</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <span href="#" class="breadcrumb-link active">Kết quả tìm kiếm với từ khóa "@ViewBag.keyword"</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-<h2>Vào search product</h2>
+@if(Model.Count() > 0)
+{
+
+}
+else {
+     <div class="text-center p-3 font-weight-bold">Không tìm thấy bất kỳ kết quả nào với từ khóa trên.</div>
+}
+
+
+
+
+
+
 

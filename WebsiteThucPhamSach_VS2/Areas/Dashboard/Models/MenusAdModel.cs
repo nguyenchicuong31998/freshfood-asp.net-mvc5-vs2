@@ -30,6 +30,11 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
             return db.menus.ToList();
         }
 
+        public List<menu> getMenusActive()
+        {
+            return db.menus.Where(p => p.status == true).ToList();
+        }
+
         public menu getMenuById(int id)
         {
             var menu = db.menus.SingleOrDefault(mn => mn.id == id);

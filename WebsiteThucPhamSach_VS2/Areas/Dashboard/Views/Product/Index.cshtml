@@ -17,6 +17,7 @@
                             <th>STT</th>
                             <th>Code</th>
                             <th>Tên</th>
+                            <th>Nhà cung cấp</th>
                             <th>Mô tả</th>
                             <th>Hình ảnh</th>
                             <th>Nhiều hình ảnh</th>
@@ -39,19 +40,18 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            var name = "";
-                            if (item.status == true)
-                            {
-                                name = "Hiển thị";
-                            }
-                            else
-                            {
-                                name = "Ẩn";
-                            }
+                            var name = item.status == true ? "Hiển thị" : "Ẩn";
                             <tr>
                                 <td>@item.id</td>
                                 <td>@item.code</td>
                                 <td>@item.name</td>
+                                @if (item.provider_id != null)
+                                {
+                                   <td>@Html.Action("getNameProviderById", "Product", new { id = item.provider_id })</td>
+                                }
+                                else {
+                                     <td></td>
+                                }
                                 <td>
                                     @item.description
                                  </td>
@@ -96,10 +96,10 @@
                                     <input type="submit" class="status btn btn-info" data-id="@item.id" value="@name" />
                                 </td>
                                 <td>
-                                    <a href="~/Dashboard/Product/Edit?id=@item.id" data-id="@item.id" class="btnUpdateRole p-2  text-warning" data-toggle="tooltip" title="Sửa">
+                                    <a href="~/Dashboard/Product/Edit/@item.id" data-id="@item.id" class="btnUpdateProduct p-2  text-warning" data-toggle="tooltip" title="Sửa">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="#" data-id="@item.id" class="btnDeleteRole p-2" data-toggle="tooltip" title="Xóa">
+                                    <a href="#" data-id="@item.id" class="btnDeleteProduct p-2" data-toggle="tooltip" title="Xóa">
                                         <i class="fas fa-trash-alt text-danger"></i>
                                     </a>
                                 </td>
@@ -112,10 +112,40 @@
     </div>
 </div>
 
-@*@section Scripts{
-        <script type="text/javascript">
-            $(document).ready(function () {
+@section Scripts{
+  <script type="text/javascript">
+     $(document).ready(function () {
+         $('.table-responsive').on('click', ".btnDeleteProduct", function () {
+             if (confirm("Bạn chắc chắn muốn xóa sản phẩm này không?")) {
+                 let id = $(this).data("id");
+                 $.ajax({
+                     url: "/Dashboard/Product/Delete",
+                     data: { id: id },
+                     dataType: "json",
+                     type: "POST",
+                     success: function (res) {
+                         alert("Bạn đã xóa thành công");
+                         location.reload();
+                     }
+                 })
+             } else {
+                 return false;
+             }
+         })
 
-            });
-        </script>
-    }*@
+         $('.table-responsive').on('click', ".status", function () {
+             let id = $(this).data("id");
+             $.ajax({
+                 url: "/Dashboard/Product/ChangeStatusById",
+                 data: { id: id },
+                 dataType: "json",
+                 type: "POST",
+                 success: function (res) {
+                     location.reload();
+                 }
+             })
+         })
+
+     });
+  </script>
+}
