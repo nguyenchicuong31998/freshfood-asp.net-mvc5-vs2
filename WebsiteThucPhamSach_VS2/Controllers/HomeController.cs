@@ -341,9 +341,9 @@ namespace WebsiteThucPhamSach_VS2.Controllers
         {
             List<FormPayment> formPayment = new List<FormPayment>();
             formPayment.Add(new FormPayment(1, "Thanh toán trước khi giao hàng"));
-            formPayment.Add(new FormPayment(2, "Thanh toán Stripe"));
-            formPayment.Add(new FormPayment(3, "Thanh toán Paypal"));
-            formPayment.Add(new FormPayment(4, "Thanh toán Bảo Kim"));
+            //formPayment.Add(new FormPayment(2, "Thanh toán Stripe"));
+            formPayment.Add(new FormPayment(2, "Thanh toán Paypal"));
+            formPayment.Add(new FormPayment(3, "Thanh toán Bảo Kim"));
             SelectList formPaymentSelect = new SelectList(formPayment, "name", "name");
             ViewBag.formPayment = formPaymentSelect;
         }
@@ -354,6 +354,55 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             formDelivery.Add(new FormDelivery(2, "Chuyển giao"));
             SelectList formDeliverySelect = new SelectList(formDelivery, "name", "name");
             ViewBag.formDelivery = formDeliverySelect;
+        }
+
+        public ActionResult PaymentPayPal(order data)
+        {
+            order order = new order();
+            order.user_id = int.Parse(Session["id"].ToString());
+            order.display_name = data.display_name;
+            order.phone_number = data.phone_number;
+            order.address = data.address;
+            order.email = data.email;
+            order.start_time = DateTime.Now.Date;
+            order.form_payments = data.form_payments;
+            order.form_delivery = data.form_delivery;
+            order.status = false;
+            order.total_money = this.totalMoney();
+            db.orders.Add(order);
+            db.SaveChanges();
+            try
+            {
+                var carts = this.getProductInCookie();
+                foreach (var item in carts)
+                {
+                    order_details orderDetail = new order_details();
+                    orderDetail.order_id = order.id;
+                    orderDetail.product_id = item.id;
+                    orderDetail.name = Server.UrlDecode(item.name);
+                    orderDetail.quantity = item.quantity;
+                    if (item.price_promotion > 0)
+                    {
+                        var giamGia = String.Format("{0:0}", item.price * ((100 - item.price_promotion) / 100));
+                        orderDetail.price = Decimal.Parse(giamGia.ToString());
+                    }
+                    else
+                    {
+                        orderDetail.price = item.price;
+                    }
+                    orderDetail.into_money = item.totalMoney;
+                    db.order_details.Add(orderDetail);
+                    db.SaveChanges();
+                }
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            //var body = new PaymentSuccess().body();
+            //new Utils().SendEmail(payment.email, "Chúc mừng bạn đã mua sản phẩm thành công", body, "", "");
+            return View();
         }
 
         [HttpGet]
@@ -383,8 +432,48 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    order order = new order();
+                    order.user_id = int.Parse(Session["id"].ToString());
+                    order.display_name = payment.display_name;
+                    order.phone_number = payment.phone_number;
+                    order.address = payment.address;
+                    order.email = payment.email;
+                    order.start_time = DateTime.Now.Date;
+                    order.form_payments = payment.form_payments;
+                    order.form_delivery = payment.form_delivery;
+                    order.status = false;
+                    order.total_money = this.totalMoney();
+                    db.orders.Add(order);
+                    db.SaveChanges();
+                    try
+                    {
+                        var carts = this.getProductInCookie();
+                        foreach(var item in carts)
+                        {
+                            order_details orderDetail = new order_details();
+                            orderDetail.order_id = order.id;
+                            orderDetail.product_id = item.id;
+                            orderDetail.name = Server.UrlDecode(item.name);
+                            orderDetail.quantity = item.quantity;
+                            if(item.price_promotion > 0)
+                            {
+                                var giamGia = String.Format("{0:0}", item.price * ((100 - item.price_promotion) / 100));
+                                orderDetail.price = Decimal.Parse(giamGia.ToString());
+                            }
+                            else
+                            {
+                                orderDetail.price = item.price;
+                            }
+                            orderDetail.into_money = item.totalMoney;
+                            db.order_details.Add(orderDetail);
+                            db.SaveChanges();
+                        }
 
-                    //var userId = 
+                    }
+                    catch(Exception e)
+                    {
+
+                    }
                     Response.Cookies["CartCookie"].Expires = DateTime.Now.AddDays(-1);
                     //var body = new PaymentSuccess().body();
                     //new Utils().SendEmail(payment.email, "Chúc mừng bạn đã mua sản phẩm thành công", body, "", "");
@@ -415,7 +504,7 @@ namespace WebsiteThucPhamSach_VS2.Controllers
                 }
                 else
                 {
-                    totalMoney += cart.price;
+                    totalMoney += cart.price * cart.quantity;
                 }
             }
             return totalMoney;

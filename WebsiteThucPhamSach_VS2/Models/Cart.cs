@@ -15,7 +15,9 @@ namespace WebsiteThucPhamSach_VS2.Models
         public int quantity { get; set; }
         public Decimal totalMoney
         {
-            get { return price * quantity; }
+            get {
+                return price * quantity;
+            }
         }
     }
 }

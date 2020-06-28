@@ -98,6 +98,35 @@
           <Property Name="order" Type="int" />
           <Property Name="status" Type="bit" />
         </EntityType>
+        <EntityType Name="order_details">
+          <Key>
+            <PropertyRef Name="order_id" />
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="price" Type="decimal" Precision="20" Scale="0" />
+          <Property Name="into_money" Type="decimal" Precision="31" Scale="0" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="display_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone_number" Type="varchar" MaxLength="11" />
+          <Property Name="address" Type="nvarchar(max)" />
+          <Property Name="email" Type="varchar" MaxLength="200" />
+          <Property Name="total_money" Type="decimal" Precision="20" Scale="0" />
+          <Property Name="start_time" Type="datetime" />
+          <Property Name="end_time" Type="datetime" />
+          <Property Name="form_payments" Type="nvarchar" MaxLength="300" />
+          <Property Name="form_delivery" Type="nvarchar" MaxLength="300" />
+          <Property Name="status" Type="bit" />
+        </EntityType>
         <EntityType Name="products">
           <Key>
             <PropertyRef Name="id" />
@@ -172,6 +201,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__orders__user_id__625A9A57">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="pk_admin_role">
           <End Role="roles" Type="Self.roles" Multiplicity="0..1" />
           <End Role="admins" Type="Self.admins" Multiplicity="*" />
@@ -192,6 +233,8 @@
           <EntitySet Name="events" EntityType="Self.events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="feedbacks" EntityType="Self.feedbacks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="menus" EntityType="Self.menus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="order_details" EntityType="Self.order_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="providers" EntityType="Self.providers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
@@ -199,6 +242,10 @@
           <AssociationSet Name="FK__events__admin_id__0D7A0286" Association="Self.FK__events__admin_id__0D7A0286">
             <End Role="admins" EntitySet="admins" />
             <End Role="events" EntitySet="events" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orders__user_id__625A9A57" Association="Self.FK__orders__user_id__625A9A57">
+            <End Role="users" EntitySet="users" />
+            <End Role="orders" EntitySet="orders" />
           </AssociationSet>
           <AssociationSet Name="pk_admin_role" Association="Self.pk_admin_role">
             <End Role="roles" EntitySet="roles" />
@@ -229,6 +276,12 @@
           <EntitySet Name="products" EntityType="FreshFoodModel.product" />
           <EntitySet Name="menus" EntityType="FreshFoodModel.menu" />
           <EntitySet Name="providers" EntityType="FreshFoodModel.provider" />
+          <EntitySet Name="order_details" EntityType="FreshFoodModel.order_details" />
+          <EntitySet Name="orders" EntityType="FreshFoodModel.order" />
+          <AssociationSet Name="FK__orders__user_id__625A9A57" Association="FreshFoodModel.FK__orders__user_id__625A9A57">
+            <End Role="user" EntitySet="users" />
+            <End Role="order" EntitySet="orders" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="role">
           <Key>
@@ -321,6 +374,7 @@
           <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="start_time" Type="DateTime" Precision="3" />
           <Property Name="status" Type="Boolean" />
+          <NavigationProperty Name="orders" Relationship="FreshFoodModel.FK__orders__user_id__625A9A57" FromRole="user" ToRole="order" />
         </EntityType>
         <EntityType Name="event">
           <Key>
@@ -413,6 +467,48 @@
           <Property Name="start_time" Type="DateTime" Precision="3" />
           <Property Name="status" Type="Boolean" />
         </EntityType>
+        <EntityType Name="order_details">
+          <Key>
+            <PropertyRef Name="order_id" />
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="price" Type="Decimal" Precision="20" Scale="0" />
+          <Property Name="into_money" Type="Decimal" Precision="31" Scale="0" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="display_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone_number" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="total_money" Type="Decimal" Precision="20" Scale="0" />
+          <Property Name="start_time" Type="DateTime" Precision="3" />
+          <Property Name="end_time" Type="DateTime" Precision="3" />
+          <Property Name="form_payments" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="form_delivery" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="Boolean" />
+          <NavigationProperty Name="user" Relationship="FreshFoodModel.FK__orders__user_id__625A9A57" FromRole="order" ToRole="user" />
+        </EntityType>
+        <Association Name="FK__orders__user_id__625A9A57">
+          <End Type="FreshFoodModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="FreshFoodModel.order" Role="order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -581,6 +677,36 @@
                 <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="order_details">
+            <EntityTypeMapping TypeName="FreshFoodModel.order_details">
+              <MappingFragment StoreEntitySet="order_details">
+                <ScalarProperty Name="into_money" ColumnName="into_money" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="FreshFoodModel.order">
+              <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="form_delivery" ColumnName="form_delivery" />
+                <ScalarProperty Name="form_payments" ColumnName="form_payments" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="total_money" ColumnName="total_money" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="display_name" ColumnName="display_name" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

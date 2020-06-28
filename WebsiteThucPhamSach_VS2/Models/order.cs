@@ -12,26 +12,21 @@ namespace WebsiteThucPhamSach_VS2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class user
+    public partial class order
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public user()
-        {
-            this.orders = new HashSet<order>();
-        }
-    
         public int id { get; set; }
+        public Nullable<int> user_id { get; set; }
         public string display_name { get; set; }
-        public Nullable<bool> gender { get; set; }
-        public Nullable<System.DateTime> date_of_birth { get; set; }
         public string phone_number { get; set; }
         public string address { get; set; }
         public string email { get; set; }
-        public string password { get; set; }
+        public Nullable<decimal> total_money { get; set; }
         public Nullable<System.DateTime> start_time { get; set; }
+        public Nullable<System.DateTime> end_time { get; set; }
+        public string form_payments { get; set; }
+        public string form_delivery { get; set; }
         public Nullable<bool> status { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<order> orders { get; set; }
+        public virtual user user { get; set; }
     }
 }

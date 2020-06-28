@@ -267,6 +267,12 @@
       <DependentUpon>DBFreshFood.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MenusModel.cs" />
+    <Compile Include="Models\order.cs">
+      <DependentUpon>DBFreshFood.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\order_details.cs">
+      <DependentUpon>DBFreshFood.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PaymentModel.cs" />
     <Compile Include="Models\PersonalInfoModel.cs" />
     <Compile Include="Models\product.cs">
