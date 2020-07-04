@@ -14,5 +14,21 @@ namespace WebsiteThucPhamSach_VS2.Controllers
 
             return PartialView();
         }
+
+
+        public ActionResult TutorialOrder()
+        {
+            return View();
+        }
+
+        public ActionResult TermsAndPolicy()
+        {
+            return View();
+        }
+
+        public ActionResult CancelOrderAndChangeOrder()
+        {
+            return View();
+        }
     }
 }

@@ -18,10 +18,55 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
             {
                 return RedirectToAction("Login", "Dashboard");
             }
-            ViewBag.totalUser = new UsersAdModel().totalUser();
-            ViewBag.totalFeeback = new FeedbacksModel().totalFeedbacks();
-            ViewBag.totalProduct = new ProductsAdModel().getTotalProducts();
+            this.loadOverViewUser();
+            this.loadOverViewFeedback();
+            this.loadOverViewProduct();
+            this.loadOverViewOrder();
+            this.loadOverViewMenu();
+            this.loadOverViewProvider();
             return View();
+        }
+
+        public void loadOverViewUser()
+        {
+            ViewBag.totalUser = new UsersAdModel().totalUser();
+            ViewBag.totalActiveUser = new UsersAdModel().totalActiveUser();
+            ViewBag.totalInActiveUser = new UsersAdModel().totalInActiveUser();
+        }
+
+        public void loadOverViewFeedback()
+        {
+            ViewBag.totalFeeback = new FeedbacksModel().totalFeedbacks();
+            ViewBag.totalActiveFeeback = new FeedbacksModel().totalActiveFeeback();
+            ViewBag.totalInActiveFeeback = new FeedbacksModel().totalInActiveFeeback();
+        }
+
+        public void loadOverViewProduct()
+        {
+            ViewBag.totalProduct = new ProductsAdModel().getTotalProducts();
+            ViewBag.totalActiveProduct = new ProductsAdModel().totalActiveProducts();
+            ViewBag.totalInActiveProduct = new ProductsAdModel().totalInActiveProducts();
+        }
+
+        public void loadOverViewOrder()
+        {
+            ViewBag.totalOrder = new PaymentModel().totalOrder(); 
+            ViewBag.totalConfirmOrder = new PaymentModel().totalConfirmOrder();
+            ViewBag.totalUnConfirmOrder = new PaymentModel().totalUnConfirmOrder();
+        }
+
+        public void loadOverViewMenu()
+        {
+            ViewBag.totalMenu = new MenusAdModel().totalMenu();
+            ViewBag.totalActiveMenu = new MenusAdModel().totalActiveMenu();
+            ViewBag.totalInActiveMenu = new MenusAdModel().totalInActiveMenu();
+        }
+
+        public void loadOverViewProvider()
+        {
+            ViewBag.totalProvider = new ProviderModel().totalProvider();
+            ViewBag.totalActiveProvider = new ProviderModel().totalActiveProvider();
+            ViewBag.totalInActiveProvider = new ProviderModel().totalInActiveProvider();
         }
 
         public PartialViewResult HeaderPartial()

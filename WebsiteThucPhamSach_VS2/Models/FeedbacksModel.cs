@@ -20,7 +20,17 @@ namespace WebsiteThucPhamSach_VS2.Models
 
         public int totalFeedbacks()
         {
+            return db.feedbacks.Count();
+        }
+
+        public int totalActiveFeeback()
+        {
             return db.feedbacks.Where(f => f.status == true).Count();
+        }
+
+        public int totalInActiveFeeback()
+        {
+            return db.feedbacks.Where(f => f.status == false).Count();
         }
 
         public IPagedList<feedback> GetFeedbacksClientByProductId(int id, int? page)

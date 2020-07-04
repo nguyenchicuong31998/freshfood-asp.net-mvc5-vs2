@@ -259,7 +259,7 @@ namespace WebsiteThucPhamSach_VS2.Controllers
                     status = false
                 });
             }
-            var newPassword = utils.RandomChar(6);
+            var newPassword = utils.RandomChar(8);
             var updatedUser = new UsersModels().updatePassword(emailExists, newPassword);
             string body = new ForgotPassword().body(updatedUser.display_name, newPassword);
             var isTrue = utils.SendEmail(emailExists.email, "Đặt lại mật khẩu", body, "", "");

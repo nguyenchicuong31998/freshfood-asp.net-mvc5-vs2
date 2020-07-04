@@ -6,11 +6,13 @@ using System.Web.Mvc;
 using WebsiteThucPhamSach_VS2.Models;
 using WebsiteThucPhamSach_VS2.Common;
 using WebsiteThucPhamSach_VS2.Areas.Dashboard.Models;
+using WebsiteThucPhamSach_VS2.EmailTeamplate;
 namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
 {
     public class UserController : Controller
     {
         // GET: Dashboard/User
+        Utils utils = new Utils();
         public ActionResult Index()
         {
             if(Session[SessionName.adminId] == null)
@@ -92,6 +94,33 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
                 return Json(new { status = true });
             }
             return Json(new { status = false });
+        }
+
+        public ActionResult ResetPasswordForUser(string email)
+        {
+            var emailExists = new UsersModels().getUserByEmail(email);
+            if (emailExists == null)
+            {
+                return Json(new
+                {
+                    status = false
+                });
+            }
+            var newPassword = utils.RandomChar(8);
+            var updatedUser = new UsersModels().updatePassword(emailExists, newPassword);
+            string body = new ResetPasswordForUser().body(updatedUser.display_name, newPassword);
+            var isTrue = utils.SendEmail(emailExists.email, "Đặt lại mật khẩu", body, "", "");
+            if (isTrue)
+            {
+                return Json(new
+                {
+                    status = true
+                });
+            }
+            return Json(new
+            {
+                status = false
+            });
         }
 
         public JsonResult Delete(int id)

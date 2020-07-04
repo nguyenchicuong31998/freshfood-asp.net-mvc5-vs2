@@ -8,6 +8,7 @@ namespace WebsiteThucPhamSach_VS2.Models
 {
     public class PaymentModel
     {
+        FreshFoodEntities db = new FreshFoodEntities();
         public int id { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập họ và tên")]
         public string display_name { get; set; }
@@ -30,7 +31,19 @@ namespace WebsiteThucPhamSach_VS2.Models
         public string password { get; set; }
         public Nullable<bool> status { get; set; }
 
+        public int totalOrder()
+        {
+            return db.orders.Count();
+        }
 
+        public int totalConfirmOrder()
+        {
+            return db.orders.Where(u => u.status == true).Count();
+        }
+        public int totalUnConfirmOrder()
+        {
+            return db.orders.Where(u => u.status == false).Count();
+        }
 
 
 

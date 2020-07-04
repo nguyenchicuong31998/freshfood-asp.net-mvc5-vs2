@@ -394,7 +394,8 @@ namespace WebsiteThucPhamSach_VS2.Controllers
                     db.order_details.Add(orderDetail);
                     db.SaveChanges();
                 }
-
+                var body = new PaymentSuccess().body(order.display_name);
+                new Utils().SendEmail(data.email, "Chúc mừng bạn đã mua sản phẩm thành công", body, "", "");
             }
             catch (Exception e)
             {
@@ -430,6 +431,7 @@ namespace WebsiteThucPhamSach_VS2.Controllers
         {
             try
             {
+   
                 if (ModelState.IsValid)
                 {
                     order order = new order();
@@ -475,8 +477,8 @@ namespace WebsiteThucPhamSach_VS2.Controllers
 
                     }
                     Response.Cookies["CartCookie"].Expires = DateTime.Now.AddDays(-1);
-                    //var body = new PaymentSuccess().body();
-                    //new Utils().SendEmail(payment.email, "Chúc mừng bạn đã mua sản phẩm thành công", body, "", "");
+                    var body = new PaymentSuccess().body(order.display_name);
+                    new Utils().SendEmail(payment.email, "Chúc mừng bạn đã mua sản phẩm thành công", body, "", "");
                     return Redirect("~/Trang-Chu");
                 }
             }catch(Exception e)

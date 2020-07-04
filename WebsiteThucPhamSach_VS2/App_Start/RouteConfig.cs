@@ -211,6 +211,40 @@ namespace WebsiteThucPhamSach_VS2
                     action = "Index"
                 }
             );
+
+            //Hướng dẵn đặt hàng
+            routes.MapRoute(
+                name: "Hướng dẫn đặt hàng",
+                url: "Huong-Dan-Dat-Hang",
+                defaults: new
+                {
+                    controller = "Footer",
+                    action = "TutorialOrder"
+                }
+            );
+
+            //Điều khoản và chính sách
+            routes.MapRoute(
+                name: "Điều khoản và chính sách",
+                url: "Dieu-Khoan-Va-Chinh-Sach",
+                defaults: new
+                {
+                    controller = "Footer",
+                    action = "TermsAndPolicy"
+                }
+            );
+
+            //Hủy và thay đổi đơn hàng
+            routes.MapRoute(
+                name: "Hủy và thay đổi dơn hàng",
+                url: "Huy-Don-Hang-Va-Thay-Doi-Don-Hang",
+                defaults: new
+                {
+                    controller = "Footer",
+                    action = "CancelOrderAndChangeOrder"
+                }
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

@@ -1664,6 +1664,9 @@
     <Content Include="Views\Common\GalleryForDetailProduct.cshtml" />
     <Content Include="Views\Category\GrandChildrenPartial.cshtml" />
     <Content Include="Views\Home\SearchProduct.cshtml" />
+    <Content Include="Views\Footer\TutorialOrder.cshtml" />
+    <Content Include="Views\Footer\TermsAndPolicy.cshtml" />
+    <Content Include="Views\Footer\CancelOrderAndChangeOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

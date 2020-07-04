@@ -118,5 +118,19 @@ namespace WebsiteThucPhamSach_VS2.Models
             }
             return false;
         }
+
+        public int totalProvider()
+        {
+            return db.providers.Count();
+        }
+
+        public int totalActiveProvider()
+        {
+            return db.providers.Where(u => u.status == true).Count();
+        }
+        public int totalInActiveProvider()
+        {
+            return db.providers.Where(u => u.status == false).Count();
+        }
     }
 }

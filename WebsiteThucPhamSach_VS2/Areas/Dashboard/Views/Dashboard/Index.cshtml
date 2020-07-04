@@ -6,11 +6,29 @@
 
 <div class="container mt-4">
     <div class="row">
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                <div class="card-body">
+                    <h4>Hóa đơn</h4>
+                    <p>Tổng số: @ViewBag.totalOrder</p>
+                    <p>Đã xác nhận: @ViewBag.totalConfirmOrder</p>
+                    <p>Chưa xác nhận: @ViewBag.totalUnConfirmOrder</p>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="~/Dashboard/Bill/Index">Xem chi tiết</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-xl-3 col-md-6">
             <div class="card bg-success text-white mb-4">
                 <div class="card-body">
                     <h4>Khách Hàng</h4>
-                    <p>@ViewBag.totalUser</p>
+                    <p>Tổng số: @ViewBag.totalUser</p>
+                    <p>Hoạt động: @ViewBag.totalActiveUser</p>
+                    <p>Không hoạt động: @ViewBag.totalInActiveUser</p>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
                     <a class="small text-white stretched-link" href="~/Dashboard/User/Index">Xem chi tiết</a>
@@ -20,10 +38,27 @@
         </div>
 
         <div class="col-xl-3 col-md-6">
+            <div class="card bg-info text-white mb-4">
+                <div class="card-body">
+                    <h4>Danh mục</h4>
+                    <p>Tổng số: @ViewBag.totalMenu</p>
+                    <p>Hoạt động: @ViewBag.totalActiveMenu</p>
+                    <p>Không hoạt động: @ViewBag.totalInActiveMenu</p>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="~/Dashboard/Menu/Index">Xem chi tiết</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
             <div class="card bg-primary text-white mb-4">
                 <div class="card-body">
                     <h4>Sản phẩm</h4>
-                    <p>@ViewBag.totalProduct</p>
+                    <p>Tổng số: @ViewBag.totalProduct</p>
+                    <p>Hiển thị: @ViewBag.totalActiveProduct</p>
+                    <p>Không hiển thị: @ViewBag.totalInActiveProduct</p>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
                     <a class="small text-white stretched-link" href="~/Dashboard/Product/Index">Xem chi tiết</a>
@@ -36,7 +71,9 @@
             <div class="card bg-warning text-white mb-4">
                 <div class="card-body">
                     <h4>Đánh giá</h4>
-                    <p>@ViewBag.totalFeeback</p>
+                    <p>Tổng số: @ViewBag.totalFeeback</p>
+                    <p>Hiển thị: @ViewBag.totalActiveFeeback</p>
+                    <p>Không hiển thị: @ViewBag.totalInActiveFeeback</p>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
                     <a class="small text-white stretched-link" href="~/Dashboard/Feedback/Index">Xem chi tiết</a>
@@ -46,14 +83,17 @@
         </div>
 
 
+
         <div class="col-xl-3 col-md-6">
-            <div class="card bg-danger text-white mb-4">
+            <div class="card bg-secondary text-white mb-4">
                 <div class="card-body">
-                    <h4>Hóa đơn</h4>
-                    <p>@ViewBag.totalUser</p>
+                    <h4>Nhà cung cấp</h4>
+                    <p>Tổng số: @ViewBag.totalProvider</p>
+                    <p>Hoạt động: @ViewBag.totalActiveProvider</p>
+                    <p>Không hoạt động: @ViewBag.totalInActiveProvider</p>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="~/Dashboard/Bill/Index">Xem chi tiết</a>
+                    <a class="small text-white stretched-link" href="~/Dashboard/Provider/Index">Xem chi tiết</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -63,7 +103,6 @@
             <div class="card bg-danger text-white mb-4">
                 <div class="card-body">
                     <h4>Thống kê</h4>
-                    <p>@ViewBag.totalUser</p>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
                     <a class="small text-white stretched-link" href="~/Dashboard/Statistical/Index">Xem chi tiết</a>
@@ -71,7 +110,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 

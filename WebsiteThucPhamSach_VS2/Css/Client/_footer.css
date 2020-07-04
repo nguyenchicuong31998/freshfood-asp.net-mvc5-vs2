@@ -30,3 +30,20 @@
                 text-decoration: none;
                 color: #9bd031;
             }
+
+
+.followUs{
+   list-style-type: none;
+}
+
+.followUs > li {
+
+}
+
+.followUs > li > a{
+
+}
+
+    .followUs > li > a > i{
+        font-size: 40px;
+    }

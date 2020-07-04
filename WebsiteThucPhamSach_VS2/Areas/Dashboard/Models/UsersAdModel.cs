@@ -50,7 +50,16 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
         {
             return db.users.Count();
         }
-        
+
+        public int totalActiveUser()
+        {
+            return db.users.Where(u => u.status == true).Count();
+        }
+        public int totalInActiveUser()
+        {
+            return db.users.Where(u => u.status == false).Count();
+        }
+
         public bool createUser(UsersAdModel newUser)
         {
             try

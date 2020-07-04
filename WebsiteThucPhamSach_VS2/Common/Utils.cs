@@ -141,7 +141,5 @@ namespace WebsiteThucPhamSach_VS2.Common
             }
             return afterFormat;
         }
-
-        
     }
 }

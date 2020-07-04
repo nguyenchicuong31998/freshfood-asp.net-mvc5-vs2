@@ -1,40 +1,210 @@
-﻿
-@{
-    ViewBag.Title = "Quản lý hóa đơn";
-    Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
-}
+﻿    @using WebsiteThucPhamSach_VS2.Models
+    @using WebsiteThucPhamSach_VS2.Common
+    @model List<order>
+    @{
+        ViewBag.Title = "Quản lý hóa đơn";
+        Layout = "~/Areas/Dashboard/Views/Shared/_LayoutDashboard.cshtml";
+        Utils utils = new Utils();
+    }
 
 
-<div class="container-fluid p-3">
-    <div class="card mb-4">
-        <div class="card-header"><i class="fas fa-table mr-1"></i>Quản lý hóa đơn</div>
-        <div class="card-body">
-            <div class="table-responsive text-nowrap">
-                <table class="table table-bordered" id="dataTable" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Họ và tên</th>
-                            <th>Giới tính</th>
-                            <th>Ngày sinh</th>
-                            <th>Số điện thoại</th>
-                            <th>Trạng thái</th>
-                            <th>Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>2</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>1</td>
-                            <td>2</td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="container-fluid p-3">
+        <div class="mb-3">
+            <a class="exportCsv btn btn-success" href="/Dashboard/Bill/ExportExcel">Xuất báo cáo hóa đơn</a>
+            @*<a class="exportCsv btn btn-primary" href="#" onclick="tableToExcel('dataTable', 'Quản lý hóa đơn');">Export Order</a>*@
+        </div>
+        <div class="card mb-4">
+            <div class="card-header"><i class="fas fa-table mr-1"></i>Quản lý hóa đơn</div>
+            <div class="card-body">
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-bordered tableOrder" id="dataTable" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Họ và tên</th>
+                                <th>Số điện thoại</th>
+                                <th>Địa chỉ</th>
+                                <th>Email</th>
+                                <th>Tổng tiền</th>
+                                <th>Ngày đặt</th>
+                                <th>Ngày xác nhận</th>
+                                <th>Hình thức thanh toán</th>
+                                <th>Hình thức giao hàng</th>
+                                <th>Trạng thái</th>
+                                <th>Xem chi tiết đơn hàng</th>
+                                <th>Hủy đơn hàng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model)
+                            {
+                                var trangthai = order.status == true ? "Đã xác nhận" : "Xác nhận";
+                                <tr>
+                                    <td>@order.id</td>
+                                    <td>@order.display_name</td>
+                                    <td>@order.phone_number</td>
+                                    <td>@order.address</td>
+                                    <td>@order.email</td>
+                                    <td>@utils.FormatPrice(order.total_money.ToString())</td>
+                                    <td>@String.Format("{0:dd/MM/yyyy}", order.start_time)</td>
+                                    <td>@String.Format("{0:dd/MM/yyyy}", order.end_time)</td>
+                                    <td>@order.form_payments</td>
+                                    <td>@order.form_delivery</td>
+                                    <td>
+                                        <input type="submit" class="status btn btn-info" data-id="@order.id" value="@trangthai" />
+                                    </td>
+                                    <td>
+                                        <a href="#" data-id="@order.id" data-toggle="modal" data-target="#myModal-@order.id" class="btnXemCT btn btn-info" data-toggle="tooltip" title="Xem">Xem</a>
+                                    </td>
+                                    <td>
+                                        <a href="#" data-id="@order.id" onclick="return ThongBao()" class="btnHuy btn btn-info" data-toggle="tooltip" title="Hủy">Hủy</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <div class="modal fade modal-detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3 class="text-center font-weight-bold">Chi Tiết Hóa Đơn</h3>
+                    <div class="box-detail">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@section scripts{
+
+    <script type="text/javascript">
+        //var tableToExcel = (function () {
+        //    var uri = 'data:application/vnd.ms-excel;base64,'
+        //        , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+        //        , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+        //        , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        //    return function (table, name) {
+        //        if (!table.nodeType) table = document.getElementById(table)
+        //        var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+        //        window.location.href = uri + base64(format(template, ctx))
+        //    }
+        //})()
+        function exportCsv(fileName) {
+            var table = $('#dataTable').DataTable();
+            //    dom: 'Bfrtip',
+            //    buttons: [
+            //        'copy', 'csv', 'excel', 'pdf', 'print'
+            //    ]
+            //});   
+            var data = table.buttons.exportData();
+            //var data = table
+            //    .rows()
+            //    .data();
+
+            //console.log('The table has ' + data.length + ' records');
+            console.log('Data', data);   
+
+        }
+        $('.table-responsive').on('click', ".btnHuy", function () {
+            var orderId = $(this).data('id');
+            $.ajax({
+                data: { orderId: orderId },
+                url: '/Dashboard/Bill/Cancel',
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.status == true) {
+                        window.location.href = "/Dashboard/Bill/Index";
+                        alert("Bạn đã hủy đơn hàng thành công");
+                    }
+                }
+            })
+        });
+        $('.table-responsive').on('click', ".btnXemCT", function (e) {
+            var orderId = $(this).data('id');
+           
+            $.ajax({
+                data: { orderId: orderId },
+                url: '/Dashboard/Bill/orderDetail',
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    console.log(res);
+                    var orderDetail = res.orderDetail;
+                    var name = "myModal-" + res.id;
+                    var totalMoney = 0;
+                    $('.modal-detail').attr('id', name);
+                    var string = "";
+                    string += "<p>Mã hóa đơn: " + res.id + "</p>";
+                    string += "<p>Tên khách hàng: " + res.name + "</p>"
+                    string += "<div class='table-responsive'>";
+                    string += "<table class='table'>";
+                    string += "<thead>";
+                    string += "<tr>";
+                    string += "<th>Mã sản phẩm</th>";
+                    string += "<th>Tên sản phẩm</th>";
+                    string += "<th>Số lượng</th>";
+                    string += "<th>Đơn giá</th>";
+                    string += "<th>Thành tiền</th>";
+                    string += "</tr>";
+                    string += "</thead>";
+                    string += "<tbody>";
+                    orderDetail.forEach(item => {
+                        totalMoney += item.into_money;
+                        string += "<tr>";
+                        string += "<td>" + item.order_id + "</td>";
+                        string += "<td>" + item.name + "</td>";
+                        string += "<td>" + item.quantity + "</td>";
+                        string += "<td>" + item.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); + "</td>";
+                        string += "<td>" + item.into_money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); + "</td>";
+                        string += "</tr>";
+                    })
+                    string += "</tbody>";
+                    string += "</table>";
+                    string += "</div>";
+                    string += "<div class='text-right mr-3'> Tổng tiền: <b>" + totalMoney.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); + "</b> </div>";
+                    $('.box-detail').html(string);
+                    name = "#" + name;
+                    $(name).modal('show');
+                }
+            });
+        });
+
+        $('.table-responsive').on('click', ".status", function (e) {
+            e.preventDefault();
+            var orderId = $(this).data('id');
+            $.ajax({
+                data: { orderId: orderId },
+                url: '/Dashboard/Bill/changeStatus',
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.status == true) {
+                        window.location.href = "/Dashboard/Bill/Index";
+                    }
+                }
+            })
+        });
+
+        function ThongBao() {
+            if (confirm("Bạn chắc chắn muốn hủy đơn hàng này?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    </script>    
+}
+

@@ -85,7 +85,8 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
                     return true;
                 }
                 return false;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return false;
             }
@@ -102,6 +103,20 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Models
                 return true;
             }
             return false;
+        }
+
+        public int totalMenu()
+        {
+            return db.menus.Count();
+        }
+
+        public int totalActiveMenu()
+        {
+            return db.menus.Where(u => u.status == true).Count();
+        }
+        public int totalInActiveMenu()
+        {
+            return db.menus.Where(u => u.status == false).Count();
         }
     }
 }
