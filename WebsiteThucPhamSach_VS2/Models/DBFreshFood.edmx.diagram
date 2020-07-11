@@ -19,10 +19,10 @@
         <EntityTypeShape EntityType="FreshFoodModel.feedback" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="FreshFoodModel.product" Width="1.5" PointX="8.5" PointY="5.625" />
         <EntityTypeShape EntityType="FreshFoodModel.menu" Width="1.5" PointX="5.375" PointY="4.75" />
-        <EntityTypeShape EntityType="FreshFoodModel.provider" Width="1.5" PointX="5.375" PointY="7.75" />
         <EntityTypeShape EntityType="FreshFoodModel.order_details" Width="1.5" PointX="0.75" PointY="8.75" />
         <EntityTypeShape EntityType="FreshFoodModel.order" Width="1.5" PointX="3.375" PointY="11.75" />
         <AssociationConnector Association="FreshFoodModel.FK__orders__user_id__625A9A57" />
+        <EntityTypeShape EntityType="FreshFoodModel.provider" Width="1.5" PointX="5.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

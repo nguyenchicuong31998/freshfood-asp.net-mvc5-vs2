@@ -35,8 +35,8 @@ namespace WebsiteThucPhamSach_VS2.Models
         public virtual DbSet<feedback> feedbacks { get; set; }
         public virtual DbSet<product> products { get; set; }
         public virtual DbSet<menu> menus { get; set; }
-        public virtual DbSet<provider> providers { get; set; }
         public virtual DbSet<order_details> order_details { get; set; }
         public virtual DbSet<order> orders { get; set; }
+        public virtual DbSet<provider> providers { get; set; }
     }
 }

@@ -53,6 +53,12 @@
                           });
                 </script>
             </div>
+            @if(Model.provider_id != null)
+            {
+                <div class="mt-2">
+                    Cung cấp bởi: <a href="https://www.google.com/maps/place/@Html.Action("getAddressProvider", "Home",new { providerId = Model.provider_id })" class="font-weight-bold">@Html.Action("getNameProvider", "Home", new { providerId = Model.provider_id })</a>
+                </div>
+             }
             <div class="mt-2">
                 Lượt xem: <span class="font-weight-bold">@Model.view_count</span>
             </div>
@@ -88,7 +94,7 @@
                 }
                 <div class="d-inline">Số lượng:</div>
                 <div class="d-flex mt-3">
-                    <input id="soluong" name="soluong" class="nhapsoluong mr-4" type="number" value="1" min="1" max="20" />
+                    <input id="soluong" onblur="value = value == '' ? 1 : value;" oninput="validity.valid||(value=1);" name="soluong" class="nhapsoluong mr-4" type="number" value="1" min="1" max="20" />
                     <input id="soluong" name="soluong" data-id="@Model.id" type="submit" class="btn btn-danger btn-lg add-cart" @enable value="Cho vào giỏ hàng" id="submitgh" />
                 </div>
             </div>
@@ -99,7 +105,7 @@
         <div class="col-12">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link activeBlock active text-uppercase text-black" href="#product-info" role="tab" data-toggle="tab">Mô tả sản phẩm</a>
+                    <a class="nav-link activeBlock active  text-uppercase text-black" href="#product-info" role="tab" data-toggle="tab">Mô tả sản phẩm</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-uppercase text-black" href="#feedback" role="tab" data-toggle="tab">Nhận xét (@ViewBag.totalFeedback)</a>
@@ -108,7 +114,7 @@
 
             <!-- Tab panes -->
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active mt-5" id="product-info">
+                <div role="tabpanel" class="tab-pane fade in active show mt-5" id="product-info">
                     @Html.Raw(Model.detail)
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="feedback">
@@ -122,8 +128,8 @@
     <div class="row mt-5">
         <div class="col-12">
             <div class="mt-5 product-slide">
-                @Model.menu_id
-                @Model.menu_id.Split(',')[0].Split('[')[1].Split('"')[1]
+                @*@Model.menu_id
+                @Model.menu_id.Split(',')[0].Split('[')[1].Split('"')[1]*@
                 @Html.Action("RelatedProductPartial", "Home", new { @id = Model.id, @menuId = int.Parse(Model.menu_id.Split(',')[0].Split('[')[1].Split('"')[1])})
             </div>
         </div>

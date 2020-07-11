@@ -162,7 +162,6 @@
           <Property Name="address" Type="nvarchar(max)" />
           <Property Name="phone_number" Type="varchar" MaxLength="11" />
           <Property Name="email" Type="varchar" MaxLength="250" />
-          <Property Name="link_google_map" Type="nvarchar(max)" />
           <Property Name="start_time" Type="datetime" />
           <Property Name="status" Type="bit" />
         </EntityType>
@@ -275,13 +274,13 @@
           <EntitySet Name="feedbacks" EntityType="FreshFoodModel.feedback" />
           <EntitySet Name="products" EntityType="FreshFoodModel.product" />
           <EntitySet Name="menus" EntityType="FreshFoodModel.menu" />
-          <EntitySet Name="providers" EntityType="FreshFoodModel.provider" />
           <EntitySet Name="order_details" EntityType="FreshFoodModel.order_details" />
           <EntitySet Name="orders" EntityType="FreshFoodModel.order" />
           <AssociationSet Name="FK__orders__user_id__625A9A57" Association="FreshFoodModel.FK__orders__user_id__625A9A57">
             <End Role="user" EntitySet="users" />
             <End Role="order" EntitySet="orders" />
           </AssociationSet>
+          <EntitySet Name="providers" EntityType="FreshFoodModel.provider" />
         </EntityContainer>
         <EntityType Name="role">
           <Key>
@@ -453,20 +452,6 @@
           <Property Name="order" Type="Int32" />
           <Property Name="status" Type="Boolean" />
         </EntityType>
-        <EntityType Name="provider">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="phone_number" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="link_google_map" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="start_time" Type="DateTime" Precision="3" />
-          <Property Name="status" Type="Boolean" />
-        </EntityType>
         <EntityType Name="order_details">
           <Key>
             <PropertyRef Name="order_id" />
@@ -509,6 +494,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="provider">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="phone_number" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="start_time" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -666,21 +664,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="providers">
-            <EntityTypeMapping TypeName="FreshFoodModel.provider">
-              <MappingFragment StoreEntitySet="providers">
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="start_time" ColumnName="start_time" />
-                <ScalarProperty Name="link_google_map" ColumnName="link_google_map" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="order_details">
             <EntityTypeMapping TypeName="FreshFoodModel.order_details">
               <MappingFragment StoreEntitySet="order_details">
@@ -707,6 +690,20 @@
                 <ScalarProperty Name="phone_number" ColumnName="phone_number" />
                 <ScalarProperty Name="display_name" ColumnName="display_name" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="providers">
+            <EntityTypeMapping TypeName="FreshFoodModel.provider">
+              <MappingFragment StoreEntitySet="providers">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

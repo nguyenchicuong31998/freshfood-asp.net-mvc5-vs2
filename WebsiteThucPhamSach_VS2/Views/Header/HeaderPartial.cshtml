@@ -58,24 +58,13 @@
                 <br />Bán kính trên 100 Km
             </div>
         </div>
-        @*@using (Html.BeginForm("TimKiem", "Home", FormMethod.Post))
+        @using (Html.BeginForm("SearchProduct", "Home", FormMethod.Post))
         {
-            <ul class="nav navbar-right">
-                <li>
-                    <input name="txttimkiem" type="text" class="form-control nho" placeholder="Tìm kiếm" />
-                    <input type="submit" class="btn btn-default btn-image" value="" />
-                </li>   
-            </ul>
-        }*@
-      @using (Html.BeginForm("SearchProduct", "Home", FormMethod.Post))
-      {
-        <div class="header__search">
-            <input id="search__tags" name="searchTags" class="search__input" type="text" placeholder="Tìm kiếm" />
-            <input type="submit" class="header__icon-search fa fa-search">
-            @*<input type="submit" class="btn btn-default btn-image" value="" />*@
-
-        </div>
-      }
+            <div class="header__search header__search-mobile">
+                <input id="search__tags" name="searchTags" class="search__input search__tags" type="text" placeholder="Tìm kiếm" />
+                <input type="submit" class="header__icon-search btn-default btn-image" aria-label="Search" value="">
+            </div>
+        }
     </div>
     <div class="header__box">
         <div class="header__info">
@@ -102,6 +91,15 @@
             <div class="bar2"></div>
             <div class="bar3"></div>
         </div>
+    </div>
+    <div class="header__box d-none d-md-block">
+        @using (Html.BeginForm("SearchProduct", "Home", FormMethod.Post))
+        {
+            <div class="header__search">
+                <input id="search__tags" name="searchTags" class="search__input search__tags" type="text" placeholder="Tìm kiếm" />
+                <input type="submit" class="header__icon-search btn-default btn-image" aria-label="Search" value="">
+            </div>
+        }
     </div>
 </div>
 

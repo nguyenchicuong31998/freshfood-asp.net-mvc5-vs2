@@ -21,7 +21,6 @@ namespace WebsiteThucPhamSach_VS2.Models
         [Required(ErrorMessage = "Vui lòng nhập email")]
         [EmailAddress(ErrorMessage = "Địa chỉ email không hợp lệ")]
         public string email { get; set; }
-        public string link_google_map { get; set; }
         public Nullable<bool> status { get; set; }
 
         public List<provider> getProviders()
@@ -55,7 +54,6 @@ namespace WebsiteThucPhamSach_VS2.Models
                 provider.phone_number = newProvider.phone_number;
                 provider.address = newProvider.address;
                 provider.description = newProvider.description;
-                provider.link_google_map = newProvider.link_google_map;
                 provider.start_time = DateTime.Now;
                 provider.status = true;
                 db.providers.Add(provider);
@@ -80,7 +78,6 @@ namespace WebsiteThucPhamSach_VS2.Models
                     currentProvider.phone_number = updateProvider.phone_number;
                     currentProvider.address = updateProvider.address;
                     currentProvider.description = updateProvider.description;
-                    currentProvider.link_google_map = updateProvider.link_google_map;
                     currentProvider.start_time = DateTime.Now;
                     db.Entry(currentProvider).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();

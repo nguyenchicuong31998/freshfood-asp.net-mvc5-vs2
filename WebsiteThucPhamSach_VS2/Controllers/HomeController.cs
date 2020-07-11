@@ -202,6 +202,7 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             if(cartProduct.FirstOrDefault(p=>p.id == id) == null)
             {
                 product product = db.products.Find(id);
+
                 Cart cart = new Cart()
                 {
                     id = product.id,
@@ -210,6 +211,10 @@ namespace WebsiteThucPhamSach_VS2.Controllers
                     quantity = quantity,
                     price = Decimal.Parse(product.price.ToString()),
                 };
+                if(product.provider_id != null)
+                {
+                    cart.provider_id = int.Parse(product.provider_id.ToString());
+                }
                 if(product.price_promotion > 0)
                 {
                     cart.price_promotion = Decimal.Parse(product.price_promotion.ToString());
@@ -542,9 +547,21 @@ namespace WebsiteThucPhamSach_VS2.Controllers
         [HttpPost]
         public ActionResult SearchProduct(string searchTags)
         {
-            var products = db.products.SqlQuery("select * from products Where name like '%' + @timkiem + '%'", new SqlParameter("timkiem", searchTags)).ToList();
+            var products = db.products.SqlQuery("select * from products Where name like '%' + @timkiem + '%'", new SqlParameter("timkiem", searchTags)).Where(s=>s.status == true).ToList();
             ViewBag.keyword = searchTags;
             return View(products);
+        }
+
+        public string getNameProvider(int providerId)
+        {
+            var provider = new ProviderModel().getProviderActiveById(providerId);
+            return provider.name == null ? "" : provider.name;
+        }
+
+        public string getAddressProvider(int providerId)
+        {
+            var provider = new ProviderModel().getProviderActiveById(providerId);
+            return provider.address == null ? "" : provider.address;
         }
     }
 }

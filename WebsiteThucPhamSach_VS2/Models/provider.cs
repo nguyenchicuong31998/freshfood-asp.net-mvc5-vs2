@@ -20,7 +20,6 @@ namespace WebsiteThucPhamSach_VS2.Models
         public string address { get; set; }
         public string phone_number { get; set; }
         public string email { get; set; }
-        public string link_google_map { get; set; }
         public Nullable<System.DateTime> start_time { get; set; }
         public Nullable<bool> status { get; set; }
     }

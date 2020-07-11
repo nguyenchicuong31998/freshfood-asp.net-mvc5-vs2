@@ -2,9 +2,11 @@
 
 
 
-
 .ui-menu.ui-autocomplete {
     padding: 10px 20px !important;
+    height: 300px !important;
+    width: 290px !important;
+    overflow-y: scroll;
 }
 
     .ui-menu.ui-autocomplete::before {

@@ -32,6 +32,12 @@
                     <div class="w-100 box-content d-flex flex-column flex-md-row">
                         <div class="info w-100 mb-1 m-md-0">
                             <div>@utils.add3Dots(cartItem.name, 180)</div>
+                            @if(cartItem.provider_id != null && cartItem.provider_id != 0) {
+                                <div class="cart-provider">
+                                    Cung cấp bởi:
+                                    <a href="https://www.google.com/maps/place/@Html.Action("getAddressProvider", "Home",new { providerId = cartItem.provider_id })" class="font-weight-bold">@utils.add3Dots(Html.Action("getNameProvider", "Home", new { providerId = cartItem.provider_id }).ToString(), 60)</a>
+                                </div>
+                            }
                             <a class="btnDelete" href="#" data-id="@cartItem.id">Xóa</a>
                         </div>
                         <div class="price w-75 mb-2 mt-1 m-md-0 w-lg-100">

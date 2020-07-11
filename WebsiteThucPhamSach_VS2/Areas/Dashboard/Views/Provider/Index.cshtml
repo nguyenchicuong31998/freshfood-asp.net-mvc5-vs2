@@ -22,7 +22,6 @@
                             <th>Địa chỉ</th>
                             <th>Số điện thoại</th>
                             <th>Email</th>
-                            <th>Đường dẫn địa chỉ google map</th>
                             <th>Trạng thái</th>
                             <th>Công cụ</th>
                         </tr>
@@ -37,10 +36,14 @@
                                 <td>
                                     @item.description
                                 </td>
-                                <td>@item.address</td>
+                                <td>
+                                    <a class="text-secondary" href="https://www.google.com/maps/place/@item.address" target="_blank">@item.address</a>
+                                </td>
                                 <td>@item.phone_number</td>
                                 <td>@item.email</td>
-                                <td>@item.link_google_map</td>
+                                @*<td>
+                                    <img src="@Html.Action("GennerateQRCode","Provider", new { address = item.address })" width="300px" height="300px" alt="Alternate Text" />
+                                </td>*@
                                 <td>
                                     <input type="submit" class="status btn btn-info" data-id="@item.id" value="@name" />
                                 </td>

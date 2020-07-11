@@ -4,9 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebsiteThucPhamSach_VS2.Models;
+using QRCoder;
+using System.Drawing;
+using System.IO;
 
 namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
 {
+    
     public class ProviderController : Controller
     {
         // GET: Dashboard/Provider
@@ -14,6 +18,23 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
         {
             var providers = new ProviderModel().getProviders();
             return View(providers);
+        }
+
+        public string GennerateQRCode(string address)
+        {
+            var url = "";
+            QRCodeGenerator objectQR = new QRCodeGenerator();
+            string data = "https://www.google.com/maps/place/" + Server.UrlEncode(address);
+            QRCodeData qrCodeData = objectQR.CreateQrCode(data, QRCodeGenerator.ECCLevel.Q);
+            Bitmap bitMap = new QRCode(qrCodeData).GetGraphic(20);
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitMap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                byte[] byteImage = ms.ToArray();
+                url = String.Format("data:image/png;base64," + Convert.ToBase64String(byteImage));
+
+            }
+            return url;
         }
 
         public ActionResult Create()
@@ -43,7 +64,6 @@ namespace WebsiteThucPhamSach_VS2.Areas.Dashboard.Controllers
             providerModel.address = provider.address;
             providerModel.phone_number = provider.phone_number;
             providerModel.description = provider.description;
-            providerModel.link_google_map = provider.link_google_map;
             return View(providerModel);
         }
 

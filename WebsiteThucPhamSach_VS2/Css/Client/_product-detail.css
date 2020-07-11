@@ -11,6 +11,7 @@
     display: none;
     border: 1px solid #9bd031;
     border-radius: 8px;
+    min-height: 360px;
 }
     .left .pictureLarge img {
         width: 100%;

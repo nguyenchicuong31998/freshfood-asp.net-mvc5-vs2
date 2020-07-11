@@ -29,7 +29,7 @@ $(document).ready(function () {
         dataType: "JSON",
         type: "GET",
         success: function (res) {
-            $('#search__tags').autocomplete({
+            $('.search__tags').autocomplete({
                 source: res.data
             });
         }

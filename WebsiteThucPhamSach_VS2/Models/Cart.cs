@@ -9,6 +9,7 @@ namespace WebsiteThucPhamSach_VS2.Models
     {
         public int id { get; set; }
         public string name { get; set; }
+        public int provider_id { get; set;}
         public string image { get; set; }
         public Decimal price { get; set; }
         public Decimal price_promotion { get; set; }

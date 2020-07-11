@@ -1,8 +1,11 @@
 ﻿@using WebsiteThucPhamSach_VS2.Models
+@using WebsiteThucPhamSach_VS2.Common
 @model List<product>
 @{
     ViewBag.Title = "Tìm kiếm";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    Utils utils = new Utils();
+
 }
 <div class="container mt-4">
     <div class="row">
@@ -20,18 +23,91 @@
         </div>
     </div>
 </div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Count() > 0)
+            {
+                <div class="featured-products">
+                    <h2 class="title-share mt-5 mb-5 pb-4">Có @Model.Count() kết quả tìm kiếm phù hợp</h2>
+                    <div class="featured-products-content">
+                        @foreach (var product in Model)
+                        {
+                            <div class="featured-products-item p-3 product-for-your">
+                                @{
+                                    product.image = product.image != " " ? product.image : "https://via.placeholder.com/250x250";
+                                }
+                                <div class="box-photo">
+                                    <img class="img-thumbnail" src="@Url.Content(product.image)" />
+                                    <div class="box-order d-flex align-items-center justify-content-center">
+                                        <a href="#" data-id="@product.id" class="quick-view mr-3 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Xem nhanh"><i class="far fa-eye"></i></a>
+                                        <a href="#" data-id="@product.id" class="add-cart d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Thêm vào giỏ hàng"><i class="fas fa-cart-plus"></i></a>
+                                    </div>
+                                </div>
+                                <div class="featured-item-content pt-3 pb-3">
+                                    <div class="product-name">
+                                        <a href="~/Chi-Tiet-San-Pham/@product.id" class="p-2 text-black">@product.name</a>
+                                    </div>
+                                    <div class="product-star">
+                                        @Html.Action("RatingStar", "Common", new { id = product.id })
+                                    </div>
+                                    <div class="product-price">
+                                        @if (product.price_promotion != null)
+                                        {
+                                            <span class="price-promotion font-weight-bold">
+                                                @{
+                                                    var giamGia = String.Format("{0:0}", product.price * ((100 - product.price_promotion) / 100));
+                                                }
+                                                @utils.FormatPrice(giamGia.ToString()) đ
+                                            </span>
+                                            <span class="price font-weight-normal"><del>@utils.FormatPrice(product.price.ToString()) đ</del></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="price font-weight-bold">@utils.FormatPrice(product.price.ToString()) đ</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="mt-5 mb-5 d-flex justify-content-center">
+                        <a id="load-more" class="btn custom-btn bg-green text-white">Xem thêm</a>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="text-center mt-5 p-3 font-weight-bold">Không tìm thấy bất kỳ kết quả nào với từ khóa trên.</div>
+            }
+        </div>
+    </div>
+</div>
 
-@if(Model.Count() > 0)
-{
 
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var sizeFaqs = $('.product-for-your').length;
+            var sizeDefault = 12;
+            if (sizeFaqs < sizeDefault) {
+                $("#load-more").hide();
+            }
+
+            $('.product-for-your').hide();
+            $('.product-for-your:lt(' + sizeDefault + ')').show();
+            $('#load-more').click(function () {
+                sizeDefault = (sizeDefault + 8 <= sizeFaqs) ? sizeDefault + 8 : sizeFaqs;
+                $('.product-for-your:lt(' + sizeDefault + ')').show();
+                // hide load more button if all items are visible
+                if ($(".product-for-your:visible").length >= sizeFaqs) { $("#load-more").hide(); }
+            });
+
+        });
+
+    </script>
 }
-else {
-     <div class="text-center p-3 font-weight-bold">Không tìm thấy bất kỳ kết quả nào với từ khóa trên.</div>
-}
-
-
-
-
 
 
 

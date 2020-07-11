@@ -8,6 +8,9 @@
     border: 1px solid #dee2e6;
     padding: 25px 15px;
 }
+.cart-provider {
+    font-size: 11px;
+}
 
 .text {
     text-align: center

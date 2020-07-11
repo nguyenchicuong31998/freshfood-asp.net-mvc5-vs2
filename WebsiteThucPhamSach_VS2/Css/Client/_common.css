@@ -51,6 +51,11 @@
     transition: ease .6s;
 }
 
+.img-detail-product{
+    width: inherit;
+    max-width: 500px;
+}
+
 .img-custom {
     /*object-fit: cover;*/
     width: 45px;
