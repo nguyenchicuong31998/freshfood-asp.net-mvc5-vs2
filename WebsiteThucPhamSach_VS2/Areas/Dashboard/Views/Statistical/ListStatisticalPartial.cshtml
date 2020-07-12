@@ -1,0 +1,54 @@
+﻿
+@using WebsiteThucPhamSach_VS2.Common
+@{
+    Utils utils = new Utils();
+}
+
+<div class="container-fluid p-3">
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Thống kê</div>
+        <div class="card-body">
+            <div class="table-responsive text-nowrap">
+                <table class="table table-bordered tableOrder" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Họ và tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Email</th>
+                            <th>Tổng tiền</th>
+                            <th>Ngày đặt</th>
+                            <th>Ngày xác nhận</th>
+                            <th>Hình thức thanh toán</th>
+                            <th>Hình thức giao hàng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in ViewBag.listStatistical)
+                        {
+                            var trangthai = order.status == true ? "Đã xác nhận" : "Xác nhận";
+                            <tr>
+                                <td>@order.id</td>
+                                <td>@order.display_name</td>
+                                <td>@order.phone_number</td>
+                                <td>@order.address</td>
+                                <td>@order.email</td>
+                                <td>@utils.FormatPrice(order.total_money.ToString())</td>
+                                <td>@String.Format("{0:dd/MM/yyyy}", order.start_time)</td>
+                                <td>
+                                    @if (order.end_time != null)
+                                    {
+                                        @String.Format("{0:dd/MM/yyyy}", order.end_time)
+                                    }
+                                </td>
+                                <td>@order.form_payments</td>
+                                <td>@order.form_delivery</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

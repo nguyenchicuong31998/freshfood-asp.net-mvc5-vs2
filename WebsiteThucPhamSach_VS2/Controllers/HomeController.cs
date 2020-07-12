@@ -10,6 +10,8 @@ using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using System.Text;
 using System.Data.SqlClient;
+using Stripe;
+using Stripe.Checkout;
 
 namespace WebsiteThucPhamSach_VS2.Controllers
 {
@@ -346,9 +348,9 @@ namespace WebsiteThucPhamSach_VS2.Controllers
         {
             List<FormPayment> formPayment = new List<FormPayment>();
             formPayment.Add(new FormPayment(1, "Thanh toán trước khi giao hàng"));
-            //formPayment.Add(new FormPayment(2, "Thanh toán Stripe"));
             formPayment.Add(new FormPayment(2, "Thanh toán Paypal"));
-            formPayment.Add(new FormPayment(3, "Thanh toán Bảo Kim"));
+            formPayment.Add(new FormPayment(3, "Thanh toán Stripe"));
+            //formPayment.Add(new FormPayment(4, "Thanh toán bảo kim"));
             SelectList formPaymentSelect = new SelectList(formPayment, "name", "name");
             ViewBag.formPayment = formPaymentSelect;
         }
@@ -399,7 +401,8 @@ namespace WebsiteThucPhamSach_VS2.Controllers
                     db.order_details.Add(orderDetail);
                     db.SaveChanges();
                 }
-                var body = new PaymentSuccess().body(order.display_name);
+                var content = db.order_details.Where(n => n.order_id == order.id).ToList();
+                var body = new PaymentSuccess().body(order.display_name, content);
                 new Utils().SendEmail(data.email, "Chúc mừng bạn đã mua sản phẩm thành công", body, "", "");
             }
             catch (Exception e)
@@ -428,6 +431,38 @@ namespace WebsiteThucPhamSach_VS2.Controllers
             payment.email = user.email;
             this.getFormPayment();
             this.getFormDelivery();
+            //StripeConfiguration.ApiKey = "sk_test_51Gz5Z7Ac1Jepd0KNoEYPSVftYCV6mVsWSCfZsQKx9XbOlIbCvWyfr2RXXx4tgb2kwP1bS1rTflQXCvYN0K41XIhM00SSy7xvf6";
+            StripeConfiguration.ApiKey = "sk_test_4eC39HqLyjWDarjtT1zdp7dc";
+            var options = new SessionCreateOptions
+            {
+                PaymentMethodTypes = new List<string>
+                {
+                    "card",
+                },
+                LineItems = new List<SessionLineItemOptions>
+                {
+                    new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                          Currency = "usd",
+                          ProductData = new SessionLineItemPriceDataProductDataOptions
+                          {
+                            Name = "T-shirt",
+                          },
+                          UnitAmount = 2000,
+                        },
+                        Quantity = 1,
+                    },
+                },
+                Mode = "payment",
+                SuccessUrl = "https://localhost:44388/Trang-Chu",
+                CancelUrl = "https://example.com/Thanh-Toan",
+            };
+            var service = new SessionService();
+            Session session = service.Create(options);
+            ViewBag.sessionId = session.Id;
+            TempData["sessionId"] = session.Id;
             return View(payment);
         }
 
@@ -482,7 +517,8 @@ namespace WebsiteThucPhamSach_VS2.Controllers
 
                     }
                     Response.Cookies["CartCookie"].Expires = DateTime.Now.AddDays(-1);
-                    var body = new PaymentSuccess().body(order.display_name);
+                    var content = db.order_details.Where(n => n.order_id == order.id).ToList();
+                    var body = new PaymentSuccess().body(order.display_name, content);
                     new Utils().SendEmail(payment.email, "Chúc mừng bạn đã mua sản phẩm thành công", body, "", "");
                     return Redirect("~/Trang-Chu");
                 }

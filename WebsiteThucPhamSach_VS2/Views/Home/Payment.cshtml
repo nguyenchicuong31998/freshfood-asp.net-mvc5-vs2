@@ -4,7 +4,10 @@
     ViewBag.Title = "Thanh Toán";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
-
+<script src="https://js.stripe.com/v3/"></script>
+@{
+    var sessionId = TempData["sessionId"] ?? string.Empty;
+}
 <div class="container mt-4">
     <div class="row">
         <div class="col-12">
@@ -30,7 +33,7 @@
                 <div class="form-group row mb-4">
                     <label class="col-12" for="">Họ và tên*</label>
                     <div class="col-12">
-                        @Html.TextBoxFor(PaymentModel => PaymentModel.display_name, new { @name= "display_name", @class = "form-control input-share input-size input-height", @Placeholder = "Họ và tên*" })
+                        @Html.TextBoxFor(PaymentModel => PaymentModel.display_name, new { @name = "display_name", @class = "form-control input-share input-size input-height", @Placeholder = "Họ và tên*" })
                         @Html.ValidationMessageFor(PaymentModel => PaymentModel.display_name, "", new { @class = "text-error" })
                     </div>
                 </div>
@@ -79,6 +82,8 @@
                 <div class="d-flex justify-content-end mt-4">
                     <input id="normal" class="btn btn-primary btn-lg" type="submit" value="Thanh toán" />
                     <div id="paypal-button"></div>
+                    <div id="checkout-stripe">Pay now</div>
+                    @*<div id="check_out"></div>*@
                 </div>
             </div>
         </div>
@@ -86,21 +91,24 @@
 }
 @section scripts{
     <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    @*<script src="https://www.baokim.vn/assets/lib/js/baokim.js"></script>*@
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#paypal-button').css("display", "none");
+            $('#checkout-stripe').css("display", "none");
+
             $('#form_payments').change(function () {
                 console.log("vaoo", $('#form_payments').prop('selectedIndex'));
                 var index = $('#form_payments').prop('selectedIndex');
                 switch (index) {
                     case 1:
-                        $('#paypal-button').css("display", "none");
                         $('#normal').css("display", "block");
-                        console.log("Vaoo");
+                        $('#checkout-stripe').css("display", "none");
+                        $('.paypal-button').remove();
                         break;
                     case 2:
                         $('#normal').css("display", "none");
                         $('#paypal-button').css("display", "block");
+                        $('#checkout-stripe').css("display", "none");
 
                         var totalMoney = $('.total-money').text();
                         totalMoney = (totalMoney.split(" ")[0] / 23).toFixed(2);
@@ -125,7 +133,7 @@
 
                             // Set up a payment
                             payment: function (data, actions) {
-            
+
                                 return actions.payment.create({
                                     transactions: [{
                                         amount: {
@@ -158,8 +166,44 @@
                         }, '#paypal-button');
                         break;
                     case 3:
+                        //var stripe = Stripe('pk_test_51Gz5Z7Ac1Jepd0KNEX1EucjxP9b1tseBad8oXaUnnvFN6K41UDfPtd3Od7QPFMJV0wKuVjkXAgY2oZ5LrglLQvYa006yySuaqg');
+                        var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+                        $('#checkout-stripe').css("display", "block");
+                        $('#normal').css("display", "none");
+                        $('.paypal-button').remove();
+                           var checkoutButton = document.getElementById('checkout-stripe');
+                            var sessionId = '@sessionId';
+                            checkoutButton.addEventListener('click', function () {
+                                stripe.redirectToCheckout({
+
+                                    //sessionId: "cs_test_deeEcyFLAd9zlW0FvB6xOezVVztR9CT83obtDhDTWqFl7asoPhJC9ecx"
+                                    sessionId: sessionId
+                                }).then(function (result) {
+                                    // If `redirectToCheckout` fails due to a browser or network
+                                    // error, display the localized error message to your customer
+                                    // using `result.error.message`.
+                                });
+                            });
                         break;
                     case 4:
+                        //let baokim = new Baokim(
+                        //    'check_out', // id of css
+                        //    'a18ff78e7a9e44f38de372e093d87ca1', // key
+                        //    { //order
+                        //        mrc_order_id: `my_order_id_${Math.random().toString(36).substring(2)}_${Date.now()}`,
+                        //        total_amount: 67000,
+                        //        payment_method_type: 'card',
+                        //        description: 'thanh toan dien thoai iphone xs max 512Gb',
+                        //        success_url: 'http://my-merchant.com/callback-success',
+                        //        cancel_url: 'http://my-merchant.com/callback-cancel',
+                        //    },
+                        //    { // button config
+                        //        title: 'Thanh toán Với Bảo Kim',
+                        //        style: {
+                        //            background: '#fff'
+                        //        }
+                        //    });
+                        //baokim.create();
                         break;
                     default:
                         break;

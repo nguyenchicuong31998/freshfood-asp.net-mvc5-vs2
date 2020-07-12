@@ -220,6 +220,7 @@
     <Compile Include="Areas\Dashboard\Controllers\UnitController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\UserController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\Dashboard\Models\GlobalVariables.cs" />
     <Compile Include="Areas\Dashboard\Models\UsersAdModel.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
@@ -1603,6 +1604,7 @@
     <Content Include="Areas\Dashboard\Views\Provider\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Provider\Edit.cshtml" />
     <Content Include="Areas\Dashboard\Views\Provider\Create.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Statistical\ListStatisticalPartial.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
